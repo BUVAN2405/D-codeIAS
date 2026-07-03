@@ -73,3 +73,7 @@ Here is a summary of all architectural changes, bug fixes, and feature additions
    - **Canonical & Heading Hierarchy**: Set a Canonical Link and restructured the main header tag in `Hero.tsx` to `<h1>` for standard search crawler optimization.
    - **Link Sharing Thumbnail**: Updated social share graph previews (`og:image`, `twitter:image`) and Local Schema JSON-LD logo mappings to point directly to the school's official logo `/src/LOGO.jpeg`.
 
+6. **Hero Card Close Button & Mobile Layout Spacing**:
+   - **Interactive Close Button**: Added an exit close button (`X`) to the top-right corner of the liquid glassmorphism card, allowing users to hide the details block to view the sliding background slideshow cleanly. Added a subtle "Show Details" floating button on the top-right to restore the text.
+   - **Overlapping Fix on Mobile**: Shrank the slide buttons on mobile screens (`w-8 h-8`) and pushed them closer to the edges (`left-2`/`right-2`), while increasing outer container horizontal padding (`px-10` on mobile) to guarantee a safe spacing gap that prevents buttons from overlapping the card's text.
+
