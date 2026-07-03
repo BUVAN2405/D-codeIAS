@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+
+  --color-brand-navy: #0D2C54;
+  --color-brand-crimson: #D31218;
+  --color-surface-slate: #F8FAFC;
+
+  /* Map template color names to ensure standard Tailwind classes work flawlessly with opacity modifiers */
+  --color-brand-violet: #0D2C54;
+  --color-brand-accent: #0D2C54;
+  --color-brand-gold: #D31218;
+  --color-brand-primary: #D31218;
+  --color-surface-cream: #F8FAFC;
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .font-space {
+    font-family: var(--font-space);
+  }
+}
+
+/* D'code IAS Academy Brand Styling Overrides (60-30-10 Rule) */
+html, body {
+  background-color: #F8FAFC !important;
+  color: #1E293B;
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* 60% Dominant: Backgrounds & Fills (#F8FAFC) */
+.bg-surface-cream,
+.bg-[#ece7e5],
+.bg-surface-cream\/40,
+.bg-surface-cream\/50,
+.bg-gray-50,
+.bg-stone-50 {
+  background-color: #F8FAFC !important;
+}
+
+/* 30% Secondary: Headings & Structural Blue Cards (#FFFFFF cards with solid #0D2C54 titles) */
+.bg-white {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+}
+
+@layer base {
+  h1, h2, h3, h4, th {
+    color: #0D2C54;
+  }
+}
+
+/* Titles and Headings: Playfair Display + Official Navy Blue (#0D2C54) */
+h1, h2, h3, h4, th, .text-brand-accent {
+  font-family: var(--font-serif) !important;
+}
+
+.text-brand-accent {
+  color: #0D2C54;
+}
+
+.text-brand-violet {
+  color: #0D2C54;
+}
+
+/* 10% Accent: Interactive Buttons, Alerts, and Highlights (#D31218) */
+.text-brand-gold,
+.text-brand-gold\/90 {
+  color: #D31218;
+}
+
+/* Standard button adjustments for striking Crimson accents */
+button.bg-white,
+button.bg-brand-violet,
+#mobile-menu-drawer button,
+input[type="submit"] {
+  background-color: #D31218 !important;
+  color: #FFFFFF !important;
+  font-family: var(--font-space), sans-serif;
+  font-weight: 600 !important;
+  border: 1px solid #D31218 !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+button.bg-white:hover,
+button.bg-brand-violet:hover,
+#mobile-menu-drawer button:hover {
+  background-color: #A30D12 !important;
+  border-color: #A30D12 !important;
+  color: #FFFFFF !important;
+}
+
+/* Override contact inputs for modern slate visual styles */
+input, select, textarea {
+  background-color: #FFFFFF !important;
+  color: #1E293B !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 4px !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #0D2C54 !important;
+  box-shadow: 0 0 0 2px rgba(13, 44, 84, 0.1) !important;
+}
+
+/* Modals overlays & drawer sheets */
+#enroll-modal-container .bg-surface-cream,
+#faculty-info-modal .bg-surface-cream,
+#topper-info-overlay .bg-surface-cream {
+  background-color: #FFFFFF !important;
+  border: 2px solid #0D2C54 !important;
+}
+
+#enroll-modal-container h4,
+#enroll-modal-container h3,
+#enroll-modal-container label,
+#faculty-info-modal h4,
+#faculty-info-modal h3,
+#topper-info-overlay h4,
+#topper-info-overlay h3 {
+  color: #0D2C54 !important;
+}
+
+#enroll-modal-container select {
+  background-color: #FFFFFF !important;
+  color: #1E293B !important;
+}
+
+/* Custom text selection highlighting */
+::selection {
+  background-color: rgba(211, 18, 24, 0.15) !important;
+  color: #D31218 !important;
+}
+
+/* Custom infinite marquee scroll */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 30s linear infinite;
+}
+
+.animate-marquee-left:hover, .animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+

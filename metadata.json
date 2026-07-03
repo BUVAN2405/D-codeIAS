@@ -1,0 +1,6 @@
+{
+  "name": "D'code IAS Academy",
+  "description": "Premium, fully responsive academic platform for elite UPSC & TNPSC preparation at Anna Nagar Chennai under Sudhagaran Sir, featuring detailed program overviews, interactive inquiry forms, batch schedules, and faculty profiles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
