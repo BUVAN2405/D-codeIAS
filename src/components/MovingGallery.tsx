@@ -97,81 +97,67 @@ interface TopperHighlight {
 }
 
 const TOPPER_HIGHLIGHTS: TopperHighlight[] = [
-  { 
-    name: "Rajeshwari Suve M", 
-    rank: "CSE AIR - 02", 
-    type: "IAS",
-    image: "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?w=400&h=400&fit=crop&q=80",
-    quote: "Sudhagaran Sir's meticulous GS mentoring and personal feedback completely reformed my answer structure and approach.",
-    strategy: "I focused heavily on previous years' questions (PYQ) analysis and answer writing velocity."
-  },
-  { 
-    name: "Neya Flower S", 
-    rank: "CSE AIR - 515", 
+
+  {
+    name: "Neya Flower S",
+    rank: "CSE AIR - 515",
     type: "IAS",
     image: neyaFlowerImg,
     quote: "The study materials and micro-notes methodology of D'code IAS Academy helped me compress and retain the entire syllabus.",
     strategy: "I revised the core NCERT syllabus systematically and solved all dynamic mock exams."
   },
-  { 
-    name: "Arun Pandian N", 
-    rank: "CSE AIR - 213", 
+  {
+    name: "Arun Pandian N",
+    rank: "CSE AIR - 213",
     type: "IAS",
     image: arunPandianImg,
     quote: "Personal mentorship under Sudhagaran Sir helped me navigate complex optional subjects with absolute clarity.",
     strategy: "I structured my notes as answer flowcharts and maps to write authoritative answers in the mains exam."
   },
-  { 
-    name: "Mouleswaran S", 
-    rank: "CSE AIR - 410", 
-    type: "IAS",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&q=80",
-    quote: "The interactive counseling desk and daily test reviews pushed me to maintain a stellar streak throughout the year.",
-    strategy: "Focused heavily on mains GS papers, dedicating 3 hours daily to answer evaluation reviews."
-  },
-  { 
-    name: "Kirubakaran N", 
-    rank: "CSE AIR - 439", 
+
+  {
+    name: "Kirubakaran N",
+    rank: "CSE AIR - 439",
     type: "IAS",
     image: kirubakaranImg,
     quote: "D'code's rich library facilities and interactive peer groups provided the ultimate academic environment.",
     strategy: "Analyzed current affairs through PIB and editorial mapping to align with UPSC GS mains guidelines."
   },
-  { 
-    name: "Subramania Bharathi", 
-    rank: "CSE AIR - 778", 
+  {
+    name: "Subramania Bharathi",
+    rank: "CSE AIR - 778",
     type: "IAS",
     image: subramaniaBharathiImg,
     quote: "The essay and ethics courses were a game-changer. They boosted my overall marks significantly.",
     strategy: "Practiced standard mind mapping to structure essays seamlessly during the active test hours."
   },
-  { 
-    name: "Nishanth T", 
-    rank: "CSE AIR - 821", 
+  {
+    name: "Nishanth T",
+    rank: "CSE AIR - 821",
     type: "IAS",
     image: nishanthTImg,
     quote: "Regular one-on-one reviews of my answers under Sudhagaran Sir helped me correct persistent structure errors.",
     strategy: "Made comprehensive revision folders for general studies papers to support rapid revisions before mains."
   },
-  { 
-    name: "Sanjay S", 
-    rank: "CSE AIR - 953", 
+  {
+    name: "Sanjay S",
+    rank: "CSE AIR - 953",
     type: "IAS",
     image: sanjayImg,
     quote: "Continuous counseling at D'code ensured I stayed focused and motivated, especially during the crucial mains phase.",
     strategy: "Systematically solved CSAT papers to eliminate errors and maintain high safety margins."
   },
-  { 
-    name: "Praveen Arockiaraj J", 
-    rank: "IFoS AIR - 102", 
+  {
+    name: "Praveen Arockiaraj J",
+    rank: "IFoS AIR - 102",
     type: "IFoS",
     image: praveenArockiarajImg,
     quote: "The scientific precision demanded by the Forest Service exam was covered brilliantly by the mentorship team.",
     strategy: "Prepared short, fact-driven notes for biology and forestry subjects with high diagram density."
   },
-  { 
-    name: "Arun Vadivarasan E", 
-    rank: "IFoS AIR - 128", 
+  {
+    name: "Arun Vadivarasan E",
+    rank: "IFoS AIR - 128",
     type: "IFoS",
     image: arunVadivarasanImg,
     quote: "Sudhagaran Sir's personal optional audits helped me build answer structures that stood out to the evaluators.",
@@ -228,7 +214,7 @@ export default function MovingGallery() {
 
       {/* Sliding Cards Carousel Section */}
       <div className="max-w-[1280px] mx-auto px-4 md:px-8 relative z-10">
-        
+
         {/* Navigation buttons and progress line display */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -236,7 +222,7 @@ export default function MovingGallery() {
               Image <span className="text-[#D31218] font-bold">{currentIndex + 1}</span> of {GALLERY_ITEMS.length}
             </span>
             <div className="hidden sm:block h-[2px] w-24 bg-gray-200 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-[#D31218] transition-all duration-300"
                 style={{ width: `${((currentIndex + 1) / GALLERY_ITEMS.length) * 100}%` }}
               />
@@ -265,7 +251,7 @@ export default function MovingGallery() {
         </div>
 
         {/* Carousel Window */}
-        <div 
+        <div
           className="overflow-hidden py-4 -mx-4 px-4 sm:mx-0 sm:px-0"
           onMouseEnter={() => setIsPlaying(false)}
           onMouseLeave={() => setIsPlaying(true)}
@@ -282,16 +268,15 @@ export default function MovingGallery() {
                 className={`w-full shrink-0 px-2 box-border`}
                 id={`gallery-card-${item.id}`}
               >
-                <div className={`w-full rounded-2xl overflow-hidden relative cursor-pointer group aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[2.4/1] max-h-[500px] shadow-md hover:shadow-xl transition-all duration-500 border border-gray-150 ${
-                  activeItem?.id === item.id ? 'ring-4 ring-[#D31218]' : ''
-                }`}>
+                <div className={`w-full rounded-2xl overflow-hidden relative cursor-pointer group aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] lg:aspect-[2.4/1] max-h-[500px] shadow-md hover:shadow-xl transition-all duration-500 border border-gray-150 ${activeItem?.id === item.id ? 'ring-4 ring-[#D31218]' : ''
+                  }`}>
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     referrerPolicy="no-referrer"
                   />
-                  
+
                   {/* Elegant dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -329,9 +314,8 @@ export default function MovingGallery() {
                 setCurrentIndex(idx);
                 setIsPlaying(false);
               }}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                currentIndex === idx ? 'w-8 bg-[#D31218]' : 'w-2 bg-gray-300 hover:bg-gray-400'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${currentIndex === idx ? 'w-8 bg-[#D31218]' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
@@ -364,7 +348,7 @@ export default function MovingGallery() {
             {/* Topper Grid */}
             <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
               {TOPPER_HIGHLIGHTS.map((topper) => (
-                <div 
+                <div
                   key={topper.name}
                   className="p-2 bg-slate-50/50 rounded-xl border border-gray-200/50 shadow-xs hover:border-[#D31218]/25 hover:bg-white transition-all group cursor-pointer flex flex-col justify-between"
                   onClick={() => {
@@ -380,9 +364,9 @@ export default function MovingGallery() {
                   <div>
                     {/* Topper Avatar Frame */}
                     <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden mb-2 bg-gray-100 border border-gray-150">
-                      <img 
-                        src={topper.image} 
-                        alt={topper.name} 
+                      <img
+                        src={topper.image}
+                        alt={topper.name}
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                         referrerPolicy="no-referrer"
                       />
@@ -411,7 +395,7 @@ export default function MovingGallery() {
       {/* Lightbox Modal */}
       <AnimatePresence>
         {activeItem && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -419,7 +403,7 @@ export default function MovingGallery() {
             onClick={() => setActiveItem(null)}
           >
             {/* Close Button */}
-            <button 
+            <button
               className="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer z-10"
               onClick={() => setActiveItem(null)}
             >
@@ -427,7 +411,7 @@ export default function MovingGallery() {
             </button>
 
             {/* Poster container */}
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.95, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 15 }}
@@ -437,9 +421,9 @@ export default function MovingGallery() {
             >
               {/* Image Frame */}
               <div className="flex-1 overflow-auto bg-slate-950 flex items-center justify-center p-2">
-                <img 
-                  src={activeItem.image} 
-                  alt={activeItem.title} 
+                <img
+                  src={activeItem.image}
+                  alt={activeItem.title}
                   className="max-w-full max-h-[68vh] sm:max-h-[72vh] object-contain rounded-lg"
                   referrerPolicy="no-referrer"
                 />
