@@ -1,4 +1,6 @@
 import { Course, Advantage, FacultyMember, Topper, BatchSchedule } from './types';
+import ceoPhoto from './Ceo.jpeg';
+
 export const COURSES: Course[] = [
   {
     id: 'mains_momentum_2027',
@@ -145,7 +147,7 @@ export const FACULTY: FacultyMember[] = [
     education: 'Former Mission Director, Naan Mudhalvan',
     experience: 'Distinguished Administrative Mentor & UPSC Expert',
     bio: 'Former Mission Director of Naan Mudhalvan who has mentored over 500 UPSC aspirants, guiding many towards Top 10 All India Ranks. Renowned for his approach of simplicity and clarity to empower candidates.',
-    image: 'src/Ceo.jpeg'
+    image: ceoPhoto
   },
   
 ];
