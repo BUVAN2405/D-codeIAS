@@ -41,6 +41,10 @@ Here is a summary of all architectural changes, bug fixes, and feature additions
    - **Problem**: The topper highlights gallery displayed generic stock photos and placeholder URLs.
    - **Fix**: Created the `src/assets/toppers/` directory, copied the authentic student images inside, and configured `Toppers.tsx` to reference them.
 
+4. **Git Repository Cleanup & Exclusions**:
+   - **Problem**: The repository index tracked unnecessary build outputs like `dist.zip` and root-level directories like `assets/` which contained stale service code duplicates.
+   - **Fix**: Untracked `dist.zip` and configured [.gitignore](.gitignore) to ignore build targets, logs, caches, environment configs, and the root-level `assets/` directory.
+
 ---
 
 ### ✨ Features & UX Optimizations
