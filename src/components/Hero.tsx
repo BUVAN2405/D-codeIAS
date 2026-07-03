@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Download, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
+import { ArrowRight, Download, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import ceoPhoto from '../Ceo.jpeg';
 import academyLogo from '../LOGO.jpeg';
@@ -162,18 +162,6 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
           )}
         </AnimatePresence>
 
-        {/* Small floating info button to recover details if closed */}
-        {!isCardVisible && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            onClick={() => setIsCardVisible(true)}
-            className="absolute z-20 top-24 right-4 sm:right-6 bg-black/60 hover:bg-[#D31218] active:scale-95 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-white font-space text-[10px] font-extrabold uppercase tracking-wider shadow-lg transition-all cursor-pointer flex items-center gap-1.5 outline-none"
-          >
-            <Info className="w-3.5 h-3.5" />
-            Show Details
-          </motion.button>
-        )}
 
       </div>
 
