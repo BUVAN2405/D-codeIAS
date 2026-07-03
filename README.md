@@ -45,6 +45,10 @@ Here is a summary of all architectural changes, bug fixes, and feature additions
    - **Problem**: The repository index tracked unnecessary build outputs like `dist.zip` and root-level directories like `assets/` which contained stale service code duplicates.
    - **Fix**: Untracked `dist.zip` and configured [.gitignore](.gitignore) to ignore build targets, logs, caches, environment configs, and the root-level `assets/` directory.
 
+5. **Live Faculty Image Loading Fix**:
+   - **Problem**: Sudhagaran Sir's photo inside the `FACULTY` array in `data.ts` was referenced as a plain path string (`image: 'src/Ceo.jpeg'`), causing it to fail to load in the production build.
+   - **Fix**: Imported `Ceo.jpeg` as a TypeScript module (`import ceoPhoto from './Ceo.jpeg'`) and referenced it as `image: ceoPhoto`, enabling Vite to process and bundle it correctly.
+
 ---
 
 ### ✨ Features & UX Optimizations
