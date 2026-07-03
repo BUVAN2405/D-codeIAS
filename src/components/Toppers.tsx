@@ -38,14 +38,6 @@ const TOPPER_HIGHLIGHTS: TopperHighlight[] = [
     strategy: "I structured my notes as answer flowcharts and maps to write authoritative answers in the mains exam."
   },
   { 
-    name: "Mouleswaran S", 
-    rank: "CSE AIR - 410", 
-    type: "IAS",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&q=80",
-    quote: "The interactive counseling desk and daily test reviews pushed me to maintain a stellar streak throughout the year.",
-    strategy: "Focused heavily on mains GS papers, dedicating 3 hours daily to answer evaluation reviews."
-  },
-  { 
     name: "Kirubakaran N", 
     rank: "CSE AIR - 439", 
     type: "IAS",

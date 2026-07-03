@@ -96,7 +96,7 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
               {/* Close Button on Top Right Corner */}
               <button
                 onClick={() => setIsCardVisible(false)}
-                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-[#D31218] text-white/80 hover:text-white transition-all cursor-pointer border-none outline-none z-20"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-[#D31218] text-white/80 hover:text-white transition-all cursor-pointer border-none outline-none z-20"
                 aria-label="Close information"
               >
                 <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -110,7 +110,7 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#D31218]/25 border border-[#D31218]/35 rounded-full text-[#ffc6c6] font-space text-[11px] uppercase tracking-wider font-semibold z-10"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#D31218]/25 border border-[#D31218]/35 rounded-full text-[#ffc6c6] font-space text-[11px] uppercase tracking-wider font-semibold z-10 mt-4 sm:mt-0"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D31218] animate-pulse" />
                 Admission Open for 2026-27
