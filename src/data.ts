@@ -154,6 +154,15 @@ export const FACULTY: FacultyMember[] = [
 
 export const TOPPERS: Topper[] = [
   {
+    id: 'rajeshwari_suve',
+    name: 'Rajeshwari Suve M',
+    rank: 2,
+    year: 2026,
+    image: '/src/assets/toppers/Rajeshwari Suve M.jpeg',
+    quote: 'The personalized mentorship program and intensive answer-writing guidance under Sudhagaran Sir were pivotal to my success.',
+    strategy: 'I focused on syllabus mapping, consistent answer auditing, and daily review loops to refine my optional and GS papers.'
+  },
+  {
     id: 'topper1',
     name: 'Rahul Deshmukh',
     rank: 12,

@@ -10,6 +10,7 @@ import nishanthTImg from '../assets/toppers/Dr. NISHANTH T..jpeg';
 import sanjayImg from '../assets/toppers/Sanjay.jpeg';
 import praveenArockiarajImg from '../assets/toppers/PRAVEEN AROCKIARAJ.jpeg';
 import arunVadivarasanImg from '../assets/toppers/ARUN VADIVARASAN.jpeg';
+import rajeshwariSuveImg from '../assets/toppers/Rajeshwari Suve M.jpeg';
 
 interface TopperHighlight {
   name: string;
@@ -21,6 +22,14 @@ interface TopperHighlight {
 }
 
 const TOPPER_HIGHLIGHTS: TopperHighlight[] = [
+  { 
+    name: "Rajeshwari Suve M", 
+    rank: "CSE AIR - 2", 
+    type: "IAS",
+    image: rajeshwariSuveImg,
+    quote: "The personalized mentorship program and intensive answer-writing guidance under Sudhagaran Sir were pivotal to my success.",
+    strategy: "I focused on syllabus mapping, consistent answer auditing, and daily review loops to refine my optional and GS papers."
+  },
   { 
     name: "Neya Flower S", 
     rank: "CSE AIR - 515", 
@@ -106,13 +115,13 @@ export default function Toppers() {
             {/* Left Column - Section Info */}
             <div className="lg:col-span-4">
               <span className="font-space text-xs font-bold uppercase tracking-widest text-[#D31218] block mb-2">
-                DIRECT MENTORSHIP SELECTIONS
+                TESTIMONIALS
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0D2C54] tracking-tight mb-3">
-                UPSC Toppers under Sudhagaran Sir
+                TESTIMONIALS OF TOPPERS
               </h3>
               <p className="font-sans text-xs sm:text-sm text-gray-500 leading-relaxed">
-                Under the direct academic guidance and intensive answer-writing clinics supervised by our founder, these candidates secured elite national ranks in the UPSC Civil Services and Forest Services exams.
+                Under the mentorship of Sudhagaran Sir who had aided in their UPSC journey and Forest Services exams.
               </p>
               <div className="mt-5 flex items-center gap-2.5 text-[#D31218]">
                 <Award className="w-5 h-5 animate-bounce" />
@@ -143,7 +152,11 @@ export default function Toppers() {
                       <img 
                         src={topper.image} 
                         alt={topper.name} 
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                        className={`w-full h-full object-cover transition-transform duration-300 ${
+                          topper.name === "Rajeshwari Suve M" 
+                            ? "scale-[1.6] origin-[50%_18%] group-hover:scale-[1.7]" 
+                            : "object-top group-hover:scale-105"
+                        }`}
                         referrerPolicy="no-referrer"
                       />
                       {/* Floating Rank overlay inside avatar */}
