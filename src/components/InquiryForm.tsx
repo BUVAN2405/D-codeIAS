@@ -2,8 +2,7 @@ import { useState, FormEvent } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, HelpCircle, X } from 'lucide-react';
 import { Course } from '../types';
-import { saveEnquiryToDb } from '../services/db';
-import { dispatchEnquiryEmails } from '../services/email';
+import { submitInquiryApi } from '../services/api';
 
 interface InquiryFormProps {
   courses: Course[];
@@ -23,7 +22,7 @@ export default function InquiryForm({ courses, onSubmitSuccess }: InquiryFormPro
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone) {
       alert('Please fill out Name and Phone Number.');
@@ -32,23 +31,13 @@ export default function InquiryForm({ courses, onSubmitSuccess }: InquiryFormPro
 
     setLoading(true);
     
-    // Simulate API delay, save to database and dispatch notification triggers
-    setTimeout(() => {
-      // 1. Save entry to local database
-      saveEnquiryToDb({
-        fullName: formData.fullName,
-        phone: formData.phone,
-        email: formData.email,
-        course: formData.course,
-        message: formData.message
-      });
-
-      // 2. Dispatch simulated Resend emails
-      dispatchEnquiryEmails({
+    try {
+      await submitInquiryApi({
         fullName: formData.fullName,
         phone: formData.phone,
         email: formData.email || undefined,
         course: formData.course,
+        formType: 'contact',
         message: formData.message || undefined
       });
 
@@ -66,7 +55,11 @@ export default function InquiryForm({ courses, onSubmitSuccess }: InquiryFormPro
           message: ''
         });
       }, 4000);
-    }, 1200);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert('Failed to submit inquiry. Please try again.');
+    }
   };
 
   return (

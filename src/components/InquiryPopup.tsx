@@ -2,8 +2,7 @@ import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Send, Sparkles, Phone, User, Mail, ShieldCheck } from 'lucide-react';
 import { Course } from '../types';
-import { saveEnquiryToDb } from '../services/db';
-import { dispatchEnquiryEmails } from '../services/email';
+import { submitInquiryApi } from '../services/api';
 
 interface InquiryPopupProps {
   courses: Course[];
@@ -39,7 +38,7 @@ export default function InquiryPopup({ courses, onSubmitSuccess }: InquiryPopupP
     localStorage.setItem('dcode_popup_dismissed_v2', 'true');
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
       alert('Please provide your name and phone number.');
@@ -48,36 +47,29 @@ export default function InquiryPopup({ courses, onSubmitSuccess }: InquiryPopupP
 
     setLoading(true);
     
-    // Simulate DB + Email workflow dispatch
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      
-      // 1. Save to database
-      saveEnquiryToDb({
+    try {
+      await submitInquiryApi({
         fullName: formData.name,
         phone: formData.phone,
         email: formData.email || undefined,
         course: formData.course,
-        message: formData.message || 'Auto Enquiry Popup Submission'
+        formType: 'registration',
+        message: formData.message || 'Auto Enquiry Popup Registration'
       });
 
-      // 2. Dispatch email logs
-      dispatchEnquiryEmails({
-        fullName: formData.name,
-        phone: formData.phone,
-        email: formData.email || undefined,
-        course: formData.course,
-        message: formData.message || 'Auto Enquiry Popup Submission'
-      });
-      
+      setLoading(false);
+      setSuccess(true);
       onSubmitSuccess();
 
       setTimeout(() => {
         setIsVisible(false);
         localStorage.setItem('dcode_popup_dismissed_v2', 'true');
       }, 3000);
-    }, 1200);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert('Failed to submit registration. Please try again.');
+    }
   };
 
   return (

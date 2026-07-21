@@ -26,6 +26,10 @@ pnpm-debug.log*
 .env.production.local
 !.env.example
 
+# Local Database Files
+server/data/
+data/
+
 # Editor & OS files
 .vscode/
 .idea/

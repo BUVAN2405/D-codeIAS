@@ -375,11 +375,10 @@ export default function MovingGallery() {
                       <img
                         src={topper.image}
                         alt={topper.name}
-                        className={`w-full h-full object-cover transition-transform duration-300 ${
-                          topper.name === "Rajeshwari Suve M" 
-                            ? "scale-[1.6] origin-[50%_18%] group-hover:scale-[1.7]" 
+                        className={`w-full h-full object-cover transition-transform duration-300 ${topper.name === "Rajeshwari Suve M"
+                            ? "scale-[1.6] origin-[50%_18%] group-hover:scale-[1.7]"
                             : "object-top group-hover:scale-105"
-                        }`}
+                          }`}
                         referrerPolicy="no-referrer"
                       />
                       {/* Floating Rank overlay inside avatar */}

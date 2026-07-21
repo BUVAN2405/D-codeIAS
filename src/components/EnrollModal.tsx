@@ -2,8 +2,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, MapPin, Calendar, BookOpen, Clock } from 'lucide-react';
 import { Course, BatchSchedule } from '../types';
 import { useState, FormEvent, useEffect } from 'react';
-import { saveEnquiryToDb } from '../services/db';
-import { dispatchEnquiryEmails } from '../services/email';
+import { submitInquiryApi } from '../services/api';
 
 interface EnrollModalProps {
   isOpen: boolean;
@@ -49,21 +48,13 @@ export default function EnrollModal({
       return;
     }
 
-    // 1. Save entry to local database
-    saveEnquiryToDb({
+    // Submit via backend Express API
+    submitInquiryApi({
       fullName: formData.name,
       phone: formData.phone,
       email: formData.email || undefined,
       course: formData.selectedId,
-      message: `Preferred Slot: ${formData.preferredTime}. Commute Mode: ${formData.scheduleType}. Prior attempt: ${formData.hasPriorAttempt}`
-    });
-
-    // 2. Dispatch simulated Resend emails
-    dispatchEnquiryEmails({
-      fullName: formData.name,
-      phone: formData.phone,
-      email: formData.email || undefined,
-      course: formData.selectedId,
+      formType: 'enrollment',
       message: `Preferred Slot: ${formData.preferredTime}. Commute Mode: ${formData.scheduleType}. Prior attempt: ${formData.hasPriorAttempt}`
     });
 
