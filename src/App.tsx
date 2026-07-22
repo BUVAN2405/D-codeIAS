@@ -19,6 +19,9 @@ import FaqSection from './components/FaqSection';
 import InquiryPopup from './components/InquiryPopup';
 import LeadControls from './components/LeadControls';
 import AdminLeadsDrawer from './components/AdminLeadsDrawer';
+import AdminDashboard from './components/AdminDashboard';
+import AdminLoginModal from './components/AdminLoginModal';
+import { getAdminSession } from './services/api';
 
 // New Dynamic Content Sections
 import Toppers from './components/Toppers';
@@ -37,6 +40,19 @@ export default function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [selectedBatch, setSelectedBatch] = useState<BatchSchedule | null>(null);
   const [showNotification, setShowNotification] = useState<string | null>(null);
+
+  // Admin Dashboard & Auth Modals
+  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
+  const [isAdminDashboardOpen, setIsAdminDashboardOpen] = useState(false);
+
+  const handleOpenAdminPortal = () => {
+    const session = getAdminSession();
+    if (session && session.token) {
+      setIsAdminDashboardOpen(true);
+    } else {
+      setIsAdminLoginOpen(true);
+    }
+  };
 
   // IntersectionObserver to auto-update active navbar coordinates on scroll
   useEffect(() => {
@@ -135,6 +151,7 @@ export default function App() {
         onEnrollClick={triggerModalGeneric}
         onNavigate={scrollToSection}
         activeSection={activeSection}
+        onAdminClick={handleOpenAdminPortal}
       />
 
       {/* Main landing segments */}
@@ -253,7 +270,23 @@ export default function App() {
       />
 
       {/* Admin Leads and Email Logs verification portal */}
-      <AdminLeadsDrawer />
+      <AdminLeadsDrawer onOpenAdmin={handleOpenAdminPortal} />
+
+      {/* Owner Admin Authentication Modal */}
+      <AdminLoginModal
+        isOpen={isAdminLoginOpen}
+        onClose={() => setIsAdminLoginOpen(false)}
+        onSuccess={() => {
+          setIsAdminLoginOpen(false);
+          setIsAdminDashboardOpen(true);
+        }}
+      />
+
+      {/* Owner Master Admin Dashboard Overlay */}
+      <AdminDashboard
+        isOpen={isAdminDashboardOpen}
+        onClose={() => setIsAdminDashboardOpen(false)}
+      />
 
       {/* Responsive Dispatch Notification toast for file spool and callbacks */}
       {showNotification && (

@@ -148,3 +148,105 @@ export async function deleteInquiryApi(id: string): Promise<boolean> {
     return true;
   }
 }
+
+// 5. Admin Authentication API
+export interface AdminSession {
+  token: string;
+  admin: {
+    email: string;
+    role: string;
+    loginTime: string;
+  };
+}
+
+export async function adminLoginApi(email: string, password: string): Promise<{ success: boolean; data?: AdminSession; error?: string }> {
+  try {
+    const response = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      return { success: false, error: result.error || 'Invalid credentials' };
+    }
+
+    // Save session in localStorage
+    const sessionData: AdminSession = {
+      token: result.token,
+      admin: result.admin
+    };
+    localStorage.setItem('dcode_admin_session', JSON.stringify(sessionData));
+    return { success: true, data: sessionData };
+  } catch (err) {
+    console.warn('[ADMIN LOGIN FALLBACK] Express server offline. Checking static local fallback credentials.', err);
+    // Static local fallback validation when server is offline
+    if (email.toLowerCase().trim() === 'info@decodeias.com' && password === 'dCode#Admin9872!') {
+      const fallbackSession: AdminSession = {
+        token: `dcode_local_token_${Date.now()}`,
+        admin: {
+          email: 'info@decodeias.com',
+          role: 'Administrator',
+          loginTime: new Date().toISOString()
+        }
+      };
+      localStorage.setItem('dcode_admin_session', JSON.stringify(fallbackSession));
+      return { success: true, data: fallbackSession };
+    }
+    return { success: false, error: 'Invalid admin credentials.' };
+  }
+}
+
+export function getAdminSession(): AdminSession | null {
+  try {
+    const raw = localStorage.getItem('dcode_admin_session');
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+export function adminLogoutApi(): void {
+  localStorage.removeItem('dcode_admin_session');
+  window.dispatchEvent(new Event('dcode_admin_logout'));
+}
+
+export interface DashboardStats {
+  totalLeads: number;
+  enrollmentsCount: number;
+  registrationsCount: number;
+  contactsCount: number;
+  pendingCount: number;
+  contactedCount: number;
+  enrolledCount: number;
+}
+
+export async function fetchAdminDashboardStatsApi(): Promise<{ stats: DashboardStats; inquiries: ApiInquiry[] }> {
+  try {
+    const response = await fetch('/api/admin/dashboard');
+    if (!response.ok) {
+      throw new Error(`API returned status ${response.status}`);
+    }
+    const result = await response.json();
+    return {
+      stats: result.stats,
+      inquiries: result.inquiries || []
+    };
+  } catch (err) {
+    console.warn('[ADMIN DASHBOARD FALLBACK] Loading stats from local storage data.', err);
+    const inquiries = await fetchInquiriesApi();
+    const stats: DashboardStats = {
+      totalLeads: inquiries.length,
+      enrollmentsCount: inquiries.filter(i => i.formType === 'enrollment').length,
+      registrationsCount: inquiries.filter(i => i.formType === 'registration').length,
+      contactsCount: inquiries.filter(i => !i.formType || i.formType === 'contact' || i.formType === 'inquiry').length,
+      pendingCount: inquiries.filter(i => i.status === 'New').length,
+      contactedCount: inquiries.filter(i => i.status === 'Contacted').length,
+      enrolledCount: inquiries.filter(i => i.status === 'Enrolled').length,
+    };
+    return { stats, inquiries };
+  }
+}
+

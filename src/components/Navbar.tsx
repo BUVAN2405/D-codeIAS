@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Landmark, GraduationCap, ChevronRight } from 'lucide-react';
+import { Menu, X, Landmark, GraduationCap, ChevronRight, ShieldCheck } from 'lucide-react';
 import LogoImage from '../LOGO.jpeg';
 
 interface NavbarProps {
   onEnrollClick: () => void;
   onNavigate: (sectionId: string) => void;
   activeSection: string;
+  onAdminClick?: () => void;
 }
 
-export default function Navbar({ onEnrollClick, onNavigate, activeSection }: NavbarProps) {
+export default function Navbar({ onEnrollClick, onNavigate, activeSection, onAdminClick }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -99,7 +100,7 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection }: Nav
             })}
           </nav>
 
-          {/* Action CTA & Mobile Toggle */}
+          {/* Action CTA & Burger Menu Toggle */}
           <div className="flex items-center gap-3">
             <button
               onClick={onEnrollClick}
@@ -110,8 +111,9 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection }: Nav
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-md hover:bg-white/10 text-white focus:outline-none transition-colors"
+              className="p-2 rounded-md hover:bg-white/10 text-white focus:outline-none transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
+              title="Menu & Admin Options"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -123,10 +125,10 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection }: Nav
         </div>
       </motion.header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Menu Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <div id="mobile-menu-drawer" className="fixed inset-0 z-30 md:hidden bg-black/50 backdrop-blur-xs">
+          <div id="mobile-menu-drawer" className="fixed inset-0 z-30 bg-black/50 backdrop-blur-xs">
             {/* Backdrop click close */}
             <div className="absolute inset-0" onClick={() => setIsMobileMenuOpen(false)} />
 
@@ -169,7 +171,7 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection }: Nav
                 </div>
               </div>
  
-              <div className="border-t border-white/10 mt-6 pt-5 pb-1">
+              <div className="border-t border-white/10 mt-6 pt-5 pb-1 space-y-2">
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -179,6 +181,20 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection }: Nav
                 >
                   Enroll Now
                 </button>
+
+                {onAdminClick && (
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onAdminClick();
+                    }}
+                    className="w-full bg-white/10 hover:bg-white/20 text-white font-space text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl text-center transition-all cursor-pointer border border-white/15 flex items-center justify-center gap-2"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    Admin Dashboard
+                  </button>
+                )}
+
                 <div className="flex flex-col items-center mt-3.5 gap-0.5">
                   <p className="text-[9px] text-gray-300 font-sans">
                     Admissions: <span className="font-mono text-white font-semibold">+91 96000 60393</span>
