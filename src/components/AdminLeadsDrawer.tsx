@@ -66,28 +66,6 @@ export default function AdminLeadsDrawer({ onOpenAdmin }: AdminLeadsDrawerProps)
 
   return (
     <>
-      {/* Trigger Button on Bottom-Left */}
-      <div className="fixed bottom-6 left-6 z-45">
-        <button
-          onClick={() => {
-            if (onOpenAdmin) {
-              onOpenAdmin();
-            } else {
-              loadLeads();
-              setIsOpen(true);
-            }
-          }}
-          className="flex items-center gap-1.5 px-3.5 py-2 bg-[#0D2C54] hover:bg-[#D31218] text-white border border-white/15 rounded-full font-space text-[10px] uppercase tracking-wider font-bold shadow-xl cursor-pointer transition-all active:scale-95 group"
-          title="Open Admin Dashboard & Lead Records"
-        >
-          <Database className="w-3.5 h-3.5 text-emerald-400 animate-pulse group-hover:scale-110" />
-          Admin Leads Dashboard
-          <span className="w-4 h-4 rounded-full bg-[#D31218] text-white text-[9px] flex items-center justify-center font-bold">
-            {leads.length}
-          </span>
-        </button>
-      </div>
-
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end">

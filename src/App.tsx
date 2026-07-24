@@ -17,7 +17,6 @@ import LearningProcess from './components/LearningProcess';
 import FaqSection from './components/FaqSection';
 import InquiryPopup from './components/InquiryPopup';
 import LeadControls from './components/LeadControls';
-import AdminLeadsDrawer from './components/AdminLeadsDrawer';
 import AdminDashboard from './components/AdminDashboard';
 import AdminLoginModal from './components/AdminLoginModal';
 import { getAdminSession } from './services/api';
@@ -264,9 +263,6 @@ export default function App() {
         selectedBatch={selectedBatch}
         coursesList={COURSES}
       />
-
-      {/* Admin Leads and Email Logs verification portal */}
-      <AdminLeadsDrawer onOpenAdmin={handleOpenAdminPortal} />
 
       {/* Owner Admin Authentication Modal */}
       <AdminLoginModal
