@@ -116,13 +116,14 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
                 Admission Open for 2026-27
               </motion.div>
 
-              {/* Main Title of Academy */}
+              {/* Main Title of Academy with Top SEO Keyword Integration */}
               <motion.h1
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.05] tracking-tight z-10"
+                className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.05] tracking-tight z-10"
               >
+                Best IAS Academy in Chennai. <br className="hidden sm:inline" />
                 We Simplify Your <span className="text-[#fd565a]">IAS Journey.</span>
               </motion.h1>
 
@@ -132,7 +133,7 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-base sm:text-lg text-gray-100 font-sans font-medium leading-relaxed max-w-2xl z-10"
               >
-                Clarity, systematic course mapping, and intensive answer development under the personal guidance of elite mentors led by Sudhagaran Sir (Former Mission Director, Naan Mudhalvan).
+                Top UPSC & TNPSC Civil Services Coaching in Anna Nagar, Chennai. Clarity, systematic course mapping, and intensive answer development under founder Sudhagaran Sir (Former Mission Director, Naan Mudhalvan).
               </motion.p>
 
               {/* Action CTAs */}
