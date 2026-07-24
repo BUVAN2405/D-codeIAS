@@ -9,7 +9,6 @@ import BatchSchedulesList from './components/BatchSchedule';
 import InquiryForm from './components/InquiryForm';
 import Footer from './components/Footer';
 import EnrollModal from './components/EnrollModal';
-import WhatsAppWidget from './components/WhatsAppWidget';
 
 // Custom Sections
 import AboutAcademy from './components/AboutAcademy';
@@ -250,9 +249,6 @@ export default function App() {
 
       {/* Structured Legal Directory Footer */}
       <Footer />
-
-      {/* Interactive Floating WhatsApp Guidance panel */}
-      <WhatsAppWidget />
 
       {/* Interactive Sticky Lead Controls Panel */}
       <LeadControls onInquiryClick={triggerModalGeneric} />
