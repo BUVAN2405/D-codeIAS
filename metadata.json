@@ -1,6 +1,32 @@
 {
   "name": "D'code IAS Academy",
-  "description": "Premium, fully responsive academic platform for elite UPSC & TNPSC preparation at Anna Nagar Chennai under Sudhagaran Sir, featuring detailed program overviews, interactive inquiry forms, batch schedules, and faculty profiles.",
+  "alternateName": "Decode IAS Academy",
+  "tagline": "We Simplify Your IAS Journey",
+  "founder": "Sudhagaran Sir (Former Mission Director, Naan Mudhalvan)",
+  "contact": {
+    "phone": "+91 96000 60393 / +91 96000 60349",
+    "email": "info@decodeias.com",
+    "ccEmail": "dcodesudhagaran@gmail.com, sudhagaransirdcode@gmail.com",
+    "address": "825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai - 600040, Tamil Nadu, India"
+  },
+  "description": "D'code IAS Academy in Anna Nagar, Chennai is the leading UPSC & TNPSC coaching academy in Tamil Nadu led by Sudhagaran Sir (Former Mission Director, Naan Mudhalvan). Offering Mains Momentum 2027, PCM Comprehensive, Public Administration Optional, Sociology Optional, Anthropology Optional, and TNPSC Group 1, 2 & 4 coaching.",
+  "courses": [
+    "Mains Momentum 2027 (5-Month Intensive Mains Answer Development & Mentoring)",
+    "PCM Comprehensive (Prelims Cum Mains Foundation Course)",
+    "Public Administration Optional (4-Month Intensive)",
+    "Sociology Optional (4-Month Intensive)",
+    "Anthropology Optional (4-Month Intensive)",
+    "TNPSC Group 1, 2 & 4 (Bilingual Tamil & English Coaching)"
+  ],
+  "freeOffers": [
+    "Free 10-Year Solved Mains PYQ Answer Bank",
+    "Free Prelims High-Yield Micro Notes & Mind Maps",
+    "Free Daily Current Affairs & Editorial Analysis",
+    "Free 1-on-1 Mentorship Diagnostic Session with Sudhagaran Sir",
+    "Free CSAT Formula & Shortcut Guide",
+    "Free UPSC All-India Mock Test Series"
+  ],
+  "topperRanks": ["AIR 2 Rajeshwari Suve M", "AIR 12 Rahul Deshmukh", "AIR 28 Sneha Iyer", "AIR 45 Vivek Anand"],
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

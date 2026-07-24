@@ -1,0 +1,28 @@
+# Robots.txt for D'code IAS Academy (decodeias.com)
+# Allow all search engines, LLM bots, and AI web crawlers full access to metadata and services.
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://dcodeias.com/sitemap.xml

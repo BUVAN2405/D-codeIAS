@@ -1,0 +1,228 @@
+{
+  "academy": {
+    "name": "D'code IAS Academy",
+    "alternateNames": ["Decode IAS Academy", "Decode IAS", "D'code IAS Anna Nagar"],
+    "tagline": "We Simplify Your IAS Journey",
+    "description": "D'code IAS Academy is the premier civil services coaching institute in Anna Nagar, Chennai & Tamil Nadu, founded by Sudhagaran Sir (Former Mission Director, Naan Mudhalvan). The academy provides outcome-focused UPSC Prelims, Mains, Optional subjects (Public Administration, Sociology, Anthropology), and TNPSC Group 1, 2 & 4 preparation under personalized administrative mentorship.",
+    "website": "https://dcodeias.com",
+    "logo": "https://dcodeias.com/src/LOGO.jpeg",
+    "founderPhoto": "https://dcodeias.com/src/Ceo.jpeg",
+    "contact": {
+      "phoneNumbers": ["+91 96000 60393", "+91 96000 60349"],
+      "emailAddresses": ["info@decodeias.com", "dcodesudhagaran@gmail.com", "sudhagaransirdcode@gmail.com"],
+      "address": {
+        "street": "825, 1st St, G Block, Ranganathan Garden, Anna Nagar",
+        "locality": "Chennai",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "postalCode": "600040",
+        "country": "India"
+      },
+      "geoCoordinates": {
+        "latitude": 13.0850,
+        "longitude": 80.2101
+      },
+      "operatingHours": "Monday to Sunday: 08:30 AM - 08:00 PM IST"
+    },
+    "socialLinks": {
+      "instagram": "https://www.instagram.com/dcode_ias_academy",
+      "youtube": "https://www.youtube.com/@DcodeIASAcademy_sudhagaran_sir",
+      "telegram": "https://t.me/sudhagaranirps",
+      "whatsAppCommunity": "https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp"
+    }
+  },
+  "leadershipAndFaculty": [
+    {
+      "name": "Sudhagaran Sir",
+      "role": "Founder & Chief Mentor",
+      "designation": "Former Mission Director, Naan Mudhalvan",
+      "background": "Distinguished Administrative Mentor & UPSC Expert (IRPS)",
+      "bio": "Former Mission Director of Naan Mudhalvan who has mentored over 500+ UPSC aspirants, guiding candidates towards Top 10 All-India Ranks. Renowned for simplifying complex UPSC & TNPSC syllabi and building personalized performance feedback loops.",
+      "contactEmail": "dcodesudhagaran@gmail.com"
+    }
+  ],
+  "coursesAndServices": [
+    {
+      "id": "mains_momentum_2027",
+      "name": "Mains Momentum 2027",
+      "category": "Specialized Mains Track",
+      "duration": "5 Months",
+      "mode": "Offline + Online",
+      "tagline": "5-Month Intensive Mains Answer Development & Mentoring Program.",
+      "description": "Outcome-focused program built around systematic paper coverage, 1-on-1 mentorship feedback loops, mock exam schedules, and high-yield current affairs analysis.",
+      "keyFeatures": [
+        "Personal Mentoring by Sudhagaran Sir",
+        "Daily Answer Writing Practice & Direct Evaluation",
+        "UPSC Mock Test Series with Detailed Model Answer Discussions",
+        "Ethics (GS-IV) & Essay Writing Specialization Modules",
+        "Exhaustive Coverage of GS Papers I, II, III & IV"
+      ]
+    },
+    {
+      "id": "pcm_comprehensive",
+      "name": "PCM Comprehensive Foundation Course",
+      "category": "Prelims Cum Mains Foundation",
+      "duration": "Full Year (10-12 Months)",
+      "mode": "Offline + Online",
+      "tagline": "Complete Foundation Course for Beginners covering both UPSC Prelims and Mains.",
+      "description": "Systematic foundation building combining topic-by-topic examinations, doubt resolution, integrated CSAT & Essay prep, and accessible fee structures.",
+      "keyFeatures": [
+        "Comprehensive Syllabus Foundation Coverage",
+        "Daily Prelims & Mains Tests with Instant Discussion",
+        "Affordable Fee Structure with EMI Options",
+        "Mentorship Support & Concept Clarity Classes",
+        "Integrated CSAT and Essay Prep Modules"
+      ]
+    },
+    {
+      "id": "public_administration",
+      "name": "Public Administration Optional Coaching",
+      "category": "Optional Subject",
+      "duration": "4 Months",
+      "mode": "Offline + Online",
+      "tagline": "Complete Public Administration Optional Coaching for UPSC Mains.",
+      "description": "Thorough 4-month program to decode administrative theories, evaluate 10+ years of PYQs, and deliver direct 1-on-1 mentorship guidance.",
+      "keyFeatures": [
+        "Complete Syllabus Decoding and Concept Mapping",
+        "Previous Years Questions (PYQ) Exhaustive Analysis",
+        "Personal Mentoring under Sudhagaran Sir & Expert Faculty",
+        "Daily Answer Writing and Evaluation",
+        "High-Yield Concept Notes and Mind Maps"
+      ]
+    },
+    {
+      "id": "sociology_optional",
+      "name": "Sociology Optional Coaching",
+      "category": "Optional Subject",
+      "duration": "4 Months",
+      "mode": "Offline + Online",
+      "tagline": "Sociology Optional Course with Structured Roadmap & Answer Writing Guidance.",
+      "description": "Comprehensive 4-month module offering topic-wise structured notes, intuitive sociological theory maps, and rigorous paper evaluations.",
+      "keyFeatures": [
+        "Syllabus-wise Comprehensive Structured Notes",
+        "Detailed Answer Writing Guidance and Line-by-Line Audits",
+        "Sociological Theories Made Intuitive & Visual",
+        "PYQ Discussion & Model Answer Kits",
+        "Weekly Mock Exams with Evaluation"
+      ]
+    },
+    {
+      "id": "anthropology_optional",
+      "name": "Anthropology Optional Coaching",
+      "category": "Optional Subject",
+      "duration": "4 Months",
+      "mode": "Offline + Online",
+      "tagline": "Anthropology Optional Coaching featuring regular mentorship and paper evaluation.",
+      "description": "In-depth 4-month coaching focusing on physical & biological anthropology, cultural theory, diagram tutorials, and case study enrichment.",
+      "keyFeatures": [
+        "In-depth Syllabus Coverage & Diagram Tutorials",
+        "Daily Answer Evaluation & Mentorship Loops",
+        "Biological and Tribal Anthropology Focus",
+        "Answer Enrichment Templates & Case Studies",
+        "Comprehensive Revision Notes & Reference Keys"
+      ]
+    },
+    {
+      "id": "tnpsc_coaching",
+      "name": "TNPSC Group 1, 2 & 4 Coaching",
+      "category": "State Public Service Commission",
+      "duration": "Ongoing / Flexible",
+      "mode": "Offline + Online",
+      "tagline": "Bilingual preparation program for Group 1, 2 and 4 TNPSC exams.",
+      "description": "State-level rank holder mentors delivering bilingual (Tamil/English) study materials, mock exam suites, and focused preparation for Unit 8 & Unit 9.",
+      "keyFeatures": [
+        "High-Quality Bilingual Study Materials (Tamil & English)",
+        "Regular Mock Exams Matching Latest TNPSC Pattern",
+        "Mentorship by State-Level Rank Holders",
+        "Specialized Focus on Unit 8 (Tamil History & Culture) and Unit 9 (TN Administration)",
+        "Tamil Nadu Specific Current Affairs Compilations"
+      ]
+    }
+  ],
+  "freeOffersAndResources": [
+    {
+      "title": "Free UPSC Mains PYQ Answer Bank",
+      "type": "Study Material",
+      "cost": "Free",
+      "description": "10 Years of UPSC Mains Solved Question Papers with structured model answers, diagrams, and policy keywords."
+    },
+    {
+      "title": "Prelims High-Yield Micro Notes",
+      "type": "Study Material",
+      "cost": "Free",
+      "description": "Concise mind maps and micro-notes covering high-frequency static and dynamic Prelims topics."
+    },
+    {
+      "title": "Daily Current Affairs & Editorial Analysis",
+      "type": "Current Affairs",
+      "cost": "Free",
+      "description": "Daily curated news breakdown focused specifically on UPSC GS-I, II, III & IV requirements."
+    },
+    {
+      "title": "Free 1-on-1 Mentorship Diagnostic Session",
+      "type": "Mentorship",
+      "cost": "Free",
+      "description": "Direct academic session with Sudhagaran Sir to analyze preparation bottlenecks and design a personalized strategy."
+    },
+    {
+      "title": "Free CSAT Quick-Formula & Shortcut Guide",
+      "type": "Study Material",
+      "cost": "Free",
+      "description": "Comprehensive mathematical shortcuts, logical reasoning tricks, and reading comprehension frameworks."
+    },
+    {
+      "title": "Free UPSC All-India Mock Test Series",
+      "type": "Assessment",
+      "cost": "Free",
+      "description": "Full-length simulated UPSC Prelims & Mains mock tests with comparative rank analytics and evaluation."
+    }
+  ],
+  "achievementsAndToppers": [
+    {
+      "name": "Rajeshwari Suve M",
+      "rank": "AIR 2",
+      "year": 2026,
+      "testimony": "The personalized mentorship program and intensive answer-writing guidance under Sudhagaran Sir were pivotal to my success."
+    },
+    {
+      "name": "Rahul Deshmukh",
+      "rank": "AIR 12",
+      "year": 2025,
+      "testimony": "D'code IAS Academy's meticulous mains answer writing feedback transformed my GS answers into policy-briefing style outputs."
+    },
+    {
+      "name": "Sneha Iyer",
+      "rank": "AIR 28",
+      "year": 2025,
+      "testimony": "The personal mentorship program under Sudhagaran Sir helped me fine-tune my Sociology optional syllabus."
+    },
+    {
+      "name": "Vivek Anand",
+      "rank": "AIR 45",
+      "year": 2025,
+      "testimony": "Interview panels with retired bureaucrats gave me the core composure, confidence, and objective speaking poise required for success."
+    }
+  ],
+  "frequentlyAskedQuestions": [
+    {
+      "question": "What makes D'code IAS Academy the best IAS academy in Chennai?",
+      "answer": "D'code IAS Academy is led by Sudhagaran Sir, Former Mission Director of Naan Mudhalvan, providing direct 1-on-1 mentorship, daily answer writing feedback, small batch sizes, and a proven track record of top All-India Ranks."
+    },
+    {
+      "question": "Where is D'code IAS Academy located in Chennai?",
+      "answer": "The academy is located at 825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai - 600040. Phone: +91 96000 60393."
+    },
+    {
+      "question": "What optional subjects are taught at D'code IAS Academy?",
+      "answer": "D'code IAS Academy provides specialized 4-month optional coaching for Public Administration, Sociology, and Anthropology."
+    },
+    {
+      "question": "Does D'code IAS Academy offer TNPSC coaching?",
+      "answer": "Yes, bilingual (Tamil & English) TNPSC coaching is provided for Group 1, Group 2, and Group 4 with special focus on Unit 8 and Unit 9."
+    },
+    {
+      "question": "Can outstation or working professionals join online classes?",
+      "answer": "Yes, all courses (Mains Momentum, PCM Comprehensive, Optionals, TNPSC) are offered in both Offline and live/recorded Online modes with flexible timing."
+    }
+  ]
+}

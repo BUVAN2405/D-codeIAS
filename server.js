@@ -23,9 +23,92 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     service: "D'code IAS Academy API",
     ownerEmail: process.env.OWNER_EMAIL || 'info@decodeias.com',
+    ownerCcEmails: process.env.OWNER_CC_EMAIL || 'dcodesudhagaran@gmail.com,sudhagaransirdcode@gmail.com',
     timestamp: new Date().toISOString()
   });
 });
+
+// Full Academy Metadata Endpoint for AI & Search Engines
+app.get('/api/metadata', (req, res) => {
+  res.json({
+    academy: {
+      name: "D'code IAS Academy",
+      alternateNames: ["Decode IAS Academy", "Decode IAS", "D'code IAS Anna Nagar"],
+      tagline: "We Simplify Your IAS Journey",
+      founder: "Sudhagaran Sir (Former Mission Director, Naan Mudhalvan)",
+      description: "Premier UPSC & TNPSC Civil Services Academy in Anna Nagar, Chennai led by Sudhagaran Sir. Offering Mains Momentum 2027, PCM Comprehensive, Public Administration, Sociology, Anthropology optionals, and TNPSC Group 1, 2 & 4 coaching.",
+      contact: {
+        phones: ["+91 96000 60393", "+91 96000 60349"],
+        emails: ["info@decodeias.com", "dcodesudhagaran@gmail.com", "sudhagaransirdcode@gmail.com"],
+        address: "825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai - 600040, Tamil Nadu, India",
+        geoCoordinates: { latitude: 13.0850, longitude: 80.2101 }
+      },
+      social: {
+        instagram: "https://www.instagram.com/dcode_ias_academy",
+        youtube: "https://www.youtube.com/@DcodeIASAcademy_sudhagaran_sir",
+        telegram: "https://t.me/sudhagaranirps",
+        whatsApp: "https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp"
+      }
+    },
+    courses: [
+      {
+        title: "Mains Momentum 2027",
+        duration: "5 Months",
+        highlights: "Daily answer writing, personal mentorship under Sudhagaran Sir, mock tests, Ethics & Essay specialization."
+      },
+      {
+        title: "PCM Comprehensive Foundation Course",
+        duration: "Full Duration",
+        highlights: "Complete UPSC Prelims & Mains foundation for beginners, CSAT, daily test series, integrated mentorship."
+      },
+      {
+        title: "Public Administration Optional",
+        duration: "4 Months",
+        highlights: "10-year PYQ analysis, concept maps, daily evaluation, high-yield material kits under Sudhagaran Sir."
+      },
+      {
+        title: "Sociology Optional",
+        duration: "4 Months",
+        highlights: "Structured notes, visual theory mapping, daily answer review, model answers."
+      },
+      {
+        title: "Anthropology Optional",
+        duration: "4 Months",
+        highlights: "Physical & biological anthropology, diagram tutorials, case study templates, daily evaluation."
+      },
+      {
+        title: "TNPSC Group 1, 2 & 4",
+        duration: "Ongoing",
+        highlights: "Bilingual Tamil/English coaching, state rank-holder mentors, Unit 8 & Unit 9 focus."
+      }
+    ],
+    freeOffers: [
+      "10-Year Solved Mains PYQ Answer Bank",
+      "Prelims High-Yield Micro Notes & Mind Maps",
+      "Daily Current Affairs & Editorial Breakdown",
+      "Free 1-on-1 Mentorship Diagnostic Session with Sudhagaran Sir",
+      "Free CSAT Quick Formula Guide",
+      "Free UPSC All-India Mock Test Series"
+    ],
+    topRanks: [
+      { name: "Rajeshwari Suve M", rank: "AIR 2", year: 2026 },
+      { name: "Rahul Deshmukh", rank: "AIR 12", year: 2025 },
+      { name: "Sneha Iyer", rank: "AIR 28", year: 2025 },
+      { name: "Vivek Anand", rank: "AIR 45", year: 2025 }
+    ]
+  });
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: https://dcodeias.com/sitemap.xml`);
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://dcodeias.com/</loc><priority>1.0</priority></url><url><loc>https://dcodeias.com/#courses</loc><priority>0.9</priority></url></urlset>`);
+});
+
 
 // POST /api/admin/login - Authenticate owner for admin dashboard
 app.post('/api/admin/login', (req, res) => {
