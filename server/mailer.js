@@ -200,7 +200,7 @@ export async function sendInquiryNotification(record) {
     if (transporter) {
       try {
         await transporter.sendMail({
-          from: `"D'code IAS Academy" <${SMTP_USER || 'noreply@dcodeias.com'}>`,
+          from: `"D'code IAS Academy" <${SMTP_USER || 'noreply@decodeias.com'}>`,
           to: record.email,
           subject: `🎯 D'code IAS Academy - ${formTitle} Received`,
           html: studentHtml

@@ -42,7 +42,7 @@ Over **60% of students searching on mobile** click on the top 3 Google Maps resu
 3. **Exact NAP (Name, Address, Phone) Consistency:**
    - Address: `825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai, Tamil Nadu 600040`
    - Phone: `+91 96000 60393` / `+91 96000 60349`
-   - Website URL: `https://dcodeias.com`
+   - Website URL: `https://decodeias.com`
 4. **Google Reviews Velocity:**
    - Collect **100+ authentic 5-star Google Reviews** from students and batch candidates.
    - Instruct candidates to include keywords in reviews (e.g., *"The best IAS academy in Chennai under Sudhagaran Sir's mentorship!"*).
@@ -62,7 +62,7 @@ The website codebase has been optimized with structural SEO assets:
 - [x] **Geo-Location Meta Tags:** Lat `13.0850`, Long `80.2101`, Region `IN-TN`.
 - [x] **Breadcrumb & FAQ Schema:** Embedded multi-type JSON-LD scripts for Google Rich Snippets.
 - [x] **Robots.txt & Sitemap.xml:** Created in `/public` directory to allow GPTBot, ClaudeBot, and Googlebot full access.
-- [x] **Site Metadata JSON:** Exposed at `https://dcodeias.com/site-metadata.json` for AI engines (ChatGPT, Gemini, Perplexity).
+- [x] **Site Metadata JSON:** Exposed at `https://decodeias.com/site-metadata.json` for AI engines (ChatGPT, Gemini, Perplexity).
 
 ---
 
@@ -125,6 +125,7 @@ gantt
 ```
 
 ### Summary Checklist for D'code IAS Team:
-1. **Google Search Console:** Submit `https://dcodeias.com/sitemap.xml`.
+1. **Google Search Console:** Submit `https://decodeias.com/sitemap.xml`.
 2. **Google Maps:** Verify listing at Anna Nagar and accumulate 5-star reviews weekly.
-3. **Social Media:** Link `https://dcodeias.com` in bios of YouTube, Instagram, and Telegram.
+3. **Social Media:** Link `https://decodeias.com` in bios of YouTube, Instagram, and Telegram.
+

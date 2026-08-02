@@ -14,8 +14,6 @@ import EnrollModal from './components/EnrollModal';
 import AboutAcademy from './components/AboutAcademy';
 import Founder from './components/Founder';
 import LearningProcess from './components/LearningProcess';
-import FaqSection from './components/FaqSection';
-import InquiryPopup from './components/InquiryPopup';
 import LeadControls from './components/LeadControls';
 import AdminDashboard from './components/AdminDashboard';
 import AdminLoginModal from './components/AdminLoginModal';
@@ -251,9 +249,6 @@ export default function App() {
 
       {/* Interactive Sticky Lead Controls Panel */}
       <LeadControls onInquiryClick={triggerModalGeneric} />
-
-      {/* Automatic Invitation popup modal */}
-      <InquiryPopup courses={COURSES} onSubmitSuccess={handleInquiryNotification} />
 
       {/* Master Registration Reservation Modal Overlay */}
       <EnrollModal

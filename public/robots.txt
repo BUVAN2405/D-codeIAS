@@ -25,4 +25,5 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://dcodeias.com/sitemap.xml
+Sitemap: https://decodeias.com/sitemap.xml
+

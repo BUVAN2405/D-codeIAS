@@ -7,7 +7,6 @@ import {
   Trash2,
   X,
   Search,
-  Download,
   LogOut,
   RefreshCcw,
   Filter,
@@ -138,31 +137,6 @@ export default function AdminDashboard({ isOpen, onClose }: AdminDashboardProps)
     return true;
   });
 
-  // CSV Export helper
-  const exportToCSV = () => {
-    const headers = ['ID', 'Date', 'Full Name', 'Phone', 'Email', 'Form Type', 'Course', 'Status', 'Message'];
-    const rows = filteredInquiries.map((item) => [
-      `"${item.id}"`,
-      `"${new Date(item.createdAt).toLocaleString()}"`,
-      `"${item.fullName.replace(/"/g, '""')}"`,
-      `"${item.phone}"`,
-      `"${item.email || 'N/A'}"`,
-      `"${item.formType || 'contact'}"`,
-      `"${(item.course || 'General').replace(/_/g, ' ')}"`,
-      `"${item.status}"`,
-      `"${(item.message || '').replace(/"/g, '""')}"`
-    ]);
-
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Dcode_IAS_Leads_Report_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex justify-center items-center p-2 sm:p-4 md:p-6 overflow-hidden">
@@ -204,15 +178,6 @@ export default function AdminDashboard({ isOpen, onClose }: AdminDashboardProps)
               >
                 <RefreshCcw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                 <span>Refresh</span>
-              </button>
-
-              <button
-                onClick={exportToCSV}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-space font-bold uppercase tracking-wider transition-all cursor-pointer border-none shadow-sm"
-                title="Download CSV report of leads"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Export CSV</span>
               </button>
 
               <button

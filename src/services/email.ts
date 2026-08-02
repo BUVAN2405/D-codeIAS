@@ -14,7 +14,7 @@ export function dispatchEnquiryEmails(data: {
   course: string;
   message?: string;
 }): { clientEmail: EmailPayload; studentEmail: EmailPayload | null } {
-  const adminEmail = 'info@dcodeias.com';
+  const adminEmail = 'info@decodeias.com';
   
   // 1. Compile Admin lead notification email
   const clientEmailPayload: EmailPayload = {

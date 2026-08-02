@@ -69,7 +69,7 @@ export default function Footer() {
               
               {/* @ symbol icon container */}
               <a
-                href="mailto:info@dcodeias.com"
+                href="mailto:info@decodeias.com"
                 className="w-8 h-8 rounded-full bg-white/10 hover:bg-[#D31218] text-white flex items-center justify-center transition-all shadow-xs border-none"
                 aria-label="Direct Email Link"
               >
@@ -115,7 +115,7 @@ export default function Footer() {
             </span>
             <span className="flex items-center gap-1.5 not-italic text-gray-300">
               <Mail className="w-3 h-3 text-[#D31218]" />
-              info@dcodeias.com
+              info@decodeias.com
             </span>
           </div>
 

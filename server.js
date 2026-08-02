@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {
   saveInquiryToDb,
   getAllInquiriesFromDb,
@@ -10,6 +12,9 @@ import {
 import { sendInquiryNotification } from './server/mailer.js';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -101,12 +106,12 @@ app.get('/api/metadata', (req, res) => {
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.send(`User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: https://dcodeias.com/sitemap.xml`);
+  res.send(`User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: https://decodeias.com/sitemap.xml`);
 });
 
 app.get('/sitemap.xml', (req, res) => {
   res.type('application/xml');
-  res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://dcodeias.com/</loc><priority>1.0</priority></url><url><loc>https://dcodeias.com/#courses</loc><priority>0.9</priority></url></urlset>`);
+  res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://decodeias.com/</loc><priority>1.0</priority></url><url><loc>https://decodeias.com/#courses</loc><priority>0.9</priority></url></urlset>`);
 });
 
 
@@ -294,9 +299,22 @@ app.delete('/api/inquiries/:id', async (req, res) => {
   }
 });
 
+// Serve frontend static build files (production mode)
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Fallback to index.html for Single Page Application routing (non-API routes)
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`\n==================================================`);
   console.log(`🚀 D'code IAS Backend API running on port ${PORT}`);
   console.log(`📧 Configured Owner Email: ${process.env.OWNER_EMAIL || 'bhuvaneshwaan2405@gmail.com'}`);
   console.log(`==================================================\n`);
 });
+
+export default app;
+

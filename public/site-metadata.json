@@ -4,9 +4,9 @@
     "alternateNames": ["Decode IAS Academy", "Decode IAS", "D'code IAS Anna Nagar"],
     "tagline": "We Simplify Your IAS Journey",
     "description": "D'code IAS Academy is the premier civil services coaching institute in Anna Nagar, Chennai & Tamil Nadu, founded by Sudhagaran Sir (Former Mission Director, Naan Mudhalvan). The academy provides outcome-focused UPSC Prelims, Mains, Optional subjects (Public Administration, Sociology, Anthropology), and TNPSC Group 1, 2 & 4 preparation under personalized administrative mentorship.",
-    "website": "https://dcodeias.com",
-    "logo": "https://dcodeias.com/src/LOGO.jpeg",
-    "founderPhoto": "https://dcodeias.com/src/Ceo.jpeg",
+    "website": "https://decodeias.com",
+    "logo": "https://decodeias.com/src/LOGO.jpeg",
+    "founderPhoto": "https://decodeias.com/src/Ceo.jpeg",
     "contact": {
       "phoneNumbers": ["+91 96000 60393", "+91 96000 60349"],
       "emailAddresses": ["info@decodeias.com", "dcodesudhagaran@gmail.com", "sudhagaransirdcode@gmail.com"],
@@ -226,3 +226,4 @@
     }
   ]
 }
+

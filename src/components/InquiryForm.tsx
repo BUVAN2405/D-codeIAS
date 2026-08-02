@@ -283,7 +283,7 @@ export default function InquiryForm({ courses, onSubmitSuccess }: InquiryFormPro
               <div className="text-xs">
                 <p className="font-space font-bold uppercase tracking-wider text-[#0D2C54] mb-1.5">Email Address</p>
                 <p className="font-sans text-gray-900 leading-relaxed text-sm font-bold">
-                  info@dcodeias.com
+                  info@decodeias.com
                 </p>
               </div>
             </div>
