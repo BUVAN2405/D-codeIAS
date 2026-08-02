@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAnalytics, isSupported } from 'firebase/analytics';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDY4HchpMwX-Bv8gQcyJ7E-pvcamNCwgXE",
@@ -13,6 +14,9 @@ const firebaseConfig = {
 
 // Initialize Firebase App singleton
 export const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+
+// Initialize Firestore instance
+export const db = getFirestore(app);
 
 // Safe Analytics initialization (only in browser environment)
 export const initAnalytics = async () => {

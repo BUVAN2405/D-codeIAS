@@ -1,8 +1,14 @@
 // Frontend API service for D'code IAS Academy
-// Interfaces directly with the backend Express SQLite database & Nodemailer API
+// Interfaces with Express API and directly with Firebase Firestore
 
 import { InquiryFormInput } from '../types';
 import { saveEnquiryToDb, getAllEnquiries, deleteEnquiry, updateEnquiryStatus, SavedInquiry } from './db';
+import {
+  addQueryReport,
+  getAllQueryReports,
+  updateQueryReportStatus as updateFirestoreStatus,
+  deleteQueryReport as deleteFirestoreDoc
+} from './firestoreService';
 
 const API_BASE = '/api/inquiries';
 
@@ -10,58 +16,56 @@ export interface ApiInquiry extends SavedInquiry {
   formType: 'enrollment' | 'contact' | 'registration' | 'inquiry';
 }
 
-// 1. Submit a form to Express API with local DB fallback
+// 1. Submit a form to Express API with Firebase Firestore fallback
 export async function submitInquiryApi(
   data: InquiryFormInput & { formType?: 'enrollment' | 'contact' | 'registration' | 'inquiry' }
 ): Promise<{ success: boolean; data?: any; error?: string }> {
-  try {
-    const payload = {
-      fullName: data.fullName,
-      phone: data.phone,
-      email: data.email || undefined,
-      course: data.course || 'general_inquiry',
-      formType: data.formType || 'contact',
-      message: data.message || ''
-    };
+  const payload = {
+    fullName: data.fullName,
+    phone: data.phone,
+    email: data.email || '',
+    course: data.course || 'general_inquiry',
+    formType: data.formType || 'contact',
+    message: data.message || ''
+  };
 
+  try {
     const response = await fetch(API_BASE, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
+    if (response.ok) {
+      const result = await response.json();
+      window.dispatchEvent(new CustomEvent('dcode_leads_updated'));
+      return { success: true, data: result.inquiry };
     }
-
-    const result = await response.json();
-    
-    // Trigger custom event so active UI views can hot-reload
-    window.dispatchEvent(new CustomEvent('dcode_leads_updated'));
-    
-    // Also trigger email log preview events for testing admin panel
-    if (result.emailStatus) {
-      window.dispatchEvent(new CustomEvent('dcode_email_dispatched', {
-        detail: {
-          clientEmailPayload: {
-            to: 'bhuvaneshwaan2405@gmail.com',
-            subject: `🚨 [${(payload.formType).toUpperCase()}] New Submission: ${payload.fullName}`,
-            body: payload.message || 'No additional details.'
-          },
-          studentEmailPayload: payload.email ? {
-            to: payload.email,
-            subject: `🎯 D'code IAS Academy - Request Received`,
-            body: `Dear ${payload.fullName}, thank you for contacting us.`
-          } : null
-        }
-      }));
-    }
-
-    return { success: true, data: result.inquiry };
   } catch (err) {
-    console.warn('[API FALLBACK] Express API server offline. Saving locally to localStorage database.', err);
-    
-    // Save to local storage database instead
+    console.warn('[API] Express server offline. Writing directly to Firebase Firestore.', err);
+  }
+
+  // Direct Firestore write fallback
+  try {
+    const docId = await addQueryReport({
+      fullName: payload.fullName,
+      phone: payload.phone,
+      email: payload.email,
+      course: payload.course,
+      message: payload.message
+    });
+
+    const firestoreRecord = {
+      id: docId,
+      ...payload,
+      createdAt: new Date().toISOString(),
+      status: 'New'
+    };
+
+    window.dispatchEvent(new CustomEvent('dcode_leads_updated'));
+    return { success: true, data: firestoreRecord };
+  } catch (fsErr) {
+    console.warn('[FIRESTORE] Falling back to local storage database.', fsErr);
     const localSaved = saveEnquiryToDb({
       fullName: data.fullName,
       phone: data.phone,
@@ -69,42 +73,49 @@ export async function submitInquiryApi(
       course: data.course,
       message: data.message
     });
-
     return { success: true, data: { ...localSaved, formType: data.formType || 'contact' } };
   }
 }
 
-// 2. Fetch all leads from API with local DB fallback
+// 2. Fetch all leads from API with Firebase Firestore fallback
 export async function fetchInquiriesApi(): Promise<ApiInquiry[]> {
   try {
     const response = await fetch(API_BASE);
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
+    if (response.ok) {
+      const result = await response.json();
+      return result.inquiries || [];
     }
-
-    const result = await response.json();
-    return result.inquiries || [];
   } catch (err) {
-    console.warn('[API FALLBACK] Express API server offline. Loading inquiries from localStorage database.', err);
-    
-    // Map local inquiries to include default formType based on their message/course where possible
-    const locals = getAllEnquiries();
-    return locals.map(item => {
-      let type: 'enrollment' | 'contact' | 'registration' | 'inquiry' = 'contact';
-      if (item.message && item.message.includes('Commute Mode:')) {
-        type = 'enrollment';
-      } else if (item.message && item.message.includes('popup_inquiry')) {
-        type = 'registration';
-      }
-      return {
-        ...item,
-        formType: type
-      };
-    });
+    console.warn('[API] Express server offline. Loading inquiries directly from Firebase Firestore.', err);
   }
+
+  try {
+    const reports = await getAllQueryReports();
+    if (reports && reports.length > 0) {
+      return reports.map(r => ({
+        id: r.id,
+        fullName: r.fullName,
+        phone: r.phone,
+        email: r.email || '',
+        course: r.course || 'general_inquiry',
+        message: r.message || '',
+        status: (r.status.charAt(0).toUpperCase() + r.status.slice(1)) as any,
+        createdAt: r.createdAt ? r.createdAt.toISOString() : new Date().toISOString(),
+        formType: 'contact'
+      }));
+    }
+  } catch (fsErr) {
+    console.warn('[FIRESTORE] Reading from localStorage fallback.', fsErr);
+  }
+
+  const locals = getAllEnquiries();
+  return locals.map(item => ({
+    ...item,
+    formType: 'contact'
+  }));
 }
 
-// 3. Update Inquiry Status via API with local DB fallback
+// 3. Update Inquiry Status via API with Firestore fallback
 export async function updateInquiryStatusApi(
   id: string,
   status: 'New' | 'Contacted' | 'Enrolled'
@@ -116,37 +127,47 @@ export async function updateInquiryStatusApi(
       body: JSON.stringify({ status })
     });
 
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
+    if (response.ok) {
+      window.dispatchEvent(new Event('dcode_leads_updated'));
+      return true;
     }
-
-    window.dispatchEvent(new Event('dcode_leads_updated'));
-    return true;
   } catch (err) {
-    console.warn('[API FALLBACK] Express API status update failed. Modifying local DB.', err);
-    updateEnquiryStatus(id, status);
-    return true;
+    console.warn('[API] Updating status directly in Firebase Firestore.', err);
   }
+
+  try {
+    await updateFirestoreStatus(id, status.toLowerCase());
+  } catch (fsErr) {
+    updateEnquiryStatus(id, status);
+  }
+
+  window.dispatchEvent(new Event('dcode_leads_updated'));
+  return true;
 }
 
-// 4. Delete Inquiry via API with local DB fallback
+// 4. Delete Inquiry via API with Firestore fallback
 export async function deleteInquiryApi(id: string): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'DELETE'
     });
 
-    if (!response.ok) {
-      throw new Error(`API returned status ${response.status}`);
+    if (response.ok) {
+      window.dispatchEvent(new Event('dcode_leads_updated'));
+      return true;
     }
-
-    window.dispatchEvent(new Event('dcode_leads_updated'));
-    return true;
   } catch (err) {
-    console.warn('[API FALLBACK] Express API delete failed. Removing from local DB.', err);
-    deleteEnquiry(id);
-    return true;
+    console.warn('[API] Deleting document directly in Firebase Firestore.', err);
   }
+
+  try {
+    await deleteFirestoreDoc(id);
+  } catch (fsErr) {
+    deleteEnquiry(id);
+  }
+
+  window.dispatchEvent(new Event('dcode_leads_updated'));
+  return true;
 }
 
 // 5. Admin Authentication API

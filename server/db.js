@@ -1,7 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { createClient } from '@supabase/supabase-js';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  serverTimestamp
+} from 'firebase/firestore';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,20 +33,23 @@ try {
   console.warn('[DATABASE] Could not create local data directory:', err.message);
 }
 
-// 1. Initialize Supabase Client if configured
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-let supabase = null;
+// 1. Initialize Firebase App for Server DB Service
+const firebaseConfig = {
+  apiKey: process.env.VITE_FIREBASE_API_KEY || "AIzaSyDY4HchpMwX-Bv8gQcyJ7E-pvcamNCwgXE",
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN || "d-code-ias.firebaseapp.com",
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID || "d-code-ias",
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET || "d-code-ias.firebasestorage.app",
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "401375610463",
+  appId: process.env.VITE_FIREBASE_APP_ID || "1:401375610463:web:8f35db9c9d77e58ba73dea"
+};
 
-if (SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL !== "" && SUPABASE_ANON_KEY !== "") {
-  try {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log(`\n[DATABASE] Connected to Supabase Cloud Instance: ${SUPABASE_URL}`);
-  } catch (err) {
-    console.error('[DATABASE] Failed to initialize Supabase client:', err);
-  }
-} else {
-  console.log('\n[DATABASE] Supabase variables not set. Using local file database fallback: inquiries.json');
+let firestore = null;
+try {
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+  firestore = getFirestore(app);
+  console.log(`\n[DATABASE] Connected to Firebase Firestore Project: ${firebaseConfig.projectId}`);
+} catch (err) {
+  console.error('[DATABASE] Failed to initialize Firebase Firestore:', err.message);
 }
 
 // Initial mock data if empty
@@ -89,79 +104,90 @@ function writeDb(data) {
 export async function saveInquiryToDb(input) {
   const formType = input.formType || 'contact';
   const newRecord = {
-    id: `DC-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`,
     fullName: input.fullName,
     phone: input.phone,
     email: input.email || null,
     course: input.course || 'general_inquiry',
     formType: formType,
     message: input.message || '',
-    status: 'New',
-    createdAt: new Date().toISOString()
+    status: 'new',
   };
 
-  if (supabase) {
-    // 1. Try single master 'inquiries' table first
-    let { error } = await supabase.from('inquiries').insert([newRecord]);
-    if (!error) {
-      return newRecord;
+  if (firestore) {
+    try {
+      const docRef = await addDoc(collection(firestore, 'query'), {
+        ...newRecord,
+        createdAt: serverTimestamp()
+      });
+      console.log(`[FIREBASE SUCCESS] Lead saved to Firestore 'query' collection with ID: ${docRef.id}`);
+      return {
+        id: docRef.id,
+        ...newRecord,
+        createdAt: new Date().toISOString()
+      };
+    } catch (err) {
+      console.error(`[FIREBASE ERROR] Could not save lead to Firestore:`, err.message);
+      // Fallback: save locally
+      const localId = `DC-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const fallbackRecord = { id: localId, ...newRecord, createdAt: new Date().toISOString() };
+      const current = readDb();
+      writeDb([fallbackRecord, ...current]);
+      return fallbackRecord;
     }
-
-    // 2. If 'inquiries' table doesn't exist, fallback to separate category tables (enrollments, contacts, registrations)
-    let targetTable = 'contacts';
-    if (formType === 'enrollment') targetTable = 'enrollments';
-    else if (formType === 'registration') targetTable = 'registrations';
-
-    const { error: subError } = await supabase.from(targetTable).insert([newRecord]);
-    if (!subError) {
-      console.log(`[SUPABASE SUCCESS] Lead saved to '${targetTable}' table`);
-      return newRecord;
-    }
-
-    console.error(`[SUPABASE ERROR] Could not save lead to 'inquiries' or '${targetTable}' table:`, error?.message || subError?.message);
-    // Fallback: save locally
-    const current = readDb();
-    writeDb([newRecord, ...current]);
-    return newRecord;
   } else {
+    const localId = `DC-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const fallbackRecord = { id: localId, ...newRecord, createdAt: new Date().toISOString() };
     const current = readDb();
-    const updated = [newRecord, ...current];
-    writeDb(updated);
-    return newRecord;
+    writeDb([fallbackRecord, ...current]);
+    return fallbackRecord;
   }
 }
 
 export async function getAllInquiriesFromDb() {
-  if (supabase) {
-    const { data, error } = await supabase
-      .from('inquiries')
-      .select('*')
-      .order('createdAt', { ascending: false });
+  if (firestore) {
+    try {
+      const q = query(collection(firestore, 'query'), orderBy('createdAt', 'desc'));
+      const querySnapshot = await getDocs(q);
       
-    if (error) {
-      console.error('[SUPABASE ERROR] Failed to fetch leads from Supabase:', error);
+      return querySnapshot.docs.map(docSnap => {
+        const data = docSnap.data();
+        let createdAtStr = new Date().toISOString();
+        if (data.createdAt && typeof data.createdAt.toDate === 'function') {
+          createdAtStr = data.createdAt.toDate().toISOString();
+        } else if (data.createdAt) {
+          createdAtStr = new Date(data.createdAt).toISOString();
+        }
+        return {
+          id: docSnap.id,
+          fullName: data.fullName || '',
+          phone: data.phone || '',
+          email: data.email || null,
+          course: data.course || '',
+          formType: data.formType || 'contact',
+          message: data.message || '',
+          status: data.status || 'new',
+          createdAt: createdAtStr
+        };
+      });
+    } catch (err) {
+      console.error('[FIREBASE ERROR] Failed to fetch leads from Firestore:', err.message);
       return readDb();
     }
-    return data || [];
   } else {
     return readDb();
   }
 }
 
 export async function updateInquiryStatusInDb(id, status) {
-  if (supabase) {
-    const { data, error } = await supabase
-      .from('inquiries')
-      .update({ status })
-      .eq('id', id)
-      .select();
-
-    if (error) {
-      console.error('[SUPABASE ERROR] Failed to update lead status in Supabase:', error);
-      // Fallback: update locally
+  if (firestore) {
+    try {
+      const docRef = doc(firestore, 'query', id);
+      await updateDoc(docRef, { status });
+      return { id, status };
+    } catch (err) {
+      console.error('[FIREBASE ERROR] Failed to update lead status in Firestore:', err.message);
       return localUpdateStatus(id, status);
     }
-    return data && data.length > 0 ? data[0] : null;
   } else {
     return localUpdateStatus(id, status);
   }
@@ -186,17 +212,15 @@ function localUpdateStatus(id, status) {
 }
 
 export async function deleteInquiryFromDb(id) {
-  if (supabase) {
-    const { error } = await supabase
-      .from('inquiries')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('[SUPABASE ERROR] Failed to delete lead in Supabase:', error);
+  if (firestore) {
+    try {
+      const docRef = doc(firestore, 'query', id);
+      await deleteDoc(docRef);
+      return true;
+    } catch (err) {
+      console.error('[FIREBASE ERROR] Failed to delete lead in Firestore:', err.message);
       return localDelete(id);
     }
-    return true;
   } else {
     return localDelete(id);
   }

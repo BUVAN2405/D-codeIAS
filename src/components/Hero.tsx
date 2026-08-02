@@ -82,10 +82,10 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
 
       {/* Main Interactive Container */}
       <div className="relative z-10 max-w-(--size-container-max) mx-auto px-10 sm:px-14 md:px-16 pt-20 pb-16 sm:pt-28 sm:pb-24 flex items-center justify-center min-h-[500px] lg:min-h-[580px]">
-        
+
         {/* Editorial Text Content with Premium Liquid Morphic Glass Card */}
         <AnimatePresence>
-          {isCardVisible && (
+          {false && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

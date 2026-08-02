@@ -14,6 +14,7 @@ import EnrollModal from './components/EnrollModal';
 import AboutAcademy from './components/AboutAcademy';
 import Founder from './components/Founder';
 import LearningProcess from './components/LearningProcess';
+import FaqSection from './components/FaqSection';
 import LeadControls from './components/LeadControls';
 import AdminDashboard from './components/AdminDashboard';
 import AdminLoginModal from './components/AdminLoginModal';
