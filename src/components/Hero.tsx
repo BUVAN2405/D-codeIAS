@@ -85,7 +85,7 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
 
         {/* Editorial Text Content with Premium Liquid Morphic Glass Card */}
         <AnimatePresence>
-          {false && (
+          {isCardVisible && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

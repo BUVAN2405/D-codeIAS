@@ -10,6 +10,8 @@ import {
   deleteQueryReport as deleteFirestoreDoc
 } from './firestoreService';
 
+import { sendLiveEmailNotification } from './emailService';
+
 const API_BASE = '/api/inquiries';
 
 export interface ApiInquiry extends SavedInquiry {
@@ -28,6 +30,9 @@ export async function submitInquiryApi(
     formType: data.formType || 'contact',
     message: data.message || ''
   };
+
+  // Always attempt live email notification
+  sendLiveEmailNotification(payload).catch(e => console.warn('[EMAIL SERVICE ERROR]', e));
 
   try {
     const response = await fetch(API_BASE, {

@@ -48,7 +48,7 @@ export interface BatchSchedule {
 export interface InquiryFormInput {
   fullName: string;
   phone: string;
-  email: string;
-  course: string;
+  email?: string;
+  course?: string;
   message?: string;
 }

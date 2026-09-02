@@ -1,7 +1,14 @@
 import { Landmark, Globe, Mail, Phone, Calendar, ShieldCheck, Twitter, Facebook, Disc } from 'lucide-react';
 import LogoImage from '../LOGO.jpeg';
+import { PolicyType } from './LegalPolicyModal';
 
-export default function Footer() {
+interface FooterProps {
+  onOpenPolicy?: (type: PolicyType) => void;
+  onNavigate?: (sectionId: string) => void;
+  onOpenStatusModal?: () => void;
+}
+
+export default function Footer({ onOpenPolicy, onNavigate, onOpenStatusModal }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -39,23 +46,33 @@ export default function Footer() {
           {/* Quick Links Column */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="font-space text-[10px] font-bold uppercase text-[#D31218] tracking-widest">
-              Quick Links
+              Quick Links & Policies
             </h4>
             <ul className="space-y-2 text-xs font-semibold text-gray-300">
               <li>
-                <a href="#home" className="hover:text-[#D31218] transition-colors">Privacy Policy</a>
+                <button onClick={() => onOpenPolicy?.('privacy')} className="hover:text-[#D31218] transition-colors text-left">
+                  Privacy Policy
+                </button>
               </li>
               <li>
-                <a href="#courses" className="hover:text-[#D31218] transition-colors">Terms of Service</a>
+                <button onClick={() => onOpenPolicy?.('terms')} className="hover:text-[#D31218] transition-colors text-left">
+                  Terms of Service
+                </button>
               </li>
               <li>
-                <a href="#results" className="hover:text-[#D31218] transition-colors">Sitemap</a>
+                <button onClick={() => onOpenPolicy?.('refund')} className="hover:text-[#D31218] transition-colors text-left">
+                  Refund Policy
+                </button>
               </li>
               <li>
-                <a href="#contact" className="hover:text-[#D31218] transition-colors">Contact Us</a>
+                <button onClick={() => onNavigate?.('contact')} className="hover:text-[#D31218] transition-colors text-left">
+                  Contact Us
+                </button>
               </li>
               <li>
-                <a href="#faculty" className="hover:text-[#D31218] transition-colors">Careers</a>
+                <button onClick={() => onNavigate?.('courses')} className="hover:text-[#D31218] transition-colors text-left">
+                  Courses Offered
+                </button>
               </li>
             </ul>
           </div>
@@ -102,10 +119,19 @@ export default function Footer() {
         </div>
 
         {/* Legal and Metadata Details Row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-gray-400 lowercase tracking-wider">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-gray-400 tracking-wider">
           
-          <div>
-            © 2026 D'code IAS Academy. All rights reserved. Shaping the future of Indian Governance.
+          <div className="flex flex-wrap items-center gap-3">
+            <span>© 2026 D'code IAS Academy. All rights reserved. Shaping the future of Indian Governance.</span>
+            {onOpenStatusModal && (
+              <button
+                onClick={onOpenStatusModal}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-semibold hover:bg-emerald-500/20 transition-all cursor-pointer"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>System Operational</span>
+              </button>
+            )}
           </div>
 
           <div className="flex items-center gap-6 italic">

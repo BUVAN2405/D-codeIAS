@@ -4,11 +4,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const OWNER_EMAIL = process.env.OWNER_EMAIL || 'info@decodeias.com';
-const OWNER_CC_EMAIL = process.env.OWNER_CC_EMAIL || 'dcodesudhagaran@gmail.com';
-const SMTP_HOST = process.env.SMTP_HOST;
+const OWNER_CC_EMAIL = process.env.OWNER_CC_EMAIL || 'dcodesudhagaran@gmail.com,sudhagaransirdcode@gmail.com';
+const SMTP_HOST = process.env.SMTP_HOST || 'mail.decodeias.com';
 const SMTP_PORT = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-const SMTP_USER = process.env.SMTP_USER;
-const SMTP_PASS = process.env.SMTP_PASS;
+const SMTP_USER = process.env.SMTP_USER || 'info@decodeias.com';
+const SMTP_PASS = process.env.SMTP_PASS || '(o1&rzhp9Coy';
 const SMTP_SECURE = process.env.SMTP_SECURE === 'true';
 
 let transporter = null;
@@ -58,7 +58,7 @@ export async function sendInquiryNotification(record) {
     badgeBorder = '#fde68a';
   }
 
-  const destinationUrl = process.env.DATABASE_DASHBOARD_URL || `${process.env.APP_URL || 'http://localhost:3000'}?leads=true`;
+  const destinationUrl = process.env.DATABASE_DASHBOARD_URL || `${process.env.APP_URL || 'https://decodeias.com'}?leads=true`;
 
   const ownerHtml = `
     <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">

@@ -10,6 +10,16 @@ import InquiryForm from './components/InquiryForm';
 import Footer from './components/Footer';
 import EnrollModal from './components/EnrollModal';
 
+// System Pages & Overlays
+import ErrorBoundary from './components/ErrorBoundary';
+import NotFoundPage from './components/NotFoundPage';
+import MaintenancePage from './components/MaintenancePage';
+import ServerErrorPage from './components/ServerErrorPage';
+import AccessDeniedPage from './components/AccessDeniedPage';
+import ServiceStatusModal from './components/ServiceStatusModal';
+import NetworkStatusOverlay from './components/NetworkStatusOverlay';
+import LegalPolicyModal, { PolicyType } from './components/LegalPolicyModal';
+
 // Custom Sections
 import AboutAcademy from './components/AboutAcademy';
 import Founder from './components/Founder';
@@ -38,9 +48,32 @@ export default function App() {
   const [selectedBatch, setSelectedBatch] = useState<BatchSchedule | null>(null);
   const [showNotification, setShowNotification] = useState<string | null>(null);
 
-  // Admin Dashboard & Auth Modals
+  // System States (404, 503 Maintenance, 500 Server Error, 401 Access Denied, Policies, Admin)
+  const [is404, setIs404] = useState(false);
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [is500ServerError, setIs500ServerError] = useState(false);
+  const [is401AccessDenied, setIs401AccessDenied] = useState(false);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+
+  const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [isAdminDashboardOpen, setIsAdminDashboardOpen] = useState(false);
+
+  // Detect 404 URL route or system mode query overrides (e.g. ?mode=maintenance, ?mode=500, ?mode=401, ?mode=status)
+  useEffect(() => {
+    const path = window.location.pathname;
+    const searchParams = new URLSearchParams(window.location.search);
+    const mode = searchParams.get('mode');
+
+    if (mode === 'maintenance' || mode === '503') setIsMaintenanceMode(true);
+    if (mode === '500' || mode === 'servererror') setIs500ServerError(true);
+    if (mode === '401' || mode === '403' || mode === 'accessdenied') setIs401AccessDenied(true);
+    if (mode === 'status') setIsStatusModalOpen(true);
+
+    if (path !== '/' && path !== '' && !path.includes('index.html')) {
+      setIs404(true);
+    }
+  }, []);
 
   const handleOpenAdminPortal = () => {
     const session = getAdminSession();
@@ -140,165 +173,247 @@ export default function App() {
     }, 5000);
   };
 
-  return (
-    <div className="bg-[#fdf8f6] min-h-screen text-brand-accent selection:bg-[#fff2e0] selection:text-brand-primary overflow-x-hidden font-sans">
-      
-      {/* Sticky Top-level Header Menu bar */}
-      <Navbar
-        onEnrollClick={triggerModalGeneric}
-        onNavigate={scrollToSection}
-        activeSection={activeSection}
-        onAdminClick={handleOpenAdminPortal}
-      />
+  if (isMaintenanceMode) {
+    return (
+      <ErrorBoundary>
+        <NetworkStatusOverlay />
+        <MaintenancePage onRefresh={() => setIsMaintenanceMode(false)} />
+      </ErrorBoundary>
+    );
+  }
 
-      {/* Main landing segments */}
-      <main>
+  if (is500ServerError) {
+    return (
+      <ErrorBoundary>
+        <NetworkStatusOverlay />
+        <ServerErrorPage
+          onRetry={() => setIs500ServerError(false)}
+          onGoHome={() => {
+            window.history.pushState({}, '', '/');
+            setIs500ServerError(false);
+          }}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  if (is401AccessDenied) {
+    return (
+      <ErrorBoundary>
+        <NetworkStatusOverlay />
+        <AccessDeniedPage
+          onGoHome={() => {
+            window.history.pushState({}, '', '/');
+            setIs401AccessDenied(false);
+          }}
+          onOpenLogin={() => {
+            setIs401AccessDenied(false);
+            setIsAdminLoginOpen(true);
+          }}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  if (is404) {
+    return (
+      <ErrorBoundary>
+        <NetworkStatusOverlay />
+        <NotFoundPage
+          onGoHome={() => {
+            window.history.pushState({}, '', '/');
+            setIs404(false);
+          }}
+          onNavigateSection={(sec) => {
+            window.history.pushState({}, '', '/');
+            setIs404(false);
+            setTimeout(() => scrollToSection(sec), 150);
+          }}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  return (
+    <ErrorBoundary>
+      {/* Network Connectivity & Offline Detector */}
+      <NetworkStatusOverlay />
+
+      <div className="bg-[#fdf8f6] min-h-screen text-brand-accent selection:bg-[#fff2e0] selection:text-brand-primary overflow-x-hidden font-sans">
         
-        {/* Banner Segment */}
-        <Hero
-          onExploreClick={() => scrollToSection('courses')}
-          onBrochureClick={handleStaticBrochureRequest}
+        {/* Sticky Top-level Header Menu bar */}
+        <Navbar
+          onEnrollClick={triggerModalGeneric}
+          onNavigate={scrollToSection}
+          activeSection={activeSection}
+          onAdminClick={handleOpenAdminPortal}
         />
 
-        {/* 1st content: Courses Offered on top of the Moving Gallery */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
-          className="w-full"
-        >
-          <Programs
-            courses={COURSES}
-            onCourseSelect={triggerModalForCourse}
+        {/* Main landing segments */}
+        <main>
+          
+          {/* Banner Segment */}
+          <Hero
+            onExploreClick={() => scrollToSection('courses')}
+            onBrochureClick={handleStaticBrochureRequest}
           />
-        </motion.div>
 
-        {/* UPSC Toppers direct mentorship grid */}
-        <Toppers />
+          {/* 1st content: Courses Offered on top of the Moving Gallery */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8 }}
+            className="w-full"
+          >
+            <Programs
+              courses={COURSES}
+              onCourseSelect={triggerModalForCourse}
+            />
+          </motion.div>
 
-        {/* 2nd content: FREE CONTENT */}
-        <FreeContent />
+          {/* UPSC Toppers direct mentorship grid */}
+          <Toppers />
 
-        {/* 3rd content: DETAILED ANALYSIS OF COURSE */}
-        <CourseDetailedAnalysis />
+          {/* 2nd content: FREE CONTENT */}
+          <FreeContent />
 
-        {/* Why D'code IAS Academy - Made Highly Visual */}
-        <WhyDcodeVisual />
+          {/* 3rd content: DETAILED ANALYSIS OF COURSE */}
+          <CourseDetailedAnalysis />
 
-        {/* About Academy Section */}
-        <AboutAcademy />
+          {/* Why D'code IAS Academy - Made Highly Visual */}
+          <WhyDcodeVisual />
 
-        {/* Founder Section */}
-        <Founder />
+          {/* About Academy Section */}
+          <AboutAcademy />
 
-        {/* Learning Process Section */}
-        <LearningProcess />
+          {/* Founder Section */}
+          <Founder />
 
-        {/* Teacher Profiles & Specialty Deep Dives */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
-          className="w-full"
-        >
-          <Faculty
-            facultyList={FACULTY}
-            onConsultationRequest={triggerModalGeneric}
-          />
-        </motion.div>
+          {/* Learning Process Section */}
+          <LearningProcess />
 
-        {/* YouTube Video Testimonials */}
-        <VideoTestimonials />
+          {/* Teacher Profiles & Specialty Deep Dives */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8 }}
+            className="w-full"
+          >
+            <Faculty
+              facultyList={FACULTY}
+              onConsultationRequest={triggerModalGeneric}
+            />
+          </motion.div>
 
-        {/* Batches Table with interactive reservation indicators */}
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
-        >
-          <BatchSchedulesList
-            batches={BATCH_SCHEDULES}
-            onEnrollClick={triggerModalForBatch}
-          />
-        </motion.div>
+          {/* YouTube Video Testimonials */}
+          <VideoTestimonials />
 
-        {/* FAQ Accordions Section */}
-        <FaqSection />
+          {/* Batches Table with interactive reservation indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full"
+          >
+            <BatchSchedulesList
+              batches={BATCH_SCHEDULES}
+              onEnrollClick={triggerModalForBatch}
+            />
+          </motion.div>
 
-        {/* Get in Touch inquiry fields */}
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
-        >
-          <InquiryForm
-            courses={COURSES}
-            onSubmitSuccess={handleInquiryNotification}
-          />
-        </motion.div>
+          {/* FAQ Accordions Section */}
+          <FaqSection />
 
-      </main>
+          {/* Get in Touch inquiry fields */}
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full"
+          >
+            <InquiryForm
+              courses={COURSES}
+              onSubmitSuccess={handleInquiryNotification}
+            />
+          </motion.div>
 
-      {/* Structured Legal Directory Footer */}
-      <Footer />
+        </main>
 
-      {/* Interactive Sticky Lead Controls Panel */}
-      <LeadControls onInquiryClick={triggerModalGeneric} />
+        {/* Structured Legal Directory Footer */}
+        <Footer
+          onOpenPolicy={(policy) => setActivePolicy(policy)}
+          onNavigate={scrollToSection}
+          onOpenStatusModal={() => setIsStatusModalOpen(true)}
+        />
 
-      {/* Master Registration Reservation Modal Overlay */}
-      <EnrollModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        selectedCourse={selectedCourse}
-        selectedBatch={selectedBatch}
-        coursesList={COURSES}
-      />
+        {/* Real-Time Service Health Telemetry Modal */}
+        <ServiceStatusModal
+          isOpen={isStatusModalOpen}
+          onClose={() => setIsStatusModalOpen(false)}
+        />
 
-      {/* Owner Admin Authentication Modal */}
-      <AdminLoginModal
-        isOpen={isAdminLoginOpen}
-        onClose={() => setIsAdminLoginOpen(false)}
-        onSuccess={() => {
-          setIsAdminLoginOpen(false);
-          setIsAdminDashboardOpen(true);
-        }}
-      />
+        {/* Legal Policies Modal (Privacy, Terms, Refund) */}
+        <LegalPolicyModal
+          policyType={activePolicy}
+          onClose={() => setActivePolicy(null)}
+        />
 
-      {/* Owner Master Admin Dashboard Overlay */}
-      <AdminDashboard
-        isOpen={isAdminDashboardOpen}
-        onClose={() => setIsAdminDashboardOpen(false)}
-      />
+        {/* Interactive Sticky Lead Controls Panel */}
+        <LeadControls onInquiryClick={triggerModalGeneric} />
 
-      {/* Responsive Dispatch Notification toast for file spool and callbacks */}
-      {showNotification && (
-        <div className="fixed bottom-24 left-6 z-50 max-w-sm bg-brand-violet text-white py-3 px-4 rounded-lg shadow-xl border border-white/15 flex items-start gap-2.5 animate-bounce">
-          <CheckCircle className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-          <div className="text-xs">
-            <p className="font-semibold uppercase tracking-wider font-space text-[10px] text-brand-gold">
-              Academy Bulletin
-            </p>
-            <p className="font-sans leading-relaxed mt-0.5">{showNotification}</p>
+        {/* Master Registration Reservation Modal Overlay */}
+        <EnrollModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedCourse={selectedCourse}
+          selectedBatch={selectedBatch}
+          coursesList={COURSES}
+        />
+
+        {/* Owner Admin Authentication Modal */}
+        <AdminLoginModal
+          isOpen={isAdminLoginOpen}
+          onClose={() => setIsAdminLoginOpen(false)}
+          onSuccess={() => {
+            setIsAdminLoginOpen(false);
+            setIsAdminDashboardOpen(true);
+          }}
+        />
+
+        {/* Owner Master Admin Dashboard Overlay */}
+        <AdminDashboard
+          isOpen={isAdminDashboardOpen}
+          onClose={() => setIsAdminDashboardOpen(false)}
+        />
+
+        {/* Responsive Dispatch Notification toast for file spool and callbacks */}
+        {showNotification && (
+          <div className="fixed bottom-24 left-6 z-50 max-w-sm bg-brand-violet text-white py-3 px-4 rounded-lg shadow-xl border border-white/15 flex items-start gap-2.5 animate-bounce">
+            <CheckCircle className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
+            <div className="text-xs">
+              <p className="font-semibold uppercase tracking-wider font-space text-[10px] text-brand-gold">
+                Academy Bulletin
+              </p>
+              <p className="font-sans leading-relaxed mt-0.5">{showNotification}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Documentation Drawer for component expansion */}
+        <div className="bg-brand-violet/5 py-4 border-t border-brand-violet/15">
+          <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8 text-center">
+            <div className="inline-flex items-center gap-1.5 text-[10px] font-space text-brand-violet/85 uppercase tracking-wider font-semibold py-1 px-3 bg-white border border-brand-violet/10 rounded">
+              <Lightbulb className="w-3.5 h-3.5 text-brand-gold" />
+              Developer Reference docs: expand components inside `/src/components/*` securely.
+            </div>
           </div>
         </div>
-      )}
 
-      {/* Documentation Drawer for component expansion */}
-      <div className="bg-brand-violet/5 py-4 border-t border-brand-violet/15">
-        <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8 text-center">
-          <div className="inline-flex items-center gap-1.5 text-[10px] font-space text-brand-violet/85 uppercase tracking-wider font-semibold py-1 px-3 bg-white border border-brand-violet/10 rounded">
-            <Lightbulb className="w-3.5 h-3.5 text-brand-gold" />
-            Developer Reference docs: expand components inside `/src/components/*` securely.
-          </div>
-        </div>
       </div>
-
-    </div>
+    </ErrorBoundary>
   );
 }
