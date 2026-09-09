@@ -1,0 +1,16 @@
+- generic [ref=f3e4]:
+  - heading "500 Internal Server Error" [level=1] [ref=f3e10]
+  - paragraph [ref=f3e11]: Our backend API database encountered an unexpected server exception. Technicians have been notified automatically.
+  - generic [ref=f3e12]: "Incident Ref ID: INC-672403"
+  - generic [ref=f3e13]:
+    - button "Retry Connection Now" [ref=f3e14]
+    - button "Return to Main Page" [ref=f3e20]
+  - generic [ref=f3e24]:
+    - heading "Instant Direct Callback Dispatch Offline Spool Ready" [level=3] [ref=f3e25]:
+      - generic [ref=f3e26]: Instant Direct Callback Dispatch
+      - generic [ref=f3e27]: Offline Spool Ready
+    - generic [ref=f3e28]:
+      - generic [ref=f3e29]:
+        - textbox "Your Full Name" [ref=f3e30]
+        - textbox "Mobile Phone Number" [ref=f3e31]
+      - button "Request Priority Academic Callback" [ref=f3e32]

@@ -29,7 +29,7 @@ export default function Founder() {
               className="relative w-full max-w-[380px]"
             >
               {/* Card border decoration */}
-              <div className="absolute inset-0 border border-[#D31218]/30 rounded-2xl transform translate-x-4 translate-y-4" />
+              <div className="absolute inset-0 border border-[#D31218]/30 rounded-2xl transform translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4 pointer-events-none" />
               
               <div className="relative bg-[#112F5A] rounded-2xl p-4 border border-white/10 shadow-2xl">
                 <img

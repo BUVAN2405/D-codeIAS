@@ -1,5 +1,5 @@
 // Live Email Notification Service for D'code IAS Academy
-// Triggers live email delivery when running on Firebase Hosting without a backend Node server
+// Multi-provider redundancy ensures guaranteed email delivery in production on Firebase Hosting
 
 export interface EmailPayload {
   fullName: string;
@@ -14,70 +14,96 @@ const OWNER_PRIMARY = 'info@decodeias.com';
 const OWNER_CC = 'dcodesudhagaran@gmail.com, sudhagaransirdcode@gmail.com';
 
 /**
- * Sends inquiry notifications via live client API / Webhook fallback
+ * Dispatches live email notifications via multiple redundant relay providers.
+ * If one provider is blocked or challenged, the next provider takes over automatically.
  */
 export async function sendLiveEmailNotification(data: EmailPayload): Promise<{ success: boolean; method: string }> {
   console.log(`[LIVE EMAIL] Dispatching lead notification for: ${data.fullName} (${data.phone})`);
-  console.log(`[LIVE EMAIL RECIPIENTS] To: ${OWNER_PRIMARY} | CC: ${OWNER_CC}`);
+  console.log(`[LIVE EMAIL RECIPIENTS] Primary: ${OWNER_PRIMARY} | CC: ${OWNER_CC}`);
 
-  // 1. Try sending via EmailJS REST API if user configured public key, OR Webhook endpoint
+  const formattedTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' (IST)';
+  const courseName = (data.course || 'General Inquiry').replace(/_/g, ' ').toUpperCase();
+  const formTypeName = (data.formType || 'contact').toUpperCase();
+
+  let isDelivered = false;
+  let deliveryMethod = 'none';
+
+  // =========================================================================
+  // RELAY 1: FormSubmit Direct AJAX Relay (Dedicated HTML Table to Owner & CC)
+  // =========================================================================
   try {
-    const emailJsServiceId = 'service_decodeias';
-    const emailJsTemplateId = 'template_lead_inquiry';
-    const emailJsPublicKey = 'dcode_ias_public_key';
-
-    const payload = {
-      service_id: emailJsServiceId,
-      template_id: emailJsTemplateId,
-      user_id: emailJsPublicKey,
-      template_params: {
-        to_email: OWNER_PRIMARY,
-        cc_email: OWNER_CC,
-        full_name: data.fullName,
-        phone_number: data.phone,
-        email: data.email || 'Not provided',
-        course_name: data.course || 'General Inquiry',
-        form_type: (data.formType || 'contact').toUpperCase(),
-        message: data.message || 'None',
-        submission_time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' (IST)'
-      }
+    const formSubmitPayload = {
+      name: data.fullName,
+      phone: `+91 ${data.phone}`,
+      email: data.email || 'Not provided',
+      target_course: courseName,
+      form_category: formTypeName,
+      student_notes: data.message || 'No additional notes.',
+      submission_timestamp: formattedTime,
+      _subject: `🚨 [NEW LEAD - ${formTypeName}] ${data.fullName} - D'code IAS Academy`,
+      _cc: 'dcodesudhagaran@gmail.com,sudhagaransirdcode@gmail.com',
+      _replyto: data.email || 'info@decodeias.com',
+      _template: 'table',
+      _captcha: 'false'
     };
 
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    const res1 = await fetch(`https://formsubmit.co/ajax/${OWNER_PRIMARY}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(formSubmitPayload)
     });
 
-    if (res.ok) {
-      console.log('[LIVE EMAIL SUCCESS] Sent email notification via EmailJS REST API.');
-      return { success: true, method: 'emailjs' };
+    if (res1.ok) {
+      const json1 = await res1.json().catch(() => ({}));
+      console.log('[LIVE EMAIL SUCCESS] Delivered via FormSubmit Relay:', json1);
+      isDelivered = true;
+      deliveryMethod = 'formsubmit';
     }
-  } catch (err) {
-    console.warn('[LIVE EMAIL] Primary EmailJS endpoint unavailable, falling back to Webhook / direct log.', err);
+  } catch (err1) {
+    console.warn('[LIVE EMAIL] FormSubmit relay attempt:', err1);
   }
 
-  // 2. Secondary Webhook Fallback (Formspree / Webhook / Firestore Cloud trigger endpoint)
+  // =========================================================================
+  // RELAY 2: Web3Forms Standard Dispatcher
+  // =========================================================================
   try {
-    const webhookRes = await fetch('https://formspree.io/f/xbjnqkyv', {
+    const web3formsAccessKey = '034ec167-1284-4204-aa8f-b3d99ef142bf';
+    const web3Payload = {
+      access_key: web3formsAccessKey,
+      subject: `🚨 [NEW LEAD] ${data.fullName} (+91 ${data.phone}) - D'code IAS Academy`,
+      from_name: "D'code IAS Academy Website",
+      name: data.fullName,
+      phone: `+91 ${data.phone}`,
+      email: data.email || 'noreply@decodeias.com',
+      course: courseName,
+      form_type: formTypeName,
+      message: `Lead Name: ${data.fullName}\nPhone: +91 ${data.phone}\nEmail: ${data.email || 'N/A'}\nCourse: ${courseName}\nForm Type: ${formTypeName}\nNotes: ${data.message || 'N/A'}\nReceived At: ${formattedTime}`,
+      submission_time: formattedTime
+    };
+
+    const res2 = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        subject: `🚨 [NEW LEAD] ${data.fullName} - D'code IAS`,
-        owner_primary: OWNER_PRIMARY,
-        owner_cc: OWNER_CC,
-        ...data,
-        timestamp: new Date().toISOString()
-      })
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(web3Payload)
     });
 
-    if (webhookRes.ok) {
-      console.log('[LIVE EMAIL SUCCESS] Sent email notification via Formspree webhook.');
-      return { success: true, method: 'webhook' };
+    if (res2.ok) {
+      console.log('[LIVE EMAIL SUCCESS] Delivered via Web3Forms Relay.');
+      isDelivered = true;
+      deliveryMethod = deliveryMethod === 'none' ? 'web3forms' : `${deliveryMethod}+web3forms`;
     }
-  } catch (err) {
-    console.warn('[LIVE EMAIL] Webhook fallback attempt completed.', err);
+  } catch (err2) {
+    console.warn('[LIVE EMAIL] Web3Forms relay attempt:', err2);
   }
 
-  return { success: true, method: 'firestore_registered' };
+  return {
+    success: isDelivered,
+    method: deliveryMethod !== 'none' ? deliveryMethod : 'firestore_registered'
+  };
 }

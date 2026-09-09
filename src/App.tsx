@@ -250,7 +250,7 @@ export default function App() {
         />
 
         {/* Main landing segments */}
-        <main>
+        <main className="w-full max-w-full overflow-x-hidden">
           
           {/* Banner Segment */}
           <Hero

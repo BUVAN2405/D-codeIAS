@@ -1,0 +1,628 @@
+- generic [ref=f6e3]:
+  - banner [ref=f6e4]:
+    - generic [ref=f6e5]:
+      - button [ref=f6e6] [cursor=pointer]:
+        - img "D'code IAS Academy Logo" [ref=f6e7]
+        - generic [ref=f6e8]:
+          - heading "D'code IAS" [level=1] [ref=f6e9]
+          - paragraph [ref=f6e10]: Academy • ESTD 2026
+      - button "Toggle navigation menu" [ref=f6e12] [cursor=pointer]
+  - main [ref=f6e14]:
+    - generic [ref=f6e15]:
+      - img "D'code Campus Atmosphere" [ref=f6e17]
+      - button "Previous background" [ref=f6e19] [cursor=pointer]
+      - button "Next background" [ref=f6e22] [cursor=pointer]
+      - generic [ref=f6e25]: 1 / 7
+      - generic [ref=f6e28]:
+        - button "Close information" [ref=f6e29] [cursor=pointer]
+        - generic [ref=f6e33]: Admission Open for 2026-27
+        - heading "Best IAS Academy in Chennai. We Simplify Your IAS Journey." [level=1] [ref=f6e35]
+        - paragraph [ref=f6e36]: Top UPSC & TNPSC Civil Services Coaching in Anna Nagar, Chennai. Clarity, systematic course mapping, and intensive answer development under founder Sudhagaran Sir (Former Mission Director, Naan Mudhalvan).
+        - generic [ref=f6e37]:
+          - button "Explore Courses" [ref=f6e38] [cursor=pointer]
+          - button "Brochure" [ref=f6e41] [cursor=pointer]
+    - generic [ref=f6e47]:
+      - generic [ref=f6e48]:
+        - generic [ref=f6e49]: Our Programs
+        - heading "Comprehensive UPSC Training" [level=2] [ref=f6e50]
+      - generic [ref=f6e52]:
+        - generic [ref=f6e53]:
+          - generic [ref=f6e54]:
+            - heading "Mains Momentum 2027" [level=3] [ref=f6e61]
+            - paragraph [ref=f6e62]: An outcome-focused program built around paper coverage, mentorship feedback loops, mock schedules, and key current insights.
+          - button "Learn More" [ref=f6e64] [cursor=pointer]
+        - generic [ref=f6e67]:
+          - generic [ref=f6e68]:
+            - heading "PCM Comprehensive" [level=3] [ref=f6e72]
+            - paragraph [ref=f6e73]: Covers syllabus foundations systematically, combining consistent topic examinations, doubt clearing discussions, and pricing formats built for accessibility.
+          - button "Learn More" [ref=f6e75] [cursor=pointer]
+        - generic [ref=f6e78]:
+          - generic [ref=f6e79]:
+            - heading "Public Administration Optional" [level=3] [ref=f6e83]
+            - paragraph [ref=f6e84]: A thorough 4-month program designed to decode public administration concepts, evaluate previous years questions, and offer one-on-one personal mentoring.
+          - button "Learn More" [ref=f6e86] [cursor=pointer]
+        - generic [ref=f6e89]:
+          - generic [ref=f6e90]:
+            - heading "Sociology Optional" [level=3] [ref=f6e94]
+            - paragraph [ref=f6e95]: A comprehensive 4-month course providing complete syllabus coverage, comprehensive structured notes, and direct answers review.
+          - button "Learn More" [ref=f6e97] [cursor=pointer]
+        - generic [ref=f6e100]:
+          - generic [ref=f6e101]:
+            - heading "Anthropology Optional" [level=3] [ref=f6e105]
+            - paragraph [ref=f6e106]: An in-depth 4-month coaching module focusing on biological anthropology, cultural theory, and daily answer evaluation.
+          - button "Learn More" [ref=f6e108] [cursor=pointer]
+        - generic [ref=f6e111]:
+          - generic [ref=f6e112]:
+            - heading "TNPSC Group 1, 2 & 4" [level=3] [ref=f6e116]
+            - paragraph [ref=f6e117]: State-level mentors delivering comprehensive coaching with bilingual study materials and mock exam suites.
+          - button "Learn More" [ref=f6e119] [cursor=pointer]
+    - generic [ref=f6e125]:
+      - generic [ref=f6e126]:
+        - generic [ref=f6e127]: TESTIMONIALS
+        - heading "TESTIMONIALS OF TOPPERS" [level=3] [ref=f6e128]
+        - paragraph [ref=f6e129]: Under the mentorship of Sudhagaran Sir who had aided in their UPSC journey and Forest Services exams.
+        - generic [ref=f6e130]: Guaranteed Results & Dedication
+      - generic [ref=f6e135]:
+        - generic [ref=f6e136] [cursor=pointer]:
+          - generic [ref=f6e137]:
+            - generic [ref=f6e138]:
+              - img "Rajeshwari Suve M" [ref=f6e139]
+              - generic [ref=f6e140]: "2"
+            - heading "Rajeshwari Suve M" [level=5] [ref=f6e141]
+          - paragraph [ref=f6e142]: UPSC IAS
+        - generic [ref=f6e143] [cursor=pointer]:
+          - generic [ref=f6e144]:
+            - generic [ref=f6e145]:
+              - img "Neya Flower S" [ref=f6e146]
+              - generic [ref=f6e147]: "515"
+            - heading "Neya Flower S" [level=5] [ref=f6e148]
+          - paragraph [ref=f6e149]: UPSC IAS
+        - generic [ref=f6e150] [cursor=pointer]:
+          - generic [ref=f6e151]:
+            - generic [ref=f6e152]:
+              - img "Arun Pandian N" [ref=f6e153]
+              - generic [ref=f6e154]: "213"
+            - heading "Arun Pandian N" [level=5] [ref=f6e155]
+          - paragraph [ref=f6e156]: UPSC IAS
+        - generic [ref=f6e157] [cursor=pointer]:
+          - generic [ref=f6e158]:
+            - generic [ref=f6e159]:
+              - img "Kirubakaran N" [ref=f6e160]
+              - generic [ref=f6e161]: "439"
+            - heading "Kirubakaran N" [level=5] [ref=f6e162]
+          - paragraph [ref=f6e163]: UPSC IAS
+        - generic [ref=f6e164] [cursor=pointer]:
+          - generic [ref=f6e165]:
+            - generic [ref=f6e166]:
+              - img "Subramania Bharathi" [ref=f6e167]
+              - generic [ref=f6e168]: "778"
+            - heading "Subramania Bharathi" [level=5] [ref=f6e169]
+          - paragraph [ref=f6e170]: UPSC IAS
+        - generic [ref=f6e171] [cursor=pointer]:
+          - generic [ref=f6e172]:
+            - generic [ref=f6e173]:
+              - img "Nishanth T" [ref=f6e174]
+              - generic [ref=f6e175]: "821"
+            - heading "Nishanth T" [level=5] [ref=f6e176]
+          - paragraph [ref=f6e177]: UPSC IAS
+        - generic [ref=f6e178] [cursor=pointer]:
+          - generic [ref=f6e179]:
+            - generic [ref=f6e180]:
+              - img "Sanjay S" [ref=f6e181]
+              - generic [ref=f6e182]: "953"
+            - heading "Sanjay S" [level=5] [ref=f6e183]
+          - paragraph [ref=f6e184]: UPSC IAS
+        - generic [ref=f6e185] [cursor=pointer]:
+          - generic [ref=f6e186]:
+            - generic [ref=f6e187]:
+              - img "Praveen Arockiaraj J" [ref=f6e188]
+              - generic [ref=f6e189]: "102"
+            - heading "Praveen Arockiaraj J" [level=5] [ref=f6e190]
+          - paragraph [ref=f6e191]: UPSC IFoS
+        - generic [ref=f6e192] [cursor=pointer]:
+          - generic [ref=f6e193]:
+            - generic [ref=f6e194]:
+              - img "Arun Vadivarasan E" [ref=f6e195]
+              - generic [ref=f6e196]: "128"
+            - heading "Arun Vadivarasan E" [level=5] [ref=f6e197]
+          - paragraph [ref=f6e198]: UPSC IFoS
+    - generic [ref=f6e200]:
+      - generic [ref=f6e201]:
+        - generic [ref=f6e202]: Aspirant Corner
+        - heading "Free High-Yield Resources" [level=2] [ref=f6e203]
+        - paragraph [ref=f6e204]: Boost your daily preparation with high-value materials curated personally under Sudhagaran Sir's supervision.
+      - generic [ref=f6e205]:
+        - button "Daily Q&A Practice" [ref=f6e206] [cursor=pointer]
+        - button "Syllabus breakdown" [ref=f6e210] [cursor=pointer]
+        - button "Standard Booklist" [ref=f6e215] [cursor=pointer]
+      - generic [ref=f6e220]:
+        - generic [ref=f6e221]:
+          - generic [ref=f6e222]: GS-2 Polity & GovernanceJune 30, 2026
+          - generic [ref=f6e223]: Live Review Queue
+        - generic [ref=f6e225]:
+          - heading "UPSC Mains Model Question" [level=4] [ref=f6e226]
+          - paragraph [ref=f6e227]: "\"Analyze the role of the Governor under the Indian Constitution, particularly in relation to the discretionary powers and the friction points arising with state-elected cabinets. Highlight judicial precedents.\""
+        - generic [ref=f6e228]:
+          - heading "Sudhagaran Sir's Answer Structuring Guideline" [level=5] [ref=f6e229]
+          - paragraph [ref=f6e233]: "Structure your response into: 1. Constitutional position (Article 153/163), 2. Area of friction (Bills assent, floor tests), 3. Recommendations of Sarkaria & Punchhi Commissions, 4. Way forward."
+        - generic [ref=f6e234]:
+          - generic [ref=f6e235]:
+            - generic [ref=f6e236]: Draft Your Structured Answer (Supports rough ideas or points)
+            - textbox "Type your introduction or bullet points here..." [ref=f6e237]
+            - generic [ref=f6e238]:
+              - generic [ref=f6e239]: "Characters: 0/2000"
+              - generic [ref=f6e240]: "Mains Word limit reference: ~150-250 words"
+          - button "Submit Answer for Review" [disabled] [ref=f6e241]
+    - generic [ref=f6e247]:
+      - generic [ref=f6e248]:
+        - generic [ref=f6e249]: Pedagogical Breakdown
+        - heading "Detailed Analysis of Course" [level=2] [ref=f6e250]
+        - paragraph [ref=f6e251]: See how our preparation pipelines are structurally layered to ensure absolute syllabus tracking, feedback audits, and score enhancement.
+      - generic [ref=f6e252]:
+        - generic [ref=f6e253]:
+          - heading "Select Program Pathway" [level=4] [ref=f6e254]
+          - button [ref=f6e255] [cursor=pointer]:
+            - generic [ref=f6e256]:
+              - heading "UPSC Integrated Foundation 2027" [level=3] [ref=f6e257]
+              - paragraph [ref=f6e258]: Absolute zero-to-advanced pathway for ultimate syllabus coverage.
+          - button [ref=f6e262] [cursor=pointer]:
+            - generic [ref=f6e263]:
+              - heading "Mains Momentum Program 2027" [level=3] [ref=f6e264]
+              - paragraph [ref=f6e265]: Dedicated answer structuring and evaluation feedback loop.
+          - button [ref=f6e269] [cursor=pointer]:
+            - generic [ref=f6e270]:
+              - heading "Optional Masterclasses (Soc, Pub-Ad, Anthro)" [level=3] [ref=f6e271]
+              - paragraph [ref=f6e272]: Highly analytical coaching targeting 300+ marks in optionals.
+          - generic [ref=f6e276]:
+            - generic [ref=f6e277]: Evaluation Metric
+            - paragraph [ref=f6e278]:
+              - text: All evaluation frameworks, score models, and answer reviews are personally audited by
+              - strong [ref=f6e279]: Sudhagaran Sir
+              - text: .
+        - generic [ref=f6e281]:
+          - generic [ref=f6e282]:
+            - heading "UPSC Integrated Foundation 2027" [level=3] [ref=f6e283]
+            - paragraph [ref=f6e284]: Absolute zero-to-advanced pathway for ultimate syllabus coverage.
+            - generic [ref=f6e285]:
+              - generic [ref=f6e286]:
+                - paragraph [ref=f6e290]: Total Duration
+                - paragraph [ref=f6e291]: 1200+ Class Hours
+              - generic [ref=f6e292]:
+                - paragraph [ref=f6e295]: Assessment Cycle
+                - paragraph [ref=f6e296]: 2 Tests / Week
+              - generic [ref=f6e297]:
+                - paragraph [ref=f6e303]: Mentorship Ratio
+                - paragraph [ref=f6e304]: 1:1 Dedicated Mentor
+          - generic [ref=f6e305]:
+            - heading "Course Phases & Milestones" [level=4] [ref=f6e306]
+            - generic [ref=f6e307]:
+              - generic [ref=f6e308]:
+                - generic [ref=f6e309]: "1"
+                - generic [ref=f6e310]:
+                  - generic [ref=f6e311]:
+                    - 'heading "Phase 1: NCERT & Core Concepts" [level=5] [ref=f6e312]'
+                    - generic [ref=f6e313]: Months 1 - 3
+                  - paragraph [ref=f6e314]: "Milestone: Baseline assessment & conceptual clarity"
+                  - list [ref=f6e315]:
+                    - listitem [ref=f6e316]:
+                      - generic [ref=f6e318]: NCERT foundation classes covering Class 6 to 12 subjects.
+                    - listitem [ref=f6e319]:
+                      - generic [ref=f6e321]: "Basic answer writing: structuring intros and conclusions."
+                    - listitem [ref=f6e322]:
+                      - generic [ref=f6e324]: Weekly MCQ tests on current affairs basics.
+              - generic [ref=f6e325]:
+                - generic [ref=f6e326]: "2"
+                - generic [ref=f6e327]:
+                  - generic [ref=f6e328]:
+                    - 'heading "Phase 2: Advanced Syllabus & Mains Integration" [level=5] [ref=f6e329]'
+                    - generic [ref=f6e330]: Months 4 - 8
+                  - paragraph [ref=f6e331]: "Milestone: Micro-topic syllabus coverage & core books"
+                  - list [ref=f6e332]:
+                    - listitem [ref=f6e333]:
+                      - generic [ref=f6e335]: Deep dive into Laxmikanth (Polity), Ramesh Singh (Economy), Spectrum (History).
+                    - listitem [ref=f6e336]:
+                      - generic [ref=f6e338]: GS-1, GS-2, and GS-3 paper-by-paper integration.
+                    - listitem [ref=f6e339]:
+                      - generic [ref=f6e341]: Bi-weekly mains answer evaluations audited by senior mentors.
+              - generic [ref=f6e342]:
+                - generic [ref=f6e343]: "3"
+                - generic [ref=f6e344]:
+                  - generic [ref=f6e345]:
+                    - 'heading "Phase 3: Prelims Targeting & Test Series" [level=5] [ref=f6e346]'
+                    - generic [ref=f6e347]: Months 9 - 11
+                  - paragraph [ref=f6e348]: "Milestone: 10,000+ MCQs & GS refinement"
+                  - list [ref=f6e349]:
+                    - listitem [ref=f6e350]:
+                      - generic [ref=f6e352]: Specialized CSAT workshops & math/analytical training.
+                    - listitem [ref=f6e353]:
+                      - generic [ref=f6e355]: Prelims simulation test series on real UPSC standard.
+                    - listitem [ref=f6e356]:
+                      - generic [ref=f6e358]: Current affairs revision briefs and map markings.
+              - generic [ref=f6e359]:
+                - generic [ref=f6e360]: "4"
+                - generic [ref=f6e361]:
+                  - generic [ref=f6e362]:
+                    - 'heading "Phase 4: Intensive Mains Writing" [level=5] [ref=f6e363]'
+                    - generic [ref=f6e364]: Month 12+
+                  - paragraph [ref=f6e365]: "Milestone: Full-length mock exam series"
+                  - list [ref=f6e366]:
+                    - listitem [ref=f6e367]:
+                      - generic [ref=f6e369]: GS 1-4 full-length test simulation (3 hours each).
+                    - listitem [ref=f6e370]:
+                      - generic [ref=f6e372]: Personalized review meetings with Sudhagaran Sir.
+                    - listitem [ref=f6e373]:
+                      - generic [ref=f6e375]: Value-addition matrices for score maximization.
+    - generic [ref=f6e377]:
+      - generic [ref=f6e378]:
+        - generic [ref=f6e379]: What Makes Us Different
+        - heading "Why D'code IAS Academy?" [level=2] [ref=f6e380]
+        - paragraph [ref=f6e381]: We reject overly complicated rote coaching. Here is the highly visual proof of how our mentorship ecosystem transforms preparation into selection.
+      - generic [ref=f6e382]:
+        - generic [ref=f6e383]:
+          - heading "Traditional Rote Coaching" [level=3] [ref=f6e389]
+          - list [ref=f6e390]:
+            - listitem [ref=f6e391]:
+              - generic [ref=f6e395]: Overcrowded classrooms with 300+ students, ignoring individual weak areas.
+            - listitem [ref=f6e396]:
+              - generic [ref=f6e400]: Mains test evaluations taking 15-20 days, rendering feedback loops stale.
+            - listitem [ref=f6e401]:
+              - generic [ref=f6e405]: Passive lecture-listening without active typing or formatting practice.
+            - listitem [ref=f6e406]:
+              - generic [ref=f6e410]: No direct access to core founders or state-level career skill administrators.
+        - generic [ref=f6e411]:
+          - heading "D'code Mentorship Method" [level=3] [ref=f6e417]
+          - list [ref=f6e418]:
+            - listitem [ref=f6e419]:
+              - generic [ref=f6e422]: Micro-cohort counseling cabins and 1-on-1 personalized preparation sheets.
+            - listitem [ref=f6e423]:
+              - generic [ref=f6e426]: Guaranteed 24-hour assessment cycle audited by Sudhagaran Sir.
+            - listitem [ref=f6e427]:
+              - generic [ref=f6e430]: Active, custom daily answer-writing practice with baseline feedback spreadsheets.
+            - listitem [ref=f6e431]:
+              - generic [ref=f6e434]: Direct daily access to seasoned bureaucrats and expert educators.
+      - generic [ref=f6e435]:
+        - heading "The 24-Hour Evaluation & Counseling Pipeline" [level=3] [ref=f6e436]
+        - generic [ref=f6e437]:
+          - generic [ref=f6e438] [cursor=pointer]:
+            - generic [ref=f6e439]:
+              - generic [ref=f6e440]: "1"
+              - generic [ref=f6e441]: Hour 0
+            - heading "Write & Upload" [level=4] [ref=f6e442]
+            - paragraph [ref=f6e443]: Aspirant writes daily answers in exam-simulated conditions and uploads or hands in the hardcopy sheet.
+          - generic [ref=f6e444] [cursor=pointer]:
+            - generic [ref=f6e445]:
+              - generic [ref=f6e446]: "2"
+              - generic [ref=f6e447]: Hour 2 - 12
+            - heading "Mentor Evaluation" [level=4] [ref=f6e448]
+            - paragraph [ref=f6e449]: Dedicated expert mentors review the answer with precise margins annotations, checking argument flow, data correctness, and maps.
+          - generic [ref=f6e450] [cursor=pointer]:
+            - generic [ref=f6e451]:
+              - generic [ref=f6e452]: "3"
+              - generic [ref=f6e453]: Hour 12 - 20
+            - heading "1-on-1 Counseling Cabin" [level=4] [ref=f6e454]
+            - paragraph [ref=f6e455]: Aspirants sit inside 1-on-1 cabins with mentors to talk through constructive critiques and clear academic hurdles.
+          - generic [ref=f6e456] [cursor=pointer]:
+            - generic [ref=f6e457]:
+              - generic [ref=f6e458]: "4"
+              - generic [ref=f6e459]: Hour 20 - 24
+            - heading "Sudhagaran Sir's Quality Audit" [level=4] [ref=f6e460]
+            - paragraph [ref=f6e461]: Sudhagaran Sir randomly samples evaluated sheets to ensure grading consistency and correct pedagogical directions.
+      - generic [ref=f6e462]:
+        - generic [ref=f6e463]:
+          - generic [ref=f6e464]: 500+
+          - heading "Mentored Candidates" [level=4] [ref=f6e465]
+          - paragraph [ref=f6e466]: Personally guided towards Civil Services pathways
+        - generic [ref=f6e467]:
+          - generic [ref=f6e468]: AIR 1 - 10
+          - heading "Top 10 All India Ranks" [level=4] [ref=f6e469]
+          - paragraph [ref=f6e470]: Top-tier achievers shaped by simplified principles
+        - generic [ref=f6e471]:
+          - generic [ref=f6e472]: < 24 Hrs
+          - heading "Feedback Commitment" [level=4] [ref=f6e473]
+          - paragraph [ref=f6e474]: Instant evaluation checks to prevent drift
+        - generic [ref=f6e475]:
+          - generic [ref=f6e476]: 100%
+          - heading "Personal Accountability" [level=4] [ref=f6e477]
+          - paragraph [ref=f6e478]: No passive lectures; active cabin-by-cabin milestones
+    - generic [ref=f6e481]:
+      - generic [ref=f6e483]:
+        - generic [ref=f6e486]: D'code Philosophy
+        - heading "\"We simplify what others make complex.\"" [level=3] [ref=f6e491]
+        - paragraph [ref=f6e492]: Decode IAS Academy is committed to simplifying the IAS journey through clarity, systematic preparation, and structured mentoring. The academy helps aspirants navigate UPSC preparation with confidence through focused learning and a clear roadmap.
+        - generic [ref=f6e493]:
+          - generic [ref=f6e494]:
+            - paragraph [ref=f6e495]: 100%
+            - paragraph [ref=f6e496]: Syllabus Decoded
+          - generic [ref=f6e497]:
+            - paragraph [ref=f6e498]: Personal
+            - paragraph [ref=f6e499]: Feedback Loops
+      - generic [ref=f6e501]:
+        - text: About D'code IAS
+        - heading "Simplifying Your IAS Journey and Guaranteeing Clarity." [level=2] [ref=f6e502]
+        - paragraph [ref=f6e503]:
+          - text: "UPSC is often perceived as an ocean of information. At D'code IAS Academy, we operate under a single core directive:"
+          - strong [ref=f6e504]: Simplify
+          - text: . Under the personal oversight of
+          - strong [ref=f6e505]: Sudhagaran Sir
+          - text: ", we design systematic, paper-by-paper tracking spreadsheets and answer reviews so you always know exactly what to study next and how to execute on exam day."
+        - generic [ref=f6e506]:
+          - generic [ref=f6e512]:
+            - heading "Clarity of Path" [level=4] [ref=f6e513]
+            - paragraph [ref=f6e514]: We cut through the noise of UPSC syllabus overload to provide clear, actionable mapping for every topic.
+          - generic [ref=f6e520]:
+            - heading "Systematic Preparation" [level=4] [ref=f6e521]
+            - paragraph [ref=f6e522]: Daily timelines, structured feedback, and progress tracking keep your prep rigorous and aligned.
+          - generic [ref=f6e527]:
+            - heading "Structured Mentorship" [level=4] [ref=f6e528]
+            - paragraph [ref=f6e529]: Under the personal supervision of Sudhagaran Sir, you receive detailed feedback on your exact weaknesses.
+    - generic [ref=f6e532]:
+      - generic [ref=f6e535]:
+        - img "Sudhagaran Sir - Founder" [ref=f6e536]
+        - generic [ref=f6e537]:
+          - heading "Sudhagaran Sir" [level=3] [ref=f6e538]
+          - paragraph [ref=f6e539]: Founder & Chief Mentor
+          - paragraph [ref=f6e540]: Former Mission Director, Naan Mudhalvan
+        - generic [ref=f6e541]:
+          - link "Sudhagaran Sir Instagram" [ref=f6e542] [cursor=pointer]:
+            - /url: https://www.instagram.com/sudhagaran_sir_official_
+          - link "Sudhagaran Sir YouTube" [ref=f6e546] [cursor=pointer]:
+            - /url: https://www.youtube.com/@SudhagaranSirOfficial
+          - link "Sudhagaran Sir Telegram" [ref=f6e550] [cursor=pointer]:
+            - /url: https://t.me/sudhagaranirps
+      - generic [ref=f6e555]:
+        - generic [ref=f6e556]: Meet the Founder
+        - heading "Led by Sudhagaran Sir Former Mission Director, Naan Mudhalvan" [level=2] [ref=f6e557]
+        - generic [ref=f6e558]:
+          - paragraph [ref=f6e559]: Sudhagaran Sir, former Mission Director of Naan Mudhalvan, has mentored over 500 UPSC aspirants, guiding many towards success in the Civil Services Examination, including the achievement of Top 10 All India Ranks.
+          - paragraph [ref=f6e560]: Renowned for his approach of simplicity and clarity, his mentorship has enabled several aspirants from Tamil Nadu to secure distinguished All India Ranks in the UPSC Civil Services Examination.
+          - paragraph [ref=f6e561]: Building on this legacy, Sudhagaran Sir, along with a carefully curated team of experienced mentors, has embarked on a new mission through D’code IAS Academy—to nurture, mentor, and empower the next generation of Civil Services aspirants with the same proven approach that has shaped numerous success stories.
+        - generic [ref=f6e562]:
+          - paragraph [ref=f6e563]: "\"UPSC is not a test of your memory; it is a test of your clarity, articulation, and synthesis of critical issues. We simplify the mapping so you can express authority in every single mains answer you draft.\""
+          - paragraph [ref=f6e564]: — Sudhagaran Sir
+        - generic [ref=f6e565]:
+          - generic [ref=f6e566]: Former Mission Director of Naan Mudhalvan
+          - generic [ref=f6e571]: Mentored 500+ UPSC Aspirants & Guided Top 10 AIRs
+          - generic [ref=f6e576]: Simplicity and Clarity Approach for civil services prep
+          - generic [ref=f6e581]: Leading a Carefully Curated Team of Experienced Mentors
+        - generic [ref=f6e586]:
+          - link "YouTube channel" [ref=f6e587] [cursor=pointer]:
+            - /url: https://www.youtube.com/@SudhagaranSirOfficial
+          - link "Join Telegram Channel" [ref=f6e592] [cursor=pointer]:
+            - /url: https://t.me/sudhagaranirps
+    - generic [ref=f6e597]:
+      - generic [ref=f6e598]:
+        - generic [ref=f6e599]: The D'code Methodology
+        - heading "How We Simplify Your IAS Journey" [level=2] [ref=f6e600]
+        - paragraph [ref=f6e601]: A meticulous, structured four-step feedback framework that transforms raw memory into clear, policy-driven exam articulation.
+      - generic [ref=f6e603]:
+        - generic [ref=f6e604]:
+          - generic [ref=f6e605]:
+            - generic [ref=f6e606]: "01"
+            - heading "Pattern Decoding" [level=3] [ref=f6e612]
+            - paragraph [ref=f6e613]: Analyze PYQs & Trends
+            - paragraph [ref=f6e614]: We don't start with arbitrary readings. We dissect standard civil services questions from the last decade to catalog exact evaluation patterns and high-yield topics.
+          - generic [ref=f6e615]: Quality Checked
+        - generic [ref=f6e619]:
+          - generic [ref=f6e620]:
+            - generic [ref=f6e621]: "02"
+            - heading "Comprehensive Mapping" [level=3] [ref=f6e626]
+            - paragraph [ref=f6e627]: Syllabus Micro-Slicing
+            - paragraph [ref=f6e628]: Each GS topic is sliced into bite-sized concept sheets, ensuring no syllabus gaps remain while preventing material fatigue.
+          - generic [ref=f6e629]: Quality Checked
+        - generic [ref=f6e633]:
+          - generic [ref=f6e634]:
+            - generic [ref=f6e635]: "03"
+            - heading "Answer Structuring" [level=3] [ref=f6e642]
+            - paragraph [ref=f6e643]: Daily Intensive Drills
+            - paragraph [ref=f6e644]: "Aspirants practice writing answers daily. We focus on structural frameworks: introduction hooks, body bulleting, flow diagrams, and constructive policy conclusions."
+          - generic [ref=f6e645]: Quality Checked
+        - generic [ref=f6e649]:
+          - generic [ref=f6e650]:
+            - generic [ref=f6e651]: "04"
+            - heading "Mentorship Loops" [level=3] [ref=f6e659]
+            - paragraph [ref=f6e660]: One-on-One Live Audits
+            - paragraph [ref=f6e661]: Sudhagaran Sir and our specialized evaluation board provide comprehensive paper reviews within 24 hours, correcting arguments and adding value-addition matrices.
+          - generic [ref=f6e662]: Quality Checked
+    - generic [ref=f6e668]:
+      - generic [ref=f6e669]:
+        - generic [ref=f6e670]: Subject Leaders
+        - heading "Our Distinguished Faculty" [level=2] [ref=f6e671]
+      - generic [ref=f6e674] [cursor=pointer]:
+        - img "Sudhagaran Sir" [ref=f6e676]
+        - generic [ref=f6e678]:
+          - heading "Sudhagaran Sir" [level=3] [ref=f6e679]
+          - paragraph [ref=f6e680]: Founder & Chief Mentor
+      - button "Show Academic Roster" [ref=f6e682] [cursor=pointer]
+    - generic [ref=f6e684]:
+      - generic [ref=f6e685]:
+        - generic [ref=f6e686]: Topper Interviews
+        - heading "YouTube Video Testimonials" [level=2] [ref=f6e687]
+        - paragraph [ref=f6e688]: Listen directly to successful candidates who unlocked top All India Ranks using D'code's systematic mentorship pipeline.
+      - generic [ref=f6e689]:
+        - generic [ref=f6e690]:
+          - generic [ref=f6e692] [cursor=pointer]:
+            - img "Sowmya R." [ref=f6e693]
+            - generic [ref=f6e699]: AIR 88 • UPSC 2023
+          - generic [ref=f6e700]:
+            - generic [ref=f6e701]:
+              - heading "How D'code Mentorship Audits Doubled My Mains Scores" [level=4] [ref=f6e702]
+              - paragraph [ref=f6e703]: "\"The paper-by-paper review loop with Sudhagaran Sir gave me structural clarity. Within weeks, my answer flow became incredibly scientific.\""
+            - generic [ref=f6e709]:
+              - paragraph [ref=f6e710]: Sowmya R.
+              - paragraph [ref=f6e711]: AIR 88, UPSC 2023
+        - generic [ref=f6e712]:
+          - generic [ref=f6e714] [cursor=pointer]:
+            - img "Arun Kumar S." [ref=f6e715]
+            - generic [ref=f6e721]: AIR 142 • UPSC 2023
+          - generic [ref=f6e722]:
+            - generic [ref=f6e723]:
+              - heading "Cracking Public Administration & Sociology Optional Papers" [level=4] [ref=f6e724]
+              - paragraph [ref=f6e725]: "\"Standard optional strategies are often bloated. At D'code Academy, we focused strictly on thinker interlinking which secured my rank.\""
+            - generic [ref=f6e731]:
+              - paragraph [ref=f6e732]: Arun Kumar S.
+              - paragraph [ref=f6e733]: AIR 142, UPSC 2023
+        - generic [ref=f6e734]:
+          - generic [ref=f6e736] [cursor=pointer]:
+            - img "Divya Bharathi K." [ref=f6e737]
+            - generic [ref=f6e743]: AIR 210 • UPSC 2023
+          - generic [ref=f6e744]:
+            - generic [ref=f6e745]:
+              - heading "Daily Answer Writing Drills and Handling Academic Fatigue" [level=4] [ref=f6e746]
+              - paragraph [ref=f6e747]: "\"The personalized counselor desk synced me directly to milestones, making sure I never drifted away from daily answers practice.\""
+            - generic [ref=f6e753]:
+              - paragraph [ref=f6e754]: Divya Bharathi K.
+              - paragraph [ref=f6e755]: AIR 210, UPSC 2023
+      - link "Visit Our YouTube Channel for More Videos" [ref=f6e757] [cursor=pointer]:
+        - /url: https://www.youtube.com/@SudhagaranSirOfficial
+    - generic [ref=f6e763]:
+      - generic [ref=f6e764]:
+        - generic [ref=f6e765]: Admissions Timeline
+        - heading "Upcoming Batch Schedule" [level=2] [ref=f6e766]
+      - generic [ref=f6e768]:
+        - generic [ref=f6e769]:
+          - generic [ref=f6e770]:
+            - heading "Mains Momentum 2027" [level=3] [ref=f6e771]
+            - generic [ref=f6e772]: Offline + Online
+          - generic [ref=f6e773]:
+            - generic [ref=f6e774]:
+              - paragraph [ref=f6e775]: Commencing
+              - paragraph [ref=f6e776]: 15th Oct, 2026
+            - generic [ref=f6e777]:
+              - paragraph [ref=f6e778]: Availability
+              - generic [ref=f6e779]: Closed
+          - button "Enroll Now" [ref=f6e781] [cursor=pointer]
+        - generic [ref=f6e782]:
+          - generic [ref=f6e783]:
+            - heading "PCM Comprehensive" [level=3] [ref=f6e784]
+            - generic [ref=f6e785]: Offline + Online
+          - generic [ref=f6e786]:
+            - generic [ref=f6e787]:
+              - paragraph [ref=f6e788]: Commencing
+              - paragraph [ref=f6e789]: 01st Nov, 2026
+            - generic [ref=f6e790]:
+              - paragraph [ref=f6e791]: Availability
+              - generic [ref=f6e792]: Coming Soon
+          - button "Enroll Now" [ref=f6e794] [cursor=pointer]
+        - generic [ref=f6e795]:
+          - generic [ref=f6e796]:
+            - heading "Optionals Special Module" [level=3] [ref=f6e797]
+            - generic [ref=f6e798]: Offline Only
+          - generic [ref=f6e799]:
+            - generic [ref=f6e800]:
+              - paragraph [ref=f6e801]: Commencing
+              - paragraph [ref=f6e802]: 10th Nov, 2026
+            - generic [ref=f6e803]:
+              - paragraph [ref=f6e804]: Availability
+              - generic [ref=f6e805]: Coming Soon
+          - button "Enroll Now" [ref=f6e807] [cursor=pointer]
+    - generic [ref=f6e809]:
+      - generic [ref=f6e810]:
+        - generic [ref=f6e811]: Clarifications
+        - heading "Frequently Asked Questions" [level=2] [ref=f6e812]
+      - generic [ref=f6e814]:
+        - generic [ref=f6e815]:
+          - button "What makes D'code IAS Academy different from other institutes?" [ref=f6e816]
+          - generic [ref=f6e824]: D'code IAS Academy operates under the direct leadership of Sudhagaran Sir, Former Mission Director of Naan Mudhalvan. Instead of just delivering lectures, we focus heavily on simplifying the preparation. We use systematic syllabus-slicing mapping and offer a personal mentoring feedback loop where your answers are evaluated directly with action points within 24 hours.
+        - button "What optional coaching subjects are available at D'code?" [ref=f6e827]
+        - button "Do you offer state civil services coaching (TNPSC)?" [ref=f6e836]
+        - button "Can absolute beginners join the PCM Comprehensive Batch?" [ref=f6e845]
+        - button "How does the Mains Momentum 2027 program work?" [ref=f6e854]
+        - button "How can I connect with other aspirants and receive official updates?" [ref=f6e863]
+      - generic [ref=f6e871]:
+        - paragraph [ref=f6e872]: Have a different question or need direct academic scheduling counseling?
+        - link "Join WhatsApp Discussion Group" [ref=f6e873] [cursor=pointer]:
+          - /url: https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp
+    - generic [ref=f6e881]:
+      - generic [ref=f6e882]:
+        - button "Exit" [ref=f6e884] [cursor=pointer]
+        - generic [ref=f6e889]:
+          - heading "Submit Admission Query" [level=2] [ref=f6e890]
+          - paragraph [ref=f6e891]: Connect directly with Sudhagaran Sir's counselor desk. Reach out today for free career mapping, trial class schedules, or syllabus guidance.
+        - generic [ref=f6e892]:
+          - generic [ref=f6e893]:
+            - generic [ref=f6e894]: Full Name *
+            - textbox "Enter your name" [ref=f6e895]
+          - generic [ref=f6e896]:
+            - generic [ref=f6e897]:
+              - generic [ref=f6e898]: Phone Number *
+              - generic [ref=f6e899]:
+                - generic [ref=f6e900]: "+91"
+                - textbox "Enter 10-digit number" [ref=f6e901]
+            - generic [ref=f6e902]:
+              - generic [ref=f6e903]:
+                - generic [ref=f6e904]: Email Address
+                - generic [ref=f6e905]: optional
+              - textbox "email@example.com" [ref=f6e906]
+          - generic [ref=f6e907]:
+            - generic [ref=f6e908]: Interested Course / Program
+            - combobox [ref=f6e909]:
+              - option "Mains Momentum 2027 Program" [selected]
+              - option "PCM Comprehensive Program"
+              - option "Public Administration Optional Program"
+              - option "Sociology Optional Program"
+              - option "Anthropology Optional Program"
+              - option "TNPSC Group 1, 2 & 4 Program"
+          - generic [ref=f6e910]:
+            - generic [ref=f6e911]: Additional Query or Notes
+            - textbox "Ask about materials, hostel partners, optional subjects, or fees..." [ref=f6e912]
+          - button "Submit Inquiry Request" [ref=f6e914] [cursor=pointer]
+      - generic [ref=f6e918]:
+        - generic [ref=f6e924]:
+          - paragraph [ref=f6e925]: Academy Address
+          - paragraph [ref=f6e926]: 825, 1st St, G Block, Ranganathan Garden,Anna Nagar, Chennai – 600040
+        - generic [ref=f6e931]:
+          - paragraph [ref=f6e932]: Direct Contacts
+          - paragraph [ref=f6e933]: +91 96000 60393 / 96000 60349
+          - paragraph [ref=f6e934]: "Counseling helpline: 24/7 active"
+        - generic [ref=f6e940]:
+          - paragraph [ref=f6e941]: Email Address
+          - paragraph [ref=f6e942]: info@decodeias.com
+        - generic [ref=f6e948]:
+          - paragraph [ref=f6e949]: Operating Hours
+          - generic [ref=f6e950]:
+            - paragraph [ref=f6e951]: "Monday - Saturday: 9:00 AM - 7:00 PM"
+            - paragraph [ref=f6e952]: "Sunday: 10:00 AM - 4:00 PM"
+  - contentinfo [ref=f6e953]:
+    - generic [ref=f6e954]:
+      - generic [ref=f6e955]:
+        - generic [ref=f6e956]:
+          - generic [ref=f6e957]:
+            - img "D'code IAS Academy Logo" [ref=f6e958]
+            - heading "D'code IAS Academy" [level=3] [ref=f6e959]
+          - paragraph [ref=f6e960]: We Simplify Your IAS Journey. Pioneering civil services coaching in Tamil Nadu. Under the leadership of Sudhagaran Sir, D'code IAS Academy simplifies your preparation with structured content and dynamic mentorship feedback loops.
+          - generic [ref=f6e961]:
+            - paragraph [ref=f6e962]: "Anna Nagar Center:"
+            - paragraph [ref=f6e963]: 825, 1st St, G Block, Ranganathan Garden,
+            - paragraph [ref=f6e964]: Anna Nagar, Chennai – 600040
+        - generic [ref=f6e965]:
+          - heading "Quick Links & Policies" [level=4] [ref=f6e966]
+          - list [ref=f6e967]:
+            - listitem [ref=f6e968]:
+              - button "Privacy Policy" [ref=f6e969]
+            - listitem [ref=f6e970]:
+              - button "Terms of Service" [ref=f6e971]
+            - listitem [ref=f6e972]:
+              - button "Refund Policy" [ref=f6e973]
+            - listitem [ref=f6e974]:
+              - button "Contact Us" [ref=f6e975]
+            - listitem [ref=f6e976]:
+              - button "Courses Offered" [ref=f6e977]
+        - generic [ref=f6e978]:
+          - heading "Connect" [level=4] [ref=f6e979]
+          - generic [ref=f6e980]:
+            - link "Direct Email Link" [ref=f6e981] [cursor=pointer]:
+              - /url: mailto:info@decodeias.com
+              - generic [ref=f6e982]: "@"
+            - link "Global Portal Directory" [ref=f6e983] [cursor=pointer]:
+              - /url: "#home"
+            - link "WhatsApp Community Chat" [ref=f6e987] [cursor=pointer]:
+              - /url: https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp
+              - generic [ref=f6e988]: ⇄
+      - generic [ref=f6e989]:
+        - generic [ref=f6e990]:
+          - generic [ref=f6e991]: © 2026 D'code IAS Academy. All rights reserved. Shaping the future of Indian Governance.
+          - button "System Operational" [ref=f6e992] [cursor=pointer]
+        - generic [ref=f6e995]:
+          - generic [ref=f6e996]: +91 96000 60393 / 96000 60349
+          - generic [ref=f6e999]: info@decodeias.com
+  - generic [ref=f6e1003]: "Developer Reference docs: expand components inside `/src/components/*` securely."

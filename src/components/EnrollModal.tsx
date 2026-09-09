@@ -29,6 +29,7 @@ export default function EnrollModal({
     preferredTime: 'morning'
   });
 
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   // Sync selected options if provided
@@ -41,37 +42,72 @@ export default function EnrollModal({
     }
   }, [selectedCourse, selectedBatch, coursesList]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
       alert('Please fill out Name and Phone Number.');
       return;
     }
 
-    // Submit via backend Express API
-    submitInquiryApi({
-      fullName: formData.name,
-      phone: formData.phone,
-      email: formData.email || undefined,
-      course: formData.selectedId,
-      formType: 'enrollment',
-      message: `Preferred Slot: ${formData.preferredTime}. Commute Mode: ${formData.scheduleType}. Prior attempt: ${formData.hasPriorAttempt}`
-    });
+    setLoading(true);
 
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        selectedId: 'mains_momentum_2027',
-        scheduleType: 'offline-hybrid',
-        hasPriorAttempt: 'no',
-        preferredTime: 'morning'
+    const targetCourseObj = coursesList.find(c => c.id === formData.selectedId) || selectedCourse;
+    const courseTitle = targetCourseObj ? targetCourseObj.title : formData.selectedId;
+
+    const studyModeMap: Record<string, string> = {
+      'offline-hybrid': 'Offline Classroom (Anna Nagar, Chennai)',
+      'online-live': 'Online Live Interactive Stream'
+    };
+
+    const slotMap: Record<string, string> = {
+      'morning': 'Morning (9 AM - 12 PM)',
+      'afternoon': 'Afternoon (1 PM - 4 PM)',
+      'evening': 'Evening (5 PM - 8 PM)'
+    };
+
+    const attemptMap: Record<string, string> = {
+      'no': 'First-Time Aspirant (No prior attempts)',
+      'yes-prelims': 'Previously Written Prelims',
+      'yes-mains': 'Previously Written Mains'
+    };
+
+    const structuredDetails = [
+      `Program: ${courseTitle}`,
+      `Study Mode: ${studyModeMap[formData.scheduleType] || formData.scheduleType}`,
+      `Preferred Slot: ${slotMap[formData.preferredTime] || formData.preferredTime}`,
+      `Attempt Background: ${attemptMap[formData.hasPriorAttempt] || formData.hasPriorAttempt}`
+    ].join(' | ');
+
+    try {
+      await submitInquiryApi({
+        fullName: formData.name,
+        phone: formData.phone,
+        email: formData.email || undefined,
+        course: courseTitle,
+        formType: 'enrollment',
+        message: structuredDetails
       });
-      onClose();
-    }, 2800);
+
+      setLoading(false);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          selectedId: 'mains_momentum_2027',
+          scheduleType: 'offline-hybrid',
+          hasPriorAttempt: 'no',
+          preferredTime: 'morning'
+        });
+        onClose();
+      }, 2800);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      alert('Failed to submit enrollment application. Please try again.');
+    }
   };
 
   return (
@@ -362,9 +398,10 @@ export default function EnrollModal({
                     <div className="pt-2">
                       <button
                         type="submit"
-                        className="w-full bg-[#D31218] text-white font-space text-[11px] sm:text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-md hover:bg-[#A30D12] transition-all active:scale-[0.99] cursor-pointer shadow-sm border-none"
+                        disabled={loading}
+                        className="w-full bg-[#D31218] text-white font-space text-[11px] sm:text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-md hover:bg-[#A30D12] transition-all active:scale-[0.99] cursor-pointer shadow-sm border-none disabled:opacity-60"
                       >
-                        Secure Provisionally Reserved Seat
+                        {loading ? 'Transmitting Registration...' : 'Secure Provisionally Reserved Seat'}
                       </button>
                     </div>
 

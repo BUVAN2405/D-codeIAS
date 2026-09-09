@@ -168,7 +168,13 @@ export async function sendInquiryNotification(record) {
 
   // Also send student confirmation if applicant provided email and is not the owner/CC
   let studentMailSent = false;
-  if (record.email && record.email !== OWNER_EMAIL && record.email !== OWNER_CC_EMAIL) {
+  const ccList = OWNER_CC_EMAIL.split(',').map(s => s.trim().toLowerCase());
+  const isOwnerOrCc = record.email && (
+    record.email.trim().toLowerCase() === OWNER_EMAIL.trim().toLowerCase() ||
+    ccList.includes(record.email.trim().toLowerCase())
+  );
+
+  if (record.email && !isOwnerOrCc) {
     const studentHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background-color: #ffffff;">
         <div style="background-color: #0D2C54; color: #ffffff; padding: 20px; text-align: center;">

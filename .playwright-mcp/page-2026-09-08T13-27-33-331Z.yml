@@ -1,0 +1,13 @@
+- generic [ref=f2e4]:
+  - generic [ref=f2e8]: Scheduled System Maintenance (HTTP 503)
+  - heading "Upgrading Our Academic Portal" [level=1] [ref=f2e13]
+  - paragraph [ref=f2e14]: D'code IAS Academy server infrastructure is undergoing essential database optimization and security updates to serve your UPSC preparation better.
+  - generic [ref=f2e15]:
+    - generic [ref=f2e16]: "Estimated Resolution Time:"
+    - generic [ref=f2e21]: ~30-45 minutes
+  - generic [ref=f2e22]:
+    - 'link "Call Admissions: +91 99403 76223" [ref=f2e23] [cursor=pointer]':
+      - /url: tel:+919940376223
+    - link "WhatsApp Urgent Support" [ref=f2e26] [cursor=pointer]:
+      - /url: https://wa.me/919940376223?text=Hi%20D'code%20IAS,%20I%20am%20inquiring%20during%20system%20maintenance.
+  - button "Check Server Status Again" [ref=f2e30]
