@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Download, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import ceoPhoto from '../Ceo.jpeg';
 import academyLogo from '../LOGO.jpeg';
@@ -21,13 +21,12 @@ const BACKGROUND_IMAGES = [
 ];
 
 interface HeroProps {
-  onExploreClick: () => void;
-  onBrochureClick: () => void;
+  onExploreClick?: () => void;
+  onBrochureClick?: () => void;
 }
 
 export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  const [isCardVisible, setIsCardVisible] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,19 +36,20 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
   }, []);
 
   return (
-    <section id="home" className="relative pt-16 overflow-hidden">
+    <section id="home" className="relative pt-16 overflow-hidden min-h-[420px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] flex items-center justify-center">
       {/* Background Image Slider with Rich Dark Gradient Overlay */}
       <div className="absolute inset-0 z-0 bg-black overflow-hidden">
         <AnimatePresence initial={false} mode="wait">
           <motion.img
             key={currentBgIndex}
             src={BACKGROUND_IMAGES[currentBgIndex]}
-            alt="D'code Campus Atmosphere"
+            alt={currentBgIndex === 6 ? "Sudhagaran Sir, Founder & Chief Mentor of D'code IAS Academy Best IAS Coaching Anna Nagar Chennai" : "D'code IAS Academy - Best IAS & UPSC Coaching Center in Anna Nagar Chennai"}
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 0.9, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
             className="w-full h-full object-cover object-center"
+            fetchPriority={currentBgIndex === 0 ? 'high' : 'auto'}
             referrerPolicy="no-referrer"
           />
         </AnimatePresence>
@@ -80,92 +80,8 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
         </span>
       </div>
 
-      {/* Main Interactive Container */}
-      <div className="relative z-10 max-w-(--size-container-max) mx-auto px-10 sm:px-14 md:px-16 pt-20 pb-16 sm:pt-28 sm:pb-24 flex items-center justify-center min-h-[500px] lg:min-h-[580px]">
-
-        {/* Editorial Text Content with Premium Liquid Morphic Glass Card */}
-        <AnimatePresence>
-          {isCardVisible && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ duration: 0.4 }}
-              className="max-w-3xl w-full mx-auto text-center p-5 sm:p-10 md:p-12 rounded-3xl bg-black/35 backdrop-blur-md border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] space-y-6 flex flex-col items-center relative overflow-hidden"
-            >
-              {/* Close Button on Top Right Corner */}
-              <button
-                onClick={() => setIsCardVisible(false)}
-                className="absolute top-2 right-2 sm:top-4 sm:right-4 p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-[#D31218] text-white/80 hover:text-white transition-all cursor-pointer border-none outline-none z-20"
-                aria-label="Close information"
-              >
-                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </button>
-
-              {/* Subtle liquid organic background glows inside card */}
-              <div className="absolute -top-20 -left-20 w-44 h-44 bg-[#D31218]/15 rounded-full filter blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-20 -right-20 w-44 h-44 bg-[#0D2C54]/30 rounded-full filter blur-3xl pointer-events-none" />
-
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#D31218]/25 border border-[#D31218]/35 rounded-full text-[#ffc6c6] font-space text-[11px] uppercase tracking-wider font-semibold z-10 mt-4 sm:mt-0"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D31218] animate-pulse" />
-                Admission Open for 2026-27
-              </motion.div>
-
-              {/* Main Title of Academy with Top SEO Keyword Integration */}
-              <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.05] tracking-tight z-10"
-              >
-                Best IAS Academy in Chennai. <br className="hidden sm:inline" />
-                We Simplify Your <span className="text-[#fd565a]">IAS Journey.</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-base sm:text-lg text-gray-100 font-sans font-medium leading-relaxed max-w-2xl z-10"
-              >
-                Top UPSC & TNPSC Civil Services Coaching in Anna Nagar, Chennai. Clarity, systematic course mapping, and intensive answer development under founder Sudhagaran Sir (Former Mission Director, Naan Mudhalvan).
-              </motion.p>
-
-              {/* Action CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-row justify-center gap-2.5 sm:gap-4 w-full sm:w-auto pt-2 z-10"
-              >
-                <button
-                  onClick={onExploreClick}
-                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-[#D31218] hover:bg-[#A30D12] text-white font-space text-[10px] sm:text-xs font-bold uppercase tracking-wider py-3.5 px-6 sm:px-8 rounded transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-[#D31218]/30 border-none flex-1 sm:flex-none"
-                >
-                  Explore Courses
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
-                </button>
-
-                <button
-                  onClick={onBrochureClick}
-                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-transparent hover:bg-white/5 text-white border border-white/30 font-space text-[10px] sm:text-xs font-bold uppercase tracking-wider py-3.5 px-6 sm:px-8 rounded transition-all active:scale-[0.98] cursor-pointer backdrop-blur-xs flex-1 sm:flex-none"
-                >
-                  Brochure
-                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white shrink-0" />
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-
-      </div>
-
+      {/* Accessible SEO Heading */}
+      <h1 className="sr-only">Best IAS Academy in Chennai - D'code IAS Academy</h1>
     </section>
   );
 }

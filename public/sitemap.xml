@@ -3,41 +3,67 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Root / Homepage -->
   <url>
     <loc>https://decodeias.com/</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <!-- UPSC Prelims 2027 Conquer Orientation (October 15 | Periyar Hall | Sudhagaran Sir) -->
+  <url>
+    <loc>https://decodeias.com/#prelims-orientation-2027</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- UPSC Prelims 2027 Strategy & Orientation Registration -->
+  <url>
+    <loc>https://decodeias.com/#prelims-conquer</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <!-- Courses Section -->
   <url>
     <loc>https://decodeias.com/#courses</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Faculty / Sudhagaran Sir Section -->
   <url>
     <loc>https://decodeias.com/#faculty</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- UPSC Toppers / Results Section -->
   <url>
     <loc>https://decodeias.com/#results</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
+  <!-- About Academy Section -->
+  <url>
+    <loc>https://decodeias.com/#about</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <!-- Contact / Inquiry Section -->
   <url>
     <loc>https://decodeias.com/#contact</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- AI / LLM Metadata Endpoint -->
   <url>
     <loc>https://decodeias.com/site-metadata.json</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 </urlset>
-

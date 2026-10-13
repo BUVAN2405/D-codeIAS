@@ -4,13 +4,14 @@ import { Phone, FileText, MessageCircle, ExternalLink } from 'lucide-react';
 
 interface LeadControlsProps {
   onInquiryClick: () => void;
+  onOrientationClick?: () => void;
 }
 
-export default function LeadControls({ onInquiryClick }: LeadControlsProps) {
+export default function LeadControls({ onInquiryClick, onOrientationClick }: LeadControlsProps) {
   const [isVisible, setIsVisible] = useState(false);
   const contact1 = '9600060393';
   const contact2 = '9600060349';
-  const whatsappCommunity = 'https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp';
+  const whatsappCommunity = 'https://wa.me/919600060393';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +42,23 @@ export default function LeadControls({ onInquiryClick }: LeadControlsProps) {
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="hidden md:flex flex-col gap-2 fixed right-0 top-1/2 -translate-y-1/2 z-40"
           >
+            {/* Sticky Prelims 2027 Orientation Card */}
+            {onOrientationClick && (
+              <motion.div
+                whileHover={{ x: -12 }}
+                onClick={onOrientationClick}
+                className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-[#D31218]/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D31218] to-red-600 text-white flex items-center justify-center hover:from-red-600 hover:to-[#0D2C54] transition-colors shrink-0 shadow-md">
+                  <span className="text-[11px] font-black tracking-tight font-space text-white">2027</span>
+                </div>
+                <div className="text-[10px] max-w-0 opacity-0 overflow-hidden group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-3 group-hover:mr-2 transition-all duration-300 ease-in-out whitespace-nowrap flex flex-col justify-center">
+                  <p className="font-space font-bold uppercase tracking-wider text-[#D31218] leading-tight">Prelims 2027</p>
+                  <p className="font-sans font-semibold text-gray-500 mt-0.5 leading-none">Oct 15 Orientation</p>
+                </div>
+              </motion.div>
+            )}
+
             {/* Sticky Call Card */}
             <motion.div
               whileHover={{ x: -12 }}
@@ -106,8 +124,20 @@ export default function LeadControls({ onInquiryClick }: LeadControlsProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="md:hidden fixed bottom-5 left-4 right-4 z-40 bg-white/95 backdrop-blur-lg border border-gray-150 py-1.5 px-2.5 rounded-full flex items-center justify-between gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-[245px] mx-auto"
+            className="md:hidden fixed bottom-5 left-3 right-3 z-40 bg-white/95 backdrop-blur-lg border border-gray-150 py-1.5 px-2.5 rounded-full flex items-center justify-between gap-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-[310px] mx-auto"
           >
+            {/* Prelims 2027 Orientation Pill on mobile */}
+            {onOrientationClick && (
+              <button
+                type="button"
+                onClick={onOrientationClick}
+                className="px-2.5 py-1.5 rounded-full bg-[#D31218] text-white font-space text-[9px] font-extrabold uppercase tracking-tight shrink-0 shadow-sm active:scale-95 transition-transform flex items-center gap-1"
+                title="Prelims 2027 Orientation (Oct 15)"
+              >
+                <span>Oct 15</span>
+              </button>
+            )}
+
             {/* Call Academy Option */}
             <a
               href={`tel:${contact1}`}
@@ -120,7 +150,7 @@ export default function LeadControls({ onInquiryClick }: LeadControlsProps) {
             {/* Quick Inquiry Option */}
             <button
               onClick={onInquiryClick}
-              className="flex-1 inline-flex items-center justify-center gap-1 bg-[#D31218] hover:bg-[#A30D12] text-white py-1.5 px-3 rounded-full font-space text-[9px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
+              className="flex-1 inline-flex items-center justify-center gap-1 bg-[#D31218] hover:bg-[#A30D12] text-white py-1.5 px-2.5 rounded-full font-space text-[9px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
             >
               <FileText className="w-3 h-3" />
               <span>Inquire</span>

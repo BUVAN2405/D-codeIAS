@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Programs from './components/Programs';
@@ -19,6 +20,7 @@ import AccessDeniedPage from './components/AccessDeniedPage';
 import ServiceStatusModal from './components/ServiceStatusModal';
 import NetworkStatusOverlay from './components/NetworkStatusOverlay';
 import LegalPolicyModal, { PolicyType } from './components/LegalPolicyModal';
+import PrelimsOrientationPopup, { ORIENTATION_HASHTAGS, REGISTRATION_FORM_URL } from './components/PrelimsOrientationPopup';
 
 // Custom Sections
 import AboutAcademy from './components/AboutAcademy';
@@ -58,6 +60,18 @@ export default function App() {
   const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [isAdminDashboardOpen, setIsAdminDashboardOpen] = useState(false);
+  const [isOrientationOpen, setIsOrientationOpen] = useState(false);
+
+  // Auto-open UPSC Prelims 2027 Conquer Orientation popup when user enters the website
+  useEffect(() => {
+    const isDismissed = sessionStorage.getItem('dcode_prelims_2027_popup_closed');
+    if (!isDismissed) {
+      const timer = setTimeout(() => {
+        setIsOrientationOpen(true);
+      }, 700);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   // Detect 404 URL route or system mode query overrides (e.g. ?mode=maintenance, ?mode=500, ?mode=401, ?mode=status)
   useEffect(() => {
@@ -234,8 +248,68 @@ export default function App() {
     );
   }
 
+  const getDynamicTitle = () => {
+    switch (activeSection) {
+      case 'courses': return "Courses & Programs | D'code IAS Academy";
+      case 'faculty': return "Faculty & Mentors | D'code IAS Academy";
+      case 'contact': return "Contact Us | D'code IAS Academy";
+      default: return "D'code IAS Academy | Best IAS Academy in Chennai & Top UPSC Coaching";
+    }
+  };
+
   return (
     <ErrorBoundary>
+      <Helmet>
+        <title>{getDynamicTitle()}</title>
+        {/* Canonical must always be the root URL — hash fragments (#section) are ignored by Googlebot */}
+        <link rel="canonical" href="https://decodeias.com/" />
+        <meta property="og:url" content="https://decodeias.com/" />
+        {/* SEO Meta Keywords targeting orientation and hashtags */}
+        <meta 
+          name="keywords" 
+          content={`dcode ias academy, best IAS academy in Chennai, top UPSC coaching in Tamil Nadu, UPSC Prelims 2027, Sudhagaran Sir, Periyar Hall orientation, ${ORIENTATION_HASHTAGS.map(h => h.replace('#', '')).join(', ')}`} 
+        />
+        {/* Schema.org Educational Event for UPSC Prelims 2027 Orientation */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationEvent",
+            "name": "D’code Prelims Conquer Orientation 2027 with Sudhagaran Sir & Team",
+            "description": "Complete practical Prelims 2027 strategy covering GS Strategy, CSAT Strategy, Current Affairs, PYQs, Revision Strategy, Test Strategy, and Prelims Planning roadmap.",
+            "startDate": "2026-10-15T09:30:00+05:30",
+            "endDate": "2026-10-15T13:30:00+05:30",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "location": {
+              "@type": "Place",
+              "name": "Periyar Hall",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Chennai",
+                "addressRegion": "Tamil Nadu",
+                "addressCountry": "IN"
+              }
+            },
+            "organizer": {
+              "@type": "EducationalOrganization",
+              "name": "D'code IAS Academy",
+              "url": "https://decodeias.com"
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": REGISTRATION_FORM_URL,
+              "price": "0",
+              "priceCurrency": "INR",
+              "availability": "https://schema.org/InStock"
+            },
+            "performer": {
+              "@type": "Person",
+              "name": "Sudhagaran Sir"
+            }
+          })}
+        </script>
+      </Helmet>
+
       {/* Network Connectivity & Offline Detector */}
       <NetworkStatusOverlay />
 
@@ -363,7 +437,19 @@ export default function App() {
         />
 
         {/* Interactive Sticky Lead Controls Panel */}
-        <LeadControls onInquiryClick={triggerModalGeneric} />
+        <LeadControls 
+          onInquiryClick={triggerModalGeneric} 
+          onOrientationClick={() => setIsOrientationOpen(true)}
+        />
+
+        {/* Exclusive UPSC Prelims 2027 Conquer Orientation Popup */}
+        <PrelimsOrientationPopup
+          isOpen={isOrientationOpen}
+          onClose={() => {
+            setIsOrientationOpen(false);
+            sessionStorage.setItem('dcode_prelims_2027_popup_closed', 'true');
+          }}
+        />
 
         {/* Master Registration Reservation Modal Overlay */}
         <EnrollModal

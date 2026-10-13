@@ -224,6 +224,21 @@
       "question": "Can outstation or working professionals join online classes?",
       "answer": "Yes, all courses (Mains Momentum, PCM Comprehensive, Optionals, TNPSC) are offered in both Offline and live/recorded Online modes with flexible timing."
     }
+  ],
+  "upcomingEvents": [
+    {
+      "id": "prelims_conquer_2027",
+      "name": "D’code Prelims Conquer Orientation 2027",
+      "date": "2026-10-15",
+      "venue": "Periyar Hall, Chennai",
+      "speakers": ["Sudhagaran Sir & D'code Team"],
+      "description": "Complete, practical UPSC Prelims 2027 strategy covering GS Strategy, CSAT Strategy, Current Affairs, PYQs, Revision Strategy, Test Strategy, and Prelims Planning roadmap.",
+      "registrationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSc_gdib-e9G5tat-QSpEw99xK6pRqccBrUtYaGZ9uWrW1GytA/viewform?usp=publish-editor",
+      "contact": "+91 96000 60349 / +91 96000 60393",
+      "targetKeywords": [
+        "UPSC2027", "UPSCPrelims2027", "UPSCPrelims", "UPSCPreparation", "UPSCStrategy", "PrelimsStrategy", "UPSC2027Preparation", "UPSCPreparation2027", "UPSCJourney", "UPSCGuidance", "UPSCMentorship", "UPSCaspirants", "IASAspirants", "IASPreparation", "CivilServicesExamination", "UPSCStrategy2027", "CSAT", "UPSCCurrentAffairs", "UPSCPreviousYearQuestions", "UPSCRevision", "PrelimsConquer", "DcodeIAS", "DcodeIASAcademy", "SudhagaranSir", "ChennaiUPSC", "UPSCChennai", "UPSCOrientation", "UPSCClasses", "IASCoaching"
+      ]
+    }
   ]
 }
 

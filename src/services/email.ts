@@ -49,7 +49,7 @@ export function dispatchEnquiryEmails(data: {
         </ul>
         <p>We are excited to guide you towards administrative success!</p>
         <br/>
-        <p>Warm regards,<br/><strong>Team D'code IAS Academy</strong><br/>825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai</p>
+        <p>Warm regards,<br/><strong>Team D'code IAS Academy</strong><br/>Block Z, 5th Ave, Z Block, Anna Nagar, Chennai – 600040</p>
       `
     };
   }

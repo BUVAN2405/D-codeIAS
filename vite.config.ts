@@ -2,10 +2,24 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
+import Sitemap from 'vite-plugin-sitemap';
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(), 
+      tailwindcss(),
+      Sitemap({
+        hostname: 'https://decodeias.com',
+        dynamicRoutes: [
+          '/#courses',
+          '/#faculty',
+          '/#results',
+          '/#contact',
+          '/site-metadata.json'
+        ]
+      })
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

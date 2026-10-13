@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, HelpCircle, X } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, HelpCircle, X, ExternalLink, Navigation } from 'lucide-react';
 import { Course } from '../types';
 import { submitInquiryApi } from '../services/api';
 
@@ -253,9 +253,52 @@ export default function InquiryForm({ courses, onSubmitSuccess }: InquiryFormPro
               <div className="text-xs">
                 <p className="font-space font-bold uppercase tracking-wider text-[#0D2C54] mb-1.5">Academy Address</p>
                 <p className="font-sans text-gray-700 leading-relaxed font-semibold">
-                  825, 1st St, G Block, Ranganathan Garden,<br />
-                  Anna Nagar, Chennai – 600040
+                  Block Z, 5th Ave, Z Block,<br />
+                  Anna Nagar, Chennai, Tamil Nadu – 600040
                 </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 text-[10px] font-bold border border-amber-200">
+                    ★ 4.9 Rating (64+ Reviews)
+                  </span>
+                  <a
+                    href="https://maps.google.com/?cid=8198133479660289364"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[#D31218] hover:text-[#9e0b10] font-space text-[10px] font-bold uppercase tracking-wider underline decoration-[#D31218]/40 hover:decoration-[#D31218]"
+                  >
+                    Open in Maps
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Verified Google Maps Pin Embed */}
+            <div className="rounded-xl overflow-hidden border border-gray-200 mt-2 mb-6 shadow-sm hover:shadow-md transition-shadow relative bg-gray-50">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.1952219468926!2d80.20821137500015!3d13.086419986895995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52650053ef730b%3A0x71c59ef6d4637d54!2sDcode%20IAS%20Academy!5e0!3m2!1sen!2sin!4v1740000000000!5m2!1sen!2sin"
+                width="100%"
+                height="230"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="D'code IAS Academy - Official Google Maps Location Pin, Anna Nagar, Chennai"
+              ></iframe>
+              <div className="bg-white border-t border-gray-200 px-3.5 py-2.5 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-1.5 text-gray-800 font-semibold text-[11px]">
+                  <MapPin className="w-3.5 h-3.5 text-[#D31218] shrink-0" />
+                  <span className="truncate">D'code IAS Academy, Anna Nagar</span>
+                </div>
+                <a
+                  href="https://maps.google.com/?cid=8198133479660289364"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 bg-[#D31218] hover:bg-[#A30D12] text-white px-2.5 py-1 rounded text-[10px] font-space font-bold uppercase tracking-wider transition-colors shrink-0 shadow-xs"
+                >
+                  <Navigation className="w-3 h-3" />
+                  Directions
+                </a>
               </div>
             </div>
 

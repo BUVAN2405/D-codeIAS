@@ -23,7 +23,7 @@ export default function WhatsAppWidget() {
     },
     {
       q: '🚇 Center Location',
-      a: 'Our premium study center is at: 825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai – 600040. Walkable from Anna Nagar Tower Metro.'
+      a: 'Our study center is at: Block Z, 5th Ave, Z Block, Anna Nagar, Chennai – 600040 (Near Anna Nagar Metro). Google Maps: https://maps.google.com/?cid=8198133479660289364'
     }
   ];
 
@@ -92,7 +92,7 @@ export default function WhatsAppWidget() {
                 <p className="text-[10px] leading-tight text-emerald-800/80 mt-0.5">Join 500+ civil services aspirants for daily study materials.</p>
               </div>
               <a 
-                href="https://chat.whatsapp.com/JaLf2Lf9uMiB1ZKzhrCnGp" 
+                href="https://wa.me/919600060393" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-space font-bold uppercase py-1.5 px-3 rounded cursor-pointer border-none shadow-xs"

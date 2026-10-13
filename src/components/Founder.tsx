@@ -34,8 +34,9 @@ export default function Founder() {
               <div className="relative bg-[#112F5A] rounded-2xl p-4 border border-white/10 shadow-2xl">
                 <img
                   src={ceoImage}
-                  alt="Sudhagaran Sir - Founder"
+                  alt="Sudhagaran Sir, Founder & Chief Mentor of D'code IAS Academy Anna Nagar Chennai - Former Mission Director Naan Mudhalvan, IRPS"
                   className="w-full h-[360px] object-cover rounded-xl filter contrast-105"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                 />
 

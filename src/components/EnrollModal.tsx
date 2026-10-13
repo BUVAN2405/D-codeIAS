@@ -23,10 +23,13 @@ export default function EnrollModal({
     name: '',
     phone: '',
     email: '',
+    state: '',
+    city: '',
+    collegeName: '',
+    highestDegree: '',
+    targetExam: '',
     selectedId: 'mains_momentum_2027',
-    scheduleType: 'offline-hybrid',
-    hasPriorAttempt: 'no',
-    preferredTime: 'morning'
+    message: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -54,29 +57,15 @@ export default function EnrollModal({
     const targetCourseObj = coursesList.find(c => c.id === formData.selectedId) || selectedCourse;
     const courseTitle = targetCourseObj ? targetCourseObj.title : formData.selectedId;
 
-    const studyModeMap: Record<string, string> = {
-      'offline-hybrid': 'Offline Classroom (Anna Nagar, Chennai)',
-      'online-live': 'Online Live Interactive Stream'
-    };
-
-    const slotMap: Record<string, string> = {
-      'morning': 'Morning (9 AM - 12 PM)',
-      'afternoon': 'Afternoon (1 PM - 4 PM)',
-      'evening': 'Evening (5 PM - 8 PM)'
-    };
-
-    const attemptMap: Record<string, string> = {
-      'no': 'First-Time Aspirant (No prior attempts)',
-      'yes-prelims': 'Previously Written Prelims',
-      'yes-mains': 'Previously Written Mains'
-    };
-
     const structuredDetails = [
       `Program: ${courseTitle}`,
-      `Study Mode: ${studyModeMap[formData.scheduleType] || formData.scheduleType}`,
-      `Preferred Slot: ${slotMap[formData.preferredTime] || formData.preferredTime}`,
-      `Attempt Background: ${attemptMap[formData.hasPriorAttempt] || formData.hasPriorAttempt}`
-    ].join(' | ');
+      `State: ${formData.state}`,
+      `City: ${formData.city}`,
+      `College: ${formData.collegeName}`,
+      `Degree: ${formData.highestDegree}`,
+      `Target Exam: ${formData.targetExam}`,
+      formData.message ? `Message: ${formData.message}` : ''
+    ].filter(Boolean).join(' | ');
 
     try {
       await submitInquiryApi({
@@ -96,10 +85,13 @@ export default function EnrollModal({
           name: '',
           phone: '',
           email: '',
+          state: '',
+          city: '',
+          collegeName: '',
+          highestDegree: '',
+          targetExam: '',
           selectedId: 'mains_momentum_2027',
-          scheduleType: 'offline-hybrid',
-          hasPriorAttempt: 'no',
-          preferredTime: 'morning'
+          message: ''
         });
         onClose();
       }, 2800);
@@ -263,73 +255,152 @@ export default function EnrollModal({
                 {/* Right Side: Interactive Admission Request Form */}
                 <div className="md:col-span-7 p-5 sm:p-6 md:p-8">
                   <h4 className="font-serif text-lg sm:text-xl font-bold text-[#0D2C54] mb-1">
-                    Academic Registration
+                    Student Enquiry Form
                   </h4>
                   <p className="text-[11px] sm:text-xs text-gray-500 font-sans mb-4 sm:mb-6">
-                    Enroll securely in just seconds. Confirm details to guarantee current batch pricing and materials kit.
+                    Enroll securely in just seconds. Fill in your details to help us guide you better.
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                    <div>
-                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        FULL NAME <span className="text-[#D31218]">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Bhuvanesh Kumar"
-                        className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                      />
-                    </div>
-
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          PHONE NUMBER <span className="text-[#D31218]">*</span>
+                          NAME <span className="text-[#D31218]">*</span>
                         </label>
-                        <div className="flex">
-                          <span className="inline-flex items-center px-2 border border-r-0 border-gray-200 bg-gray-50 rounded-l-md text-[11px] sm:text-xs font-space text-gray-500 font-bold">
-                            +91
-                          </span>
-                          <input
-                            type="tel"
-                            required
-                            pattern="[0-9]{10}"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            placeholder="9600060393"
-                            className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-r-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800 font-mono"
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="e.g. John Doe"
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        />
                       </div>
-
                       <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1 flex items-center justify-between">
-                          <span>EMAIL ADDRESS</span>
-                          <span className="text-gray-400 lowercase text-[8px] sm:text-[9px] italic font-normal">optional</span>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          EMAIL ADDRESS <span className="text-[#D31218]">*</span>
                         </label>
                         <input
                           type="email"
+                          required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="you@example.com"
+                          placeholder="john@example.com"
                           className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
                         />
                       </div>
                     </div>
 
-                    {!selectedCourse && !selectedBatch && (
+                    <div>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                        MOBILE NUMBER <span className="text-[#D31218]">*</span>
+                      </label>
+                      <div className="flex">
+                        <span className="inline-flex items-center px-2 border border-r-0 border-gray-200 bg-gray-50 rounded-l-md text-[11px] sm:text-xs font-space text-gray-500 font-bold">
+                          +91
+                        </span>
+                        <input
+                          type="tel"
+                          required
+                          pattern="[0-9]{10}"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="1234567890"
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-r-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800 font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          SELECT TARGET ACADEMIC PROGRAM
+                          STATE <span className="text-[#D31218]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.state}
+                          onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                          placeholder="e.g. Tamil Nadu"
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          CITY <span className="text-[#D31218]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.city}
+                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                          placeholder="e.g. Chennai"
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          COLLEGE NAME <span className="text-[#D31218]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.collegeName}
+                          onChange={(e) => setFormData({ ...formData, collegeName: e.target.value })}
+                          placeholder="Search your college"
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          HIGHEST DEGREE <span className="text-[#D31218]">*</span>
                         </label>
                         <select
+                          required
+                          value={formData.highestDegree}
+                          onChange={(e) => setFormData({ ...formData, highestDegree: e.target.value })}
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        >
+                          <option value="">Select Degree</option>
+                          <option value="UG">Undergraduate (UG)</option>
+                          <option value="PG">Postgraduate (PG)</option>
+                          <option value="Diploma">Diploma</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          TARGET EXAM <span className="text-[#D31218]">*</span>
+                        </label>
+                        <select
+                          required
+                          value={formData.targetExam}
+                          onChange={(e) => setFormData({ ...formData, targetExam: e.target.value })}
+                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        >
+                          <option value="">Select Exam</option>
+                          <option value="UPSC">UPSC</option>
+                          <option value="TNPSC">TNPSC</option>
+                          <option value="Both">Both</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                          PREFERRED COURSE <span className="text-[#D31218]">*</span>
+                        </label>
+                        <select
+                          required
                           value={formData.selectedId}
                           onChange={(e) => setFormData({ ...formData, selectedId: e.target.value })}
                           className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
                         >
+                          <option value="">Select Course</option>
                           {coursesList.map((c) => (
                             <option key={c.id} value={c.id}>
                               {c.title}
@@ -337,62 +408,19 @@ export default function EnrollModal({
                           ))}
                         </select>
                       </div>
-                    )}
-
+                    </div>
+                    
                     <div>
                       <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        PREFERRED STUDY MODE & COMMUTE
+                        MESSAGE
                       </label>
-                      <div className="grid grid-cols-2 gap-2 mt-1">
-                        <button
-                          type="button"
-                          onClick={() => setFormData({ ...formData, scheduleType: 'offline-hybrid' })}
-                          className={`border rounded-md p-1.5 sm:p-2 flex items-center justify-between cursor-pointer text-[10px] sm:text-xs ${formData.scheduleType === 'offline-hybrid' ? 'border-[#0D2C54] bg-[#0D2C54]/5 text-[#0D2C54] font-semibold' : 'border-gray-200 text-gray-600'}`}
-                        >
-                          <span>Offline (Anna Nagar)</span>
-                          {formData.scheduleType === 'offline-hybrid' && <span className="w-1.5 h-1.5 rounded-full bg-[#0D2C54]" />}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setFormData({ ...formData, scheduleType: 'online-live' })}
-                          className={`border rounded-md p-1.5 sm:p-2 flex items-center justify-between cursor-pointer text-[10px] sm:text-xs ${formData.scheduleType === 'online-live' ? 'border-[#0D2C54] bg-[#0D2C54]/5 text-[#0D2C54] font-semibold' : 'border-gray-200 text-gray-600'}`}
-                        >
-                          <span>Online Live Stream</span>
-                          {formData.scheduleType === 'online-live' && <span className="w-1.5 h-1.5 rounded-full bg-[#0D2C54]" />}
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          PRIOR UPSC/TNPSC ATTEMPT?
-                        </label>
-                        <select
-                          value={formData.hasPriorAttempt}
-                          onChange={(e) => setFormData({ ...formData, hasPriorAttempt: e.target.value })}
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        >
-                          <option value="no">No, First Attempt</option>
-                          <option value="yes-prelims">Yes, written Prelims</option>
-                          <option value="yes-mains">Yes, written Mains</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          COUNSELING SLOT
-                        </label>
-                        <select
-                          value={formData.preferredTime}
-                          onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        >
-                          <option value="morning">Morning (9 AM - 12 PM)</option>
-                          <option value="afternoon">Afternoon (1 PM - 4 PM)</option>
-                          <option value="evening">Evening (5 PM - 8 PM)</option>
-                        </select>
-                      </div>
+                      <textarea
+                        rows={2}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        placeholder="How can we help you?"
+                        className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                      />
                     </div>
 
                     <div className="pt-2">

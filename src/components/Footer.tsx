@@ -1,4 +1,4 @@
-import { Landmark, Globe, Mail, Phone, Calendar, ShieldCheck, Twitter, Facebook, Disc } from 'lucide-react';
+import { Landmark, Globe, Mail, Phone, Calendar, ShieldCheck, Twitter, Facebook, Disc, MapPin, ExternalLink } from 'lucide-react';
 import LogoImage from '../LOGO.jpeg';
 import { PolicyType } from './LegalPolicyModal';
 
@@ -37,9 +37,21 @@ export default function Footer({ onOpenPolicy, onNavigate, onOpenStatusModal }: 
             </p>
 
             <div className="text-xs text-gray-400 mt-2 space-y-1">
-              <p className="font-semibold text-white">Anna Nagar Center:</p>
-              <p>825, 1st St, G Block, Ranganathan Garden,</p>
+              <p className="font-semibold text-white flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[#D31218]" />
+                Anna Nagar Center:
+              </p>
+              <p>Block Z, 5th Ave, Z Block,</p>
               <p>Anna Nagar, Chennai – 600040</p>
+              <a
+                href="https://maps.google.com/?cid=8198133479660289364"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[#fd565a] hover:text-white transition-colors pt-1 font-semibold text-[11px]"
+              >
+                <span>View Pinned Location on Google Maps</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 

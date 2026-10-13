@@ -29,7 +29,7 @@ export default function FAQ() {
     },
     {
       question: "Where is D'code IAS Academy located?",
-      answer: "Our premium preparation center is located at: 825, 1st St, G Block, Ranganathan Garden, Anna Nagar, Chennai – 600040 (Phone contacts: 96000 60393, 96000 60349)."
+      answer: "Our premium preparation center is located at: Block Z, 5th Ave, Z Block, Anna Nagar, Chennai – 600040 (Phone contacts: 96000 60393, 96000 60349). You can also locate our exact campus on Google Maps via the map section above."
     },
     {
       question: "How does the personal mentorship feedback loop work?",

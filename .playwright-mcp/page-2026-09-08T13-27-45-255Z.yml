@@ -1,7 +1,0 @@
-- generic [ref=f4e4]:
-  - generic [ref=f4e9]: Security Notice (HTTP 401 / 403)
-  - heading "Restricted Administrative Access" [level=1] [ref=f4e13]
-  - paragraph [ref=f4e14]: You do not have active session privileges to view this administrative page or lead export module. Please authenticate with valid administrator credentials.
-  - generic [ref=f4e15]:
-    - button "Authenticate Administrator Account" [ref=f4e16]
-    - button "Return to Academy Main Site" [ref=f4e20]
