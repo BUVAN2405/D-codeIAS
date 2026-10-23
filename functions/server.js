@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import {
   saveInquiryToDb,
@@ -19,8 +20,106 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Whitelisted domains allowed to communicate with the API
+const allowedOrigins = [
+  'https://decodeias.com',
+  'https://www.decodeias.com',
+  'https://d-code-ias.web.app',
+  'https://d-code-ias.firebaseapp.com',
+  'http://localhost:3000',
+  'http://localhost:5000'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow non-browser requests (e.g. mobile apps, curl, server-to-server) or approved domains
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Blocked by CORS security policy.'));
+  },
+  credentials: true
+}));
+
 app.use(express.json());
+
+// Essential HTTP Security Headers (Clickjacking & MIME-confusion defense)
+app.use((req, res, next) => {
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN'); // Prevents Clickjacking in hidden iframes
+  res.setHeader('X-Content-Type-Options', 'nosniff'); // Prevents MIME type sniffing
+  res.setHeader('X-XSS-Protection', '1; mode=block'); // Legacy XSS filter
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// =========================================================================
+// SECURITY LAYER: Session Management & Rate Limiting
+// =========================================================================
+
+// Active Admin Session Map: token -> { email, role, expiresAt }
+const activeAdminSessions = new Map();
+
+// Rate Limiting: IP -> { count, lastAttempt }
+const failedLoginAttempts = new Map();
+const inquiryRateLimits = new Map();
+
+// Periodic cleanup of expired tokens and old rate limit counters every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [token, session] of activeAdminSessions.entries()) {
+    if (session.expiresAt < now) {
+      activeAdminSessions.delete(token);
+    }
+  }
+  for (const [ip, record] of failedLoginAttempts.entries()) {
+    if (now - record.lastAttempt > 15 * 60 * 1000) {
+      failedLoginAttempts.delete(ip);
+    }
+  }
+  for (const [ip, record] of inquiryRateLimits.entries()) {
+    if (now - record.firstAttempt > 60 * 60 * 1000) {
+      inquiryRateLimits.delete(ip);
+    }
+  }
+}, 5 * 60 * 1000);
+
+// Authentication Middleware to Protect Admin Endpoints
+const requireAdminAuth = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({
+      success: false,
+      error: 'Unauthorized: Admin authentication token required to access this resource.'
+    });
+  }
+
+  const token = authHeader.split(' ')[1];
+  const session = activeAdminSessions.get(token);
+
+  if (!session || session.expiresAt < Date.now()) {
+    if (session) activeAdminSessions.delete(token);
+    return res.status(401).json({
+      success: false,
+      error: 'Session expired or invalid. Please log in again.'
+    });
+  }
+
+  req.adminSession = session;
+  next();
+};
+
+// Input Sanitizer to Prevent Stored XSS and Injection
+const sanitizeInput = (val, maxLength = 250) => {
+  if (typeof val !== 'string') return '';
+  return val
+    .trim()
+    .slice(0, maxLength)
+    .replace(/[<>]/g, ''); // Strip dangerous HTML tags
+};
+
+// =========================================================================
+// PUBLIC ENDPOINTS
+// =========================================================================
 
 // Health Check
 app.get('/api/health', (req, res) => {
@@ -114,9 +213,24 @@ app.get('/sitemap.xml', (req, res) => {
   res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://decodeias.com/</loc><priority>1.0</priority></url><url><loc>https://decodeias.com/#courses</loc><priority>0.9</priority></url></urlset>`);
 });
 
+// =========================================================================
+// AUTHENTICATION & LOGIN (Brute-Force Protected)
+// =========================================================================
 
-// POST /api/admin/login - Authenticate owner for admin dashboard
+// POST /api/admin/login - Authenticate owner for admin dashboard with rate-limiting
 app.post('/api/admin/login', (req, res) => {
+  const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  const ipRecord = failedLoginAttempts.get(clientIp) || { count: 0, lastAttempt: Date.now() };
+
+  // Block if more than 5 failed attempts in 15 minutes
+  if (ipRecord.count >= 5 && Date.now() - ipRecord.lastAttempt < 15 * 60 * 1000) {
+    const minutesLeft = Math.ceil((15 * 60 * 1000 - (Date.now() - ipRecord.lastAttempt)) / 60000);
+    return res.status(429).json({
+      success: false,
+      error: `Too many failed login attempts. Security lock in place. Please retry in ${minutesLeft} minute(s).`
+    });
+  }
+
   const { email, password } = req.body;
   const targetEmail = (process.env.ADMIN_EMAIL || process.env.OWNER_EMAIL || 'info@decodeias.com').toLowerCase().trim();
   const targetPassword = process.env.ADMIN_PASSWORD || 'dCode#Admin9872!';
@@ -129,25 +243,124 @@ app.post('/api/admin/login', (req, res) => {
   }
 
   if (email.toLowerCase().trim() === targetEmail && password === targetPassword) {
+    // Reset failed attempts on successful login
+    failedLoginAttempts.delete(clientIp);
+
+    // Generate cryptographically secure random session token
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 Hours valid
+
+    activeAdminSessions.set(token, {
+      email: targetEmail,
+      role: 'Administrator',
+      expiresAt
+    });
+
     return res.json({
       success: true,
-      token: `dcode_session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+      token,
       admin: {
         email: targetEmail,
         role: 'Administrator',
-        loginTime: new Date().toISOString()
+        loginTime: new Date().toISOString(),
+        expiresAt
       }
     });
   } else {
+    // Increment failed attempt counter
+    ipRecord.count += 1;
+    ipRecord.lastAttempt = Date.now();
+    failedLoginAttempts.set(clientIp, ipRecord);
+
     return res.status(401).json({
       success: false,
-      error: 'Invalid admin email or password. Please check your credentials.'
+      error: 'Invalid admin credentials. Please verify your email and password.'
     });
   }
 });
 
+// POST /api/admin/logout - Invalidate and revoke current session token
+app.post('/api/admin/logout', (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.split(' ')[1];
+    activeAdminSessions.delete(token);
+  }
+  res.json({
+    success: true,
+    message: 'Session token invalidated successfully.'
+  });
+});
+
+// =========================================================================
+// PUBLIC INQUIRY SUBMISSION (Sanitized & Rate Limited)
+// =========================================================================
+
+// POST /api/inquiries - Create new lead submission & send email
+app.post('/api/inquiries', async (req, res) => {
+  try {
+    const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const rateRecord = inquiryRateLimits.get(clientIp) || { count: 0, firstAttempt: Date.now() };
+
+    // Limit to 25 form submissions per IP per hour to block automated spam bots
+    if (rateRecord.count >= 25 && Date.now() - rateRecord.firstAttempt < 60 * 60 * 1000) {
+      return res.status(429).json({
+        success: false,
+        error: 'Too many submissions from this connection. Please try again later.'
+      });
+    }
+
+    rateRecord.count += 1;
+    inquiryRateLimits.set(clientIp, rateRecord);
+
+    const fullName = sanitizeInput(req.body.fullName, 120);
+    const phone = sanitizeInput(req.body.phone, 25);
+    const email = sanitizeInput(req.body.email, 120);
+    const course = sanitizeInput(req.body.course, 120);
+    const formType = sanitizeInput(req.body.formType, 50) || 'contact';
+    const message = sanitizeInput(req.body.message, 2500);
+
+    if (!fullName || !phone) {
+      return res.status(400).json({
+        success: false,
+        error: 'Full Name and Phone Number are required fields.'
+      });
+    }
+
+    // 1. Save to persistent database
+    const newRecord = await saveInquiryToDb({
+      fullName,
+      phone,
+      email,
+      course,
+      formType,
+      message
+    });
+
+    // 2. Dispatch email to website owner & confirmation to student
+    const emailStatus = await sendInquiryNotification(newRecord);
+
+    return res.status(201).json({
+      success: true,
+      message: 'Inquiry received and notification dispatched.',
+      inquiry: newRecord,
+      emailStatus
+    });
+  } catch (err) {
+    console.error('Error processing inquiry endpoint:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error while processing lead.'
+    });
+  }
+});
+
+// =========================================================================
+// PROTECTED ADMIN ENDPOINTS (Requires Valid Bearer Token)
+// =========================================================================
+
 // GET /api/admin/dashboard - Fetch database statistics & aggregated lead metrics
-app.get('/api/admin/dashboard', async (req, res) => {
+app.get('/api/admin/dashboard', requireAdminAuth, async (req, res) => {
   try {
     const inquiries = await getAllInquiriesFromDb();
 
@@ -181,48 +394,8 @@ app.get('/api/admin/dashboard', async (req, res) => {
   }
 });
 
-// POST /api/inquiries - Create new lead submission & send email
-app.post('/api/inquiries', async (req, res) => {
-  try {
-    const { fullName, phone, email, course, formType, message } = req.body;
-
-    if (!fullName || !phone) {
-      return res.status(400).json({
-        success: false,
-        error: 'Full Name and Phone Number are required fields.'
-      });
-    }
-
-    // 1. Save to persistent database
-    const newRecord = await saveInquiryToDb({
-      fullName,
-      phone,
-      email,
-      course,
-      formType: formType || 'contact',
-      message
-    });
-
-    // 2. Dispatch email to website owner & confirmation to student
-    const emailStatus = await sendInquiryNotification(newRecord);
-
-    return res.status(201).json({
-      success: true,
-      message: 'Inquiry received and email dispatched to website owner.',
-      inquiry: newRecord,
-      emailStatus
-    });
-  } catch (err) {
-    console.error('Error processing inquiry endpoint:', err);
-    return res.status(500).json({
-      success: false,
-      error: 'Internal server error while processing lead.'
-    });
-  }
-});
-
 // GET /api/inquiries - Fetch all inquiries for admin portal
-app.get('/api/inquiries', async (req, res) => {
+app.get('/api/inquiries', requireAdminAuth, async (req, res) => {
   try {
     const inquiries = await getAllInquiriesFromDb();
     res.json({
@@ -240,7 +413,7 @@ app.get('/api/inquiries', async (req, res) => {
 });
 
 // PATCH /api/inquiries/:id/status - Update lead status
-app.patch('/api/inquiries/:id/status', async (req, res) => {
+app.patch('/api/inquiries/:id/status', requireAdminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -274,7 +447,7 @@ app.patch('/api/inquiries/:id/status', async (req, res) => {
 });
 
 // DELETE /api/inquiries/:id - Delete lead entry
-app.delete('/api/inquiries/:id', async (req, res) => {
+app.delete('/api/inquiries/:id', requireAdminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await deleteInquiryFromDb(id);
@@ -299,10 +472,12 @@ app.delete('/api/inquiries/:id', async (req, res) => {
   }
 });
 
-// Serve frontend static build files (production mode)
+// =========================================================================
+// STATIC BUILD SERVING & SPA ROUTING
+// =========================================================================
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Fallback to index.html for Single Page Application routing (non-API routes)
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
@@ -311,10 +486,9 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`\n==================================================`);
-  console.log(`🚀 D'code IAS Backend API running on port ${PORT}`);
-  console.log(`📧 Configured Owner Email: ${process.env.OWNER_EMAIL || 'bhuvaneshwaan2405@gmail.com'}`);
+  console.log(`🛡️  D'code IAS Backend API running on port ${PORT} [SECURED]`);
+  console.log(`📧 Configured Owner Email: ${process.env.OWNER_EMAIL || 'info@decodeias.com'}`);
   console.log(`==================================================\n`);
 });
 
 export default app;
-

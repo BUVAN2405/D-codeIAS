@@ -261,34 +261,19 @@ export default function EnrollModal({
                     Enroll securely in just seconds. Fill in your details to help us guide you better.
                   </p>
 
-                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          NAME <span className="text-[#D31218]">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="e.g. John Doe"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          EMAIL ADDRESS <span className="text-[#D31218]">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="john@example.com"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        />
-                      </div>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                        NAME <span className="text-[#D31218]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="e.g. John Doe"
+                        className="w-full text-xs sm:text-sm py-2.5 px-3.5 border border-gray-200 rounded-lg focus:outline-none focus:border-[#0D2C54] focus:ring-1 focus:ring-[#0D2C54] bg-white text-gray-800 transition-all"
+                      />
                     </div>
 
                     <div>
@@ -296,7 +281,7 @@ export default function EnrollModal({
                         MOBILE NUMBER <span className="text-[#D31218]">*</span>
                       </label>
                       <div className="flex">
-                        <span className="inline-flex items-center px-2 border border-r-0 border-gray-200 bg-gray-50 rounded-l-md text-[11px] sm:text-xs font-space text-gray-500 font-bold">
+                        <span className="inline-flex items-center px-3 border border-r-0 border-gray-200 bg-gray-50 rounded-l-lg text-xs font-space text-gray-600 font-bold">
                           +91
                         </span>
                         <input
@@ -306,120 +291,35 @@ export default function EnrollModal({
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           placeholder="1234567890"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-r-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800 font-mono"
+                          className="w-full text-xs sm:text-sm py-2.5 px-3.5 border border-gray-200 rounded-r-lg focus:outline-none focus:border-[#0D2C54] focus:ring-1 focus:ring-[#0D2C54] bg-white text-gray-800 font-mono transition-all"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          STATE <span className="text-[#D31218]">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.state}
-                          onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                          placeholder="e.g. Tamil Nadu"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          CITY <span className="text-[#D31218]">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.city}
-                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                          placeholder="e.g. Chennai"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          COLLEGE NAME <span className="text-[#D31218]">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.collegeName}
-                          onChange={(e) => setFormData({ ...formData, collegeName: e.target.value })}
-                          placeholder="Search your college"
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          HIGHEST DEGREE <span className="text-[#D31218]">*</span>
-                        </label>
-                        <select
-                          required
-                          value={formData.highestDegree}
-                          onChange={(e) => setFormData({ ...formData, highestDegree: e.target.value })}
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        >
-                          <option value="">Select Degree</option>
-                          <option value="UG">Undergraduate (UG)</option>
-                          <option value="PG">Postgraduate (PG)</option>
-                          <option value="Diploma">Diploma</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          TARGET EXAM <span className="text-[#D31218]">*</span>
-                        </label>
-                        <select
-                          required
-                          value={formData.targetExam}
-                          onChange={(e) => setFormData({ ...formData, targetExam: e.target.value })}
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        >
-                          <option value="">Select Exam</option>
-                          <option value="UPSC">UPSC</option>
-                          <option value="TNPSC">TNPSC</option>
-                          <option value="Both">Both</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                          PREFERRED COURSE <span className="text-[#D31218]">*</span>
-                        </label>
-                        <select
-                          required
-                          value={formData.selectedId}
-                          onChange={(e) => setFormData({ ...formData, selectedId: e.target.value })}
-                          className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                        >
-                          <option value="">Select Course</option>
-                          {coursesList.map((c) => (
-                            <option key={c.id} value={c.id}>
-                              {c.title}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    
                     <div>
                       <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        MESSAGE
+                        EMAIL ADDRESS <span className="text-[#D31218]">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="john@example.com"
+                        className="w-full text-xs sm:text-sm py-2.5 px-3.5 border border-gray-200 rounded-lg focus:outline-none focus:border-[#0D2C54] focus:ring-1 focus:ring-[#0D2C54] bg-white text-gray-800 transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                        IMMEDIATE QUERY / MESSAGE
                       </label>
                       <textarea
-                        rows={2}
+                        rows={3}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="How can we help you?"
-                        className="w-full text-[11px] sm:text-xs py-2 px-3 border border-gray-200 rounded-md focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
+                        placeholder="How can we help you ?"
+                        className="w-full text-xs sm:text-sm py-2.5 px-3.5 border border-gray-200 rounded-lg focus:outline-none focus:border-[#0D2C54] focus:ring-1 focus:ring-[#0D2C54] bg-white text-gray-800 transition-all resize-none"
                       />
                     </div>
 
@@ -427,9 +327,9 @@ export default function EnrollModal({
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#D31218] text-white font-space text-[11px] sm:text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-md hover:bg-[#A30D12] transition-all active:scale-[0.99] cursor-pointer shadow-sm border-none disabled:opacity-60"
+                        className="w-full bg-[#D31218] text-white font-space text-xs sm:text-sm font-bold uppercase tracking-wider py-3 px-4 rounded-lg hover:bg-[#A30D12] transition-all active:scale-[0.99] cursor-pointer shadow-md shadow-red-600/20 border-none disabled:opacity-60"
                       >
-                        {loading ? 'Transmitting Registration...' : 'Secure Provisionally Reserved Seat'}
+                        {loading ? 'Submitting Application...' : 'Secure Provisionally Reserved Seat'}
                       </button>
                     </div>
 

@@ -43,3 +43,8 @@ Thumbs.db
 
 # Root level unused folders
 assets/
+*.zip
+.playwright-mcp/
+.firebase/
+.agents/
+

@@ -17,10 +17,13 @@ import NotFoundPage from './components/NotFoundPage';
 import MaintenancePage from './components/MaintenancePage';
 import ServerErrorPage from './components/ServerErrorPage';
 import AccessDeniedPage from './components/AccessDeniedPage';
-import ServiceStatusModal from './components/ServiceStatusModal';
 import NetworkStatusOverlay from './components/NetworkStatusOverlay';
 import LegalPolicyModal, { PolicyType } from './components/LegalPolicyModal';
-import PrelimsOrientationPopup, { ORIENTATION_HASHTAGS, REGISTRATION_FORM_URL } from './components/PrelimsOrientationPopup';
+import PrelimsOrientationPage from './components/PrelimsOrientationPage';
+import PrelimsConquerCoursePage from './components/PrelimsConquerCoursePage';
+import PrelimsConquerPopupModal from './components/PrelimsConquerPopupModal';
+import { isOrientationExpired } from './utils/orientationConfig';
+import { ORIENTATION_HASHTAGS } from './components/PrelimsOrientationPopup';
 
 // Custom Sections
 import AboutAcademy from './components/AboutAcademy';
@@ -29,7 +32,7 @@ import LearningProcess from './components/LearningProcess';
 import FaqSection from './components/FaqSection';
 import LeadControls from './components/LeadControls';
 import AdminDashboard from './components/AdminDashboard';
-import AdminLoginModal from './components/AdminLoginModal';
+import AdminLoginPage from './components/AdminLoginPage';
 import { getAdminSession } from './services/api';
 
 // New Dynamic Content Sections
@@ -41,7 +44,7 @@ import VideoTestimonials from './components/VideoTestimonials';
 
 import { COURSES, ADVANTAGES, FACULTY, TOPPERS, BATCH_SCHEDULES } from './data';
 import { Course, BatchSchedule } from './types';
-import { CheckCircle, Info, Landmark, Lightbulb } from 'lucide-react';
+import { CheckCircle, Info, Landmark } from 'lucide-react';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -55,47 +58,119 @@ export default function App() {
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
   const [is500ServerError, setIs500ServerError] = useState(false);
   const [is401AccessDenied, setIs401AccessDenied] = useState(false);
-  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 
   const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
-  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
-  const [isAdminDashboardOpen, setIsAdminDashboardOpen] = useState(false);
-  const [isOrientationOpen, setIsOrientationOpen] = useState(false);
+  const [isAdminPage, setIsAdminPage] = useState(false);
+  const [adminSessionKey, setAdminSessionKey] = useState(0);
+  const [isOrientationPage, setIsOrientationPage] = useState(false);
+  const [isPrelimsConquerPage, setIsPrelimsConquerPage] = useState(false);
+  const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
 
-  // Auto-open UPSC Prelims 2027 Conquer Orientation popup when user enters the website
+  // Detect URL routes (including dedicated /prelims-orientation-2027 page, /prelims-conquer-2027 page, 404, maintenance, 500, etc.)
   useEffect(() => {
-    const isDismissed = sessionStorage.getItem('dcode_prelims_2027_popup_closed');
-    if (!isDismissed) {
-      const timer = setTimeout(() => {
-        setIsOrientationOpen(true);
-      }, 700);
-      return () => clearTimeout(timer);
-    }
+    const checkRoute = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      const searchParams = new URLSearchParams(window.location.search);
+      const mode = searchParams.get('mode');
+
+      if (mode === 'maintenance' || mode === '503') setIsMaintenanceMode(true);
+      if (mode === '500' || mode === 'servererror') setIs500ServerError(true);
+      if (mode === '401' || mode === '403' || mode === 'accessdenied') setIs401AccessDenied(true);
+
+      // Check for dedicated Prelims Conquer 2027 Course Page routes
+      if (
+        path === '/prelims-conquer-2027' ||
+        path === '/prelims-conquer' ||
+        path.startsWith('/prelims-conquer') ||
+        hash === '#prelims-conquer-2027' ||
+        hash === '#prelims-conquer' ||
+        searchParams.get('course') === 'prelims-conquer-2027' ||
+        searchParams.get('page') === 'prelims-conquer'
+      ) {
+        setIsPrelimsConquerPage(true);
+        setIsOrientationPage(false);
+        setIs404(false);
+        return;
+      }
+      setIsPrelimsConquerPage(false);
+
+      // Check for dedicated Orientation page routes
+      if (
+        path === '/prelims-orientation-2027' ||
+        path === '/orientation' ||
+        path === '/prelims-2027' ||
+        hash === '#prelims-orientation-2027' ||
+        searchParams.get('page') === 'orientation'
+      ) {
+        if (isOrientationExpired()) {
+          setIsOrientationPage(false);
+          setIs404(true);
+          return;
+        }
+        setIsOrientationPage(true);
+        setIs404(false);
+        return;
+      }
+
+      setIsOrientationPage(false);
+
+      // Check for Admin Portal route (/admin or #admin)
+      if (
+        path === '/admin' ||
+        path.startsWith('/admin') ||
+        hash === '#admin' ||
+        searchParams.get('page') === 'admin'
+      ) {
+        setIsAdminPage(true);
+        setIsPrelimsConquerPage(false);
+        setIsOrientationPage(false);
+        setIs404(false);
+        return;
+      }
+      setIsAdminPage(false);
+
+      if (path !== '/' && path !== '' && !path.includes('index.html')) {
+        setIs404(true);
+      } else {
+        setIs404(false);
+      }
+    };
+
+    checkRoute();
+    window.addEventListener('popstate', checkRoute);
+    return () => window.removeEventListener('popstate', checkRoute);
   }, []);
 
-  // Detect 404 URL route or system mode query overrides (e.g. ?mode=maintenance, ?mode=500, ?mode=401, ?mode=status)
-  useEffect(() => {
-    const path = window.location.pathname;
-    const searchParams = new URLSearchParams(window.location.search);
-    const mode = searchParams.get('mode');
+  const handleOpenPrelimsConquerPage = () => {
+    window.history.pushState({}, '', '/prelims-conquer-2027');
+    setIsPrelimsConquerPage(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-    if (mode === 'maintenance' || mode === '503') setIsMaintenanceMode(true);
-    if (mode === '500' || mode === 'servererror') setIs500ServerError(true);
-    if (mode === '401' || mode === '403' || mode === 'accessdenied') setIs401AccessDenied(true);
-    if (mode === 'status') setIsStatusModalOpen(true);
+  const handleGoHomeFromPrelimsConquer = () => {
+    window.history.pushState({}, '', '/');
+    setIsPrelimsConquerPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-    if (path !== '/' && path !== '' && !path.includes('index.html')) {
-      setIs404(true);
-    }
-  }, []);
+  const handleOpenOrientationPage = () => {
+    if (isOrientationExpired()) return;
+    window.location.href = '/prelims-orientation-2027';
+  };
+
+  const handleGoHomeFromOrientation = () => {
+    window.location.href = '/';
+  };
 
   const handleOpenAdminPortal = () => {
-    const session = getAdminSession();
-    if (session && session.token) {
-      setIsAdminDashboardOpen(true);
-    } else {
-      setIsAdminLoginOpen(true);
-    }
+    window.open('/admin', '_blank');
+  };
+
+  const handleGoHomeFromAdmin = () => {
+    window.history.pushState({}, '', '/');
+    setIsAdminPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // IntersectionObserver to auto-update active navbar coordinates on scroll
@@ -222,7 +297,7 @@ export default function App() {
           }}
           onOpenLogin={() => {
             setIs401AccessDenied(false);
-            setIsAdminLoginOpen(true);
+            setIsAdminPage(true);
           }}
         />
       </ErrorBoundary>
@@ -248,6 +323,99 @@ export default function App() {
     );
   }
 
+  if (isPrelimsConquerPage) {
+    return (
+      <ErrorBoundary>
+        <Helmet>
+          <title>UPSC Prelims Conquer 2027 Course & 43 Tests Mentorship | D'code IAS Academy</title>
+          <meta
+            name="description"
+            content="Enroll in UPSC Prelims Conquer 2027 by D'code IAS Academy with Sudhagaran Sir. 43 tests (28 GS + 15 CSAT), daily direction classes, theme PYQ analysis, and 1-on-1 mentorship. Download brochure and schedule."
+          />
+        </Helmet>
+        <NetworkStatusOverlay />
+        <PrelimsConquerCoursePage
+          onBackToHome={handleGoHomeFromPrelimsConquer}
+          onEnrollClick={(_packageName) => {
+            triggerModalGeneric();
+          }}
+        />
+        {/* Master Registration Reservation Modal Overlay */}
+        <EnrollModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedCourse={selectedCourse}
+          selectedBatch={selectedBatch}
+          coursesList={COURSES}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  if (isOrientationPage) {
+    return (
+      <ErrorBoundary>
+        <NetworkStatusOverlay />
+        <PrelimsOrientationPage
+          onGoHome={handleGoHomeFromOrientation}
+          onSubmitSuccess={handleInquiryNotification}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  if (isAdminPage) {
+    const session = getAdminSession();
+    if (!session || !session.token) {
+      return (
+        <ErrorBoundary>
+          <Helmet>
+            <title>Admin Login | D'code IAS Academy</title>
+            <meta name="robots" content="noindex, nofollow" />
+            <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+            <link rel="icon" type="image/jpeg" href="/LOGO.jpeg" />
+            <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+            <link rel="apple-touch-icon" href="/LOGO.jpeg" />
+          </Helmet>
+          <NetworkStatusOverlay />
+          <AdminLoginPage
+            onLoginSuccess={() => {
+              setIsAdminPage(true);
+              setAdminSessionKey(Date.now());
+              setShowNotification('Logged in successfully as Administrator.');
+              setTimeout(() => setShowNotification(null), 3500);
+            }}
+            onBackToHome={handleGoHomeFromAdmin}
+          />
+        </ErrorBoundary>
+      );
+    }
+
+    return (
+      <ErrorBoundary>
+        <Helmet>
+          <title>Master Admin Dashboard | D'code IAS Academy</title>
+          <meta name="robots" content="noindex, nofollow" />
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+          <link rel="icon" type="image/jpeg" href="/LOGO.jpeg" />
+          <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+          <link rel="apple-touch-icon" href="/LOGO.jpeg" />
+        </Helmet>
+        <NetworkStatusOverlay />
+        <AdminDashboard
+          isOpen={true}
+          isPage={true}
+          onClose={handleGoHomeFromAdmin}
+          onBackToHome={handleGoHomeFromAdmin}
+          onLogout={() => {
+            setAdminSessionKey(Date.now());
+            setIsAdminPage(true);
+          }}
+        />
+      </ErrorBoundary>
+    );
+  }
+
   const getDynamicTitle = () => {
     switch (activeSection) {
       case 'courses': return "Courses & Programs | D'code IAS Academy";
@@ -261,6 +429,10 @@ export default function App() {
     <ErrorBoundary>
       <Helmet>
         <title>{getDynamicTitle()}</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/jpeg" href="/LOGO.jpeg" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/LOGO.jpeg" />
         {/* Canonical must always be the root URL — hash fragments (#section) are ignored by Googlebot */}
         <link rel="canonical" href="https://decodeias.com/" />
         <meta property="og:url" content="https://decodeias.com/" />
@@ -297,7 +469,7 @@ export default function App() {
             },
             "offers": {
               "@type": "Offer",
-              "url": REGISTRATION_FORM_URL,
+              "url": "https://decodeias.com/#prelims-orientation-2027",
               "price": "0",
               "priceCurrency": "INR",
               "availability": "https://schema.org/InStock"
@@ -313,7 +485,7 @@ export default function App() {
       {/* Network Connectivity & Offline Detector */}
       <NetworkStatusOverlay />
 
-      <div className="bg-[#fdf8f6] min-h-screen text-brand-accent selection:bg-[#fff2e0] selection:text-brand-primary overflow-x-hidden font-sans">
+      <div className="bg-[#fdf8f6] min-h-screen text-brand-accent selection:bg-[#fff2e0] selection:text-brand-primary font-sans">
         
         {/* Sticky Top-level Header Menu bar */}
         <Navbar
@@ -321,10 +493,13 @@ export default function App() {
           onNavigate={scrollToSection}
           activeSection={activeSection}
           onAdminClick={handleOpenAdminPortal}
+          onOrientationClick={handleOpenOrientationPage}
+          onPrelimsConquerClick={handleOpenPrelimsConquerPage}
+          onMenuToggle={setIsNavMenuOpen}
         />
 
         {/* Main landing segments */}
-        <main className="w-full max-w-full overflow-x-hidden">
+        <main className="w-full max-w-full">
           
           {/* Banner Segment */}
           <Hero
@@ -421,13 +596,7 @@ export default function App() {
         <Footer
           onOpenPolicy={(policy) => setActivePolicy(policy)}
           onNavigate={scrollToSection}
-          onOpenStatusModal={() => setIsStatusModalOpen(true)}
-        />
-
-        {/* Real-Time Service Health Telemetry Modal */}
-        <ServiceStatusModal
-          isOpen={isStatusModalOpen}
-          onClose={() => setIsStatusModalOpen(false)}
+          onAdminClick={handleOpenAdminPortal}
         />
 
         {/* Legal Policies Modal (Privacy, Terms, Refund) */}
@@ -436,19 +605,17 @@ export default function App() {
           onClose={() => setActivePolicy(null)}
         />
 
-        {/* Interactive Sticky Lead Controls Panel */}
-        <LeadControls 
-          onInquiryClick={triggerModalGeneric} 
-          onOrientationClick={() => setIsOrientationOpen(true)}
-        />
+        {/* Interactive Sticky Lead Controls Panel (Hidden when menu is open) */}
+        {!isNavMenuOpen && (
+          <LeadControls 
+            onInquiryClick={triggerModalGeneric} 
+            onOrientationClick={!isOrientationExpired() ? handleOpenOrientationPage : undefined}
+          />
+        )}
 
-        {/* Exclusive UPSC Prelims 2027 Conquer Orientation Popup */}
-        <PrelimsOrientationPopup
-          isOpen={isOrientationOpen}
-          onClose={() => {
-            setIsOrientationOpen(false);
-            sessionStorage.setItem('dcode_prelims_2027_popup_closed', 'true');
-          }}
+        {/* Flagship Entry Advertisement Popup for Prelims Conquer 2027 */}
+        <PrelimsConquerPopupModal
+          onNavigateToCourse={handleOpenPrelimsConquerPage}
         />
 
         {/* Master Registration Reservation Modal Overlay */}
@@ -458,22 +625,6 @@ export default function App() {
           selectedCourse={selectedCourse}
           selectedBatch={selectedBatch}
           coursesList={COURSES}
-        />
-
-        {/* Owner Admin Authentication Modal */}
-        <AdminLoginModal
-          isOpen={isAdminLoginOpen}
-          onClose={() => setIsAdminLoginOpen(false)}
-          onSuccess={() => {
-            setIsAdminLoginOpen(false);
-            setIsAdminDashboardOpen(true);
-          }}
-        />
-
-        {/* Owner Master Admin Dashboard Overlay */}
-        <AdminDashboard
-          isOpen={isAdminDashboardOpen}
-          onClose={() => setIsAdminDashboardOpen(false)}
         />
 
         {/* Responsive Dispatch Notification toast for file spool and callbacks */}
@@ -488,16 +639,6 @@ export default function App() {
             </div>
           </div>
         )}
-
-        {/* Documentation Drawer for component expansion */}
-        <div className="bg-brand-violet/5 py-4 border-t border-brand-violet/15">
-          <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8 text-center">
-            <div className="inline-flex items-center gap-1.5 text-[10px] font-space text-brand-violet/85 uppercase tracking-wider font-semibold py-1 px-3 bg-white border border-brand-violet/10 rounded">
-              <Lightbulb className="w-3.5 h-3.5 text-brand-gold" />
-              Developer Reference docs: expand components inside `/src/components/*` securely.
-            </div>
-          </div>
-        </div>
 
       </div>
     </ErrorBoundary>

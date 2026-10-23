@@ -150,10 +150,9 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
             {/* Quick Inquiry Option */}
             <button
               onClick={onInquiryClick}
-              className="flex-1 inline-flex items-center justify-center gap-1 bg-[#D31218] hover:bg-[#A30D12] text-white py-1.5 px-2.5 rounded-full font-space text-[9px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
+              className="flex-1 inline-flex items-center justify-center bg-[#D31218] hover:bg-[#A30D12] text-white py-1.5 px-3 rounded-full font-space text-[10px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
             >
-              <FileText className="w-3 h-3" />
-              <span>Inquire</span>
+              <span>Inquire Now</span>
             </button>
 
             {/* Mobile WhatsApp Shortcut */}

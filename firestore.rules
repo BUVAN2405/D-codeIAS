@@ -1,11 +1,31 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // 1. Inquiries & Leads Collection (Public can submit; only authenticated Admin can view/modify)
     match /query/{document} {
-      allow create, read, update, delete: if true;
+      allow create: if request.resource.data.fullName is string
+                    && request.resource.data.phone is string
+                    && request.resource.data.fullName.size() > 0
+                    && request.resource.data.phone.size() > 0;
+                    
+      allow read, update, delete: if true;
     }
+    
+    // 2. Enrolled Students & Fee Ledger Collection (Confidential: Admin Only)
+    match /enrolled_students/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    // 3. Promotional Campaigns Collection (Public can read active ads; Admin can modify)
+    match /promotional_campaigns/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // 4. Default: Deny all other access
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }

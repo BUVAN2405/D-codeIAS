@@ -5,10 +5,10 @@ import { PolicyType } from './LegalPolicyModal';
 interface FooterProps {
   onOpenPolicy?: (type: PolicyType) => void;
   onNavigate?: (sectionId: string) => void;
-  onOpenStatusModal?: () => void;
+  onAdminClick?: () => void;
 }
 
-export default function Footer({ onOpenPolicy, onNavigate, onOpenStatusModal }: FooterProps) {
+export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -86,6 +86,17 @@ export default function Footer({ onOpenPolicy, onNavigate, onOpenStatusModal }: 
                   Courses Offered
                 </button>
               </li>
+              <li>
+                <a
+                  href="/admin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-300 transition-colors text-left flex items-center gap-1.5 text-gray-400 cursor-pointer"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Admin Access</span>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -135,15 +146,6 @@ export default function Footer({ onOpenPolicy, onNavigate, onOpenStatusModal }: 
           
           <div className="flex flex-wrap items-center gap-3">
             <span>© 2026 D'code IAS Academy. All rights reserved. Shaping the future of Indian Governance.</span>
-            {onOpenStatusModal && (
-              <button
-                onClick={onOpenStatusModal}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-semibold hover:bg-emerald-500/20 transition-all cursor-pointer"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>System Operational</span>
-              </button>
-            )}
           </div>
 
           <div className="flex items-center gap-6 italic">

@@ -192,10 +192,32 @@ export async function getQueryReportById(id: string): Promise<QueryReport | null
  */
 export async function getAllQueryReports(): Promise<QueryReport[]> {
   try {
-    const q = query(collection(db, COLLECTION_NAME), orderBy('createdAt', 'desc'));
-    const querySnapshot = await getDocs(q);
+    let querySnapshot;
+    try {
+      const q = query(collection(db, COLLECTION_NAME), orderBy('createdAt', 'desc'));
+      querySnapshot = await getDocs(q);
+    } catch (orderErr) {
+      console.warn('[FIRESTORE] Ordered query fallback, fetching collection directly:', orderErr);
+      querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+    }
 
-    return querySnapshot.docs.map(mapDocToQueryReport);
+    const reports: QueryReport[] = [];
+    for (const docSnap of querySnapshot.docs) {
+      try {
+        reports.push(mapDocToQueryReport(docSnap));
+      } catch (mapErr) {
+        console.warn(`[FIRESTORE] Skipping malformed document ${docSnap.id}:`, mapErr);
+      }
+    }
+
+    // Sort by createdAt descending
+    reports.sort((a, b) => {
+      const timeA = a.createdAt instanceof Date ? a.createdAt.getTime() : 0;
+      const timeB = b.createdAt instanceof Date ? b.createdAt.getTime() : 0;
+      return timeB - timeA;
+    });
+
+    return reports;
   } catch (err) {
     if (err instanceof FirestoreServiceError) throw err;
     throw new FirestoreServiceError('Failed to fetch query reports from Firestore.', err);

@@ -7,8 +7,8 @@ const OWNER_EMAIL = process.env.OWNER_EMAIL || 'info@decodeias.com';
 const OWNER_CC_EMAIL = process.env.OWNER_CC_EMAIL || 'dcodesudhagaran@gmail.com,sudhagaransirdcode@gmail.com';
 const SMTP_HOST = process.env.SMTP_HOST || 'mail.decodeias.com';
 const SMTP_PORT = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
-const SMTP_USER = process.env.SMTP_USER || 'info@decodeias.com';
-const SMTP_PASS = process.env.SMTP_PASS || '(o1&rzhp9Coy';
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_SECURE = process.env.SMTP_SECURE === 'true';
 
 let transporter = null;
@@ -58,7 +58,7 @@ export async function sendInquiryNotification(record) {
     badgeBorder = '#fde68a';
   }
 
-  const destinationUrl = process.env.DATABASE_DASHBOARD_URL || `${process.env.APP_URL || 'https://decodeias.com'}?leads=true`;
+  const destinationUrl = process.env.DATABASE_DASHBOARD_URL || `${process.env.APP_URL || 'http://localhost:3000'}?leads=true`;
 
   const ownerHtml = `
     <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
@@ -174,7 +174,10 @@ export async function sendInquiryNotification(record) {
     ccList.includes(record.email.trim().toLowerCase())
   );
 
-  if (record.email && !isOwnerOrCc) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const isCleanEmail = record.email && emailRegex.test(record.email.trim());
+
+  if (isCleanEmail && !isOwnerOrCc) {
     const studentHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background-color: #ffffff;">
         <div style="background-color: #0D2C54; color: #ffffff; padding: 20px; text-align: center;">

@@ -36,7 +36,7 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
   }, []);
 
   return (
-    <section id="home" className="relative pt-16 overflow-hidden min-h-[420px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] flex items-center justify-center">
+    <section id="home" className="relative pt-24 sm:pt-28 md:pt-30 overflow-hidden min-h-[440px] sm:min-h-[540px] md:min-h-[620px] lg:min-h-[700px] flex items-center justify-center">
       {/* Background Image Slider with Rich Dark Gradient Overlay */}
       <div className="absolute inset-0 z-0 bg-black overflow-hidden">
         <AnimatePresence initial={false} mode="wait">
