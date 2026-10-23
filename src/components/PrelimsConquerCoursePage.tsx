@@ -212,12 +212,23 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
       {/* Top Navbar */}
       <Navbar
         onEnrollClick={() => onEnrollClick && onEnrollClick(selectedPlan.name)}
-        onNavigate={() => onBackToHome()}
-        activeSection="courses"
+        onNavigate={(sectionId) => {
+          onBackToHome();
+          setTimeout(() => {
+            const el = document.getElementById(sectionId);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
+        activeSection="enquiry-27"
+        onPrelimsConquerClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
       />
 
-      {/* Breadcrumbs Navigation */}
-      <div className="bg-white border-b border-gray-200">
+      {/* Main Content Wrapper with Top Padding to prevent merging with Fixed Navbar */}
+      <div className="pt-24 sm:pt-28 md:pt-30">
+        {/* Breadcrumbs Navigation */}
+        <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center gap-2 text-xs text-gray-500 font-medium">
             <button
@@ -291,7 +302,7 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
             </div>
 
             {/* Sub-Tabs Navigation */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none sticky top-20 z-20">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none sticky top-28 sm:top-32 z-20">
               {[
                 { id: 'features', label: 'Package Features', icon: Award },
                 { id: 'toppers', label: 'Toppers Reviews', icon: Users },
@@ -466,7 +477,7 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
           {/* ======================================================== */}
           {/* RIGHT COLUMN: Sticky Package Selector & Pricing (4 Cols) */}
           {/* ======================================================== */}
-          <div className="lg:col-span-4 sticky top-20 space-y-5">
+          <div className="lg:col-span-4 sticky top-28 sm:top-32 space-y-5">
             
             <div className="bg-white rounded-3xl p-6 shadow-xl border-2 border-[#0D2C54]/10 relative overflow-hidden">
               
@@ -703,6 +714,8 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
           </div>
         )}
       </AnimatePresence>
+
+      </div>
 
       {/* Footer */}
       <Footer onOpenPolicy={() => {}} onNavigate={() => onBackToHome()} />

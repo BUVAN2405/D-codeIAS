@@ -39,12 +39,22 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection, onAdm
   const menuItems = [
     { label: 'Home', id: 'home' },
     { label: 'Courses', id: 'courses' },
+    { label: "Enquiry '27", id: 'enquiry-27' },
     { label: 'Faculty', id: 'faculty' },
     { label: 'Blog', id: 'blog' },
     { label: 'Contact', id: 'contact' },
   ];
 
   const handleItemClick = (id: string) => {
+    if (id === 'enquiry-27') {
+      if (onPrelimsConquerClick) {
+        onPrelimsConquerClick();
+      } else {
+        window.location.href = '/prelims-conquer-2027';
+      }
+      setIsMobileMenuOpen(false);
+      return;
+    }
     onNavigate(id);
     setIsMobileMenuOpen(false);
   };
@@ -163,16 +173,23 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection, onAdm
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7">
             {menuItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleItemClick(item.id)}
-                  className={`text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer relative py-1.5 focus:outline-none font-space text-white/90 hover:text-[#D31218]`}
+                  className={`text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer relative py-1.5 focus:outline-none font-space flex items-center gap-1.5 ${
+                    isActive ? 'text-white font-bold' : 'text-white/80 hover:text-white'
+                  }`}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
+                  {item.id === 'enquiry-27' && (
+                    <span className="px-1.5 py-0.2 rounded-full bg-amber-400 text-black text-[9px] font-black uppercase tracking-tight">
+                      2027
+                    </span>
+                  )}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
@@ -250,45 +267,52 @@ export default function Navbar({ onEnrollClick, onNavigate, activeSection, onAdm
                       <button
                         key={item.id}
                         onClick={() => handleItemClick(item.id)}
-                        className={`w-full text-left py-2.5 px-3.5 rounded-xl font-space text-xs uppercase tracking-wider font-bold transition-all flex items-center justify-between group border ${
+                        className={`w-full text-left py-2.5 px-3.5 rounded-xl font-space text-xs uppercase tracking-wider font-bold transition-all flex items-center justify-between group bg-black text-white hover:bg-neutral-800 border ${
                           isActive
-                            ? 'bg-black text-white border-black shadow-xs'
-                            : 'bg-white text-black hover:bg-gray-100 border-black/30'
+                            ? 'border-amber-400 ring-1 ring-amber-400 shadow-sm'
+                            : 'border-neutral-900'
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <span className={`font-mono text-[10px] ${isActive ? 'text-gray-300' : 'text-gray-500'}`}>
+                          <span className={`font-mono text-[10px] ${isActive ? 'text-amber-400 font-bold' : 'text-gray-400'}`}>
                             {paddedIndex}
                           </span>
-                          <span>{item.label}</span>
+                          <span className="text-white group-hover:text-amber-100 flex items-center gap-1.5">
+                            {item.label}
+                            {item.id === 'enquiry-27' && (
+                              <span className="px-1.5 py-0.2 rounded bg-amber-400 text-black text-[8px] font-black">
+                                2027
+                              </span>
+                            )}
+                          </span>
                         </div>
-                        <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${isActive ? 'rotate-90 text-white' : 'text-black/50 group-hover:translate-x-0.5'}`} />
+                        <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${isActive ? 'rotate-90 text-amber-400' : 'text-gray-400 group-hover:text-white group-hover:translate-x-0.5'}`} />
                       </button>
                     );
                   })}
                 </div>
               </div>
- 
+
               <div className="border-t border-black/15 mt-5 pt-4 pb-1 space-y-2.5">
-                {/* Special Button (Prelims Conquer 2027) with B&W gradient, no icon */}
+                {/* Special Button (Prelims Conquer 2027) with Golden background and white text */}
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     if (onPrelimsConquerClick) onPrelimsConquerClick();
                     else window.location.href = '/prelims-conquer-2027';
                   }}
-                  className="w-full bg-gradient-to-r from-gray-950 via-black to-zinc-900 hover:from-black hover:to-zinc-800 text-white font-space text-[11px] font-extrabold uppercase tracking-wider py-2.5 px-4 rounded-xl text-center transition-all cursor-pointer block border-2 border-black shadow-md flex items-center justify-center"
+                  className="w-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-600 hover:to-amber-700 text-white font-space text-[11px] font-extrabold uppercase tracking-wider py-2.5 px-4 rounded-xl text-center transition-all cursor-pointer block border border-amber-400/60 shadow-md flex items-center justify-center active:scale-95"
                 >
                   <span>Prelims Conquer 2027</span>
                 </button>
 
-                {/* Enroll Now button */}
+                {/* Enroll Now button with Green background and white text */}
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     onEnrollClick();
                   }}
-                  className="w-full bg-black hover:bg-zinc-800 text-white font-space text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl text-center transition-all cursor-pointer block border border-black shadow-sm"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-space text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl text-center transition-all cursor-pointer block border border-emerald-700 shadow-sm flex items-center justify-center active:scale-95"
                 >
                   Enroll Now
                 </button>

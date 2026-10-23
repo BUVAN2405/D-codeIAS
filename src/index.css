@@ -282,7 +282,6 @@ h1, h2, h3, h4, th, .text-brand-accent {
 /* Standard button adjustments for striking Crimson accents */
 button.bg-white,
 button.bg-brand-violet,
-#mobile-menu-drawer button,
 input[type="submit"] {
   background-color: #D31218 !important;
   color: #FFFFFF !important;
@@ -294,8 +293,7 @@ input[type="submit"] {
 }
 
 button.bg-white:hover,
-button.bg-brand-violet:hover,
-#mobile-menu-drawer button:hover {
+button.bg-brand-violet:hover {
   background-color: #A30D12 !important;
   border-color: #A30D12 !important;
   color: #FFFFFF !important;

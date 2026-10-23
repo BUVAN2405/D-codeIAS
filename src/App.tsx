@@ -209,6 +209,10 @@ export default function App() {
 
   // Soft trigger for scrolling down to a specified target ID
   const scrollToSection = (sectionId: string) => {
+    if (sectionId === 'enquiry-27') {
+      handleOpenPrelimsConquerPage();
+      return;
+    }
     // If 'results' is selected, scroll specifically, if 'blog' scroll to courses range
     const targetId = sectionId === 'blog' ? 'courses' : sectionId;
     const targetEl = document.getElementById(targetId);
