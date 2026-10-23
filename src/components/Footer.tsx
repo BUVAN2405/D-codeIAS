@@ -14,16 +14,16 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
   return (
     <footer className="bg-[#0D2C54] text-gray-200 border-t border-[#D31218]/20 pt-16 pb-8 font-sans">
       <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8">
-        
+
         {/* Core Content Row */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
-          
+
           {/* Brand Intro Column */}
           <div className="md:col-span-6 space-y-4">
             <div className="flex items-center gap-2.5">
-              <img 
-                src={LogoImage} 
-                alt="D'code IAS Academy Logo" 
+              <img
+                src={LogoImage}
+                alt="D'code IAS Academy Logo"
                 className="w-9 h-9 shrink-0 rounded-full object-cover border border-white/15 shadow-sm"
                 referrerPolicy="no-referrer"
               />
@@ -31,7 +31,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
                 D'code IAS Academy
               </h3>
             </div>
-            
+
             <p className="text-xs text-gray-300 leading-relaxed max-w-sm font-medium">
               We Simplify Your IAS Journey. Pioneering civil services coaching in Tamil Nadu. Under the leadership of Sudhagaran Sir, D'code IAS Academy simplifies your preparation with structured content and dynamic mentorship feedback loops.
             </p>
@@ -86,17 +86,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
                   Courses Offered
                 </button>
               </li>
-              <li>
-                <a
-                  href="/admin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-emerald-300 transition-colors text-left flex items-center gap-1.5 text-gray-400 cursor-pointer"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Admin Access</span>
-                </a>
-              </li>
+
             </ul>
           </div>
 
@@ -106,7 +96,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
               Connect
             </h4>
             <div className="flex gap-2.5">
-              
+
               {/* @ symbol icon container */}
               <a
                 href="mailto:info@decodeias.com"
@@ -143,7 +133,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
 
         {/* Legal and Metadata Details Row */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-gray-400 tracking-wider">
-          
+
           <div className="flex flex-wrap items-center gap-3">
             <span>© 2026 D'code IAS Academy. All rights reserved. Shaping the future of Indian Governance.</span>
           </div>
