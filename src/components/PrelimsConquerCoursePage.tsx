@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   CheckCircle2,
   Download,
   ArrowRight,
-  Award,
-  Users,
   Phone,
-  HelpCircle,
   ChevronRight,
   X,
   FileDown
@@ -88,7 +85,7 @@ const COURSE_PLANS: Record<PlanType, CoursePlan> = {
   },
   csat_crash_test: {
     id: 'csat_crash_test',
-    name: 'CSAT Crash Course + CSAT Test Series',
+    name: 'CSAT Full Course + CSAT Test Series',
     shortName: 'Full CSAT Course + CSAT Test Series',
     heroSubtitle: 'Full CSAT Course + 15 CSAT Tests',
     price: 9499,
@@ -110,7 +107,7 @@ const COURSE_PLANS: Record<PlanType, CoursePlan> = {
   },
   complete_combo: {
     id: 'complete_combo',
-    name: 'GS + CSAT Test Series + GS Crash Course + CSAT Crash Course',
+    name: 'GS + CSAT Test Series + GS Crash Course + CSAT Full Course',
     shortName: 'Full Course (Complete Combo)',
     heroSubtitle: 'Complete Course + 43 Tests Mentorship',
     badge: 'MOST POPULAR • COMPLETE PACK',
@@ -123,20 +120,19 @@ const COURSE_PLANS: Record<PlanType, CoursePlan> = {
     description: 'The ultimate 360-degree UPSC Prelims 2027 Conquer Masterplan. Combines every GS lecture, CSAT class, all 43 tests, and personal mentorship under Sudhagaran Sir.',
     featuresTitle: 'Full Course Complete Package Features',
     features: [
-      'Full Complete Package: Both GS Crash Course & Full CSAT Course included.',
-      'All 43 Tests: 28 GS Tests + 15 CSAT Tests (Online + Offline classroom access in Anna Nagar).',
-      'Daily Direction Classes + Daily Micro-Tests for routine daily study discipline.',
-      'Theme-based PYQ analysis with special dissection of latest 2026 UPSC paper trends.',
-      'Complete CSAT aptitude building covering 5,000+ MCQs, concept drills & PYQ elimination techniques.',
-      'Live Discussion Classes & Post-Test Explanation PDFs for every single test.',
-      'Personal 1-on-1 Mentorship Auditing directly with Sudhagaran Sir & team.'
+      'Complete Course: Includes both the GS Crash Course and the Full CSAT Course.',
+      '43 GS + CSAT Tests: Access all 28 GS and 15 CSAT tests online or in the Anna Nagar classroom.',
+      'Daily Preparation: Build a consistent routine with Daily Direction Classes and Daily Micro-Tests.',
+      'PYQ Analysis: Study themes and learn from detailed analysis of the latest UPSC paper trends.',
+      'Complete CSAT Preparation: Practice with 5,000+ MCQs, concept drills, and PYQ elimination techniques.',
+      'Test Discussions: Review every test in live discussion classes and use the included explanation PDFs.',
+      'Personal Mentorship: Get guidance and performance auditing from Sudhagaran Sir and his team.'
     ]
   }
 };
 
 export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }: PrelimsConquerCoursePageProps) {
   const [selectedPlanId, setSelectedPlanId] = useState<PlanType>('complete_combo');
-  const [activeTab, setActiveTab] = useState<'features' | 'toppers' | 'faq'>('features');
 
   // Brochure Download Lead Modal State
   const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
@@ -153,6 +149,11 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
       window.location.href = `/#enroll?course=${encodeURIComponent(selectedPlan.name)}`;
     }
   };
+
+  useEffect(() => {
+    const timer = window.setTimeout(handleEnrollAction, 30_000);
+    return () => window.clearTimeout(timer);
+  }, [selectedPlan.name, onEnrollClick]);
 
   const triggerDirectDownload = (url: string, filename: string) => {
     const link = document.createElement('a');
@@ -286,56 +287,27 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                 </p>
 
                 {/* Quick Meta Pills (Only Total Tests & Test Mode) */}
-                <div className="grid grid-cols-2 gap-3 pt-2 text-xs max-w-md">
+                <div className="grid w-full grid-cols-2 gap-3 pt-2 text-xs">
                   <div className="bg-black/25 backdrop-blur-sm p-3.5 rounded-xl border border-white/10">
                     <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Total Tests</p>
-                    <p className="text-white font-extrabold text-base mt-0.5 font-space">{selectedPlan.totalTests} Tests</p>
-                    <p className="text-amber-300 text-[10px] font-space font-medium">{selectedPlan.totalTestsDetail}</p>
+                    <p className="text-white font-extrabold text-base mt-0.5 font-space">
+                      {selectedPlan.totalTests} Tests
+                      <span className="ml-1 text-amber-300 text-[10px] font-medium">{selectedPlan.totalTestsDetail}</span>
+                    </p>
                   </div>
                   <div className="bg-black/25 backdrop-blur-sm p-3.5 rounded-xl border border-white/10">
                     <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Test Mode</p>
-                    <p className="text-white font-bold text-base mt-0.5">Both Modes</p>
-                    <p className="text-gray-300 text-[10px]">Online & Classroom</p>
+                    <p className="text-white font-bold text-base mt-0.5">Both Online & Offline</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Sub-Tabs Navigation */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none sticky top-28 sm:top-32 z-20">
-              {[
-                { id: 'features', label: 'Package Features', icon: Award },
-                { id: 'toppers', label: 'Toppers Reviews', icon: Users },
-                { id: 'faq', label: 'FAQs', icon: HelpCircle }
-              ].map(tab => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
-                    className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-                      isActive
-                        ? 'bg-[#0D2C54] text-white shadow-sm'
-                        : 'text-gray-600 hover:text-[#0D2C54] hover:bg-gray-100'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-amber-300' : 'text-gray-400'}`} />
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* DYNAMIC TAB CONTENT */}
-            <AnimatePresence mode="wait">
-              {/* TAB 1: Package Inclusions & Features */}
-              {activeTab === 'features' && (
+            <div className="space-y-6">
+              {/* Package Inclusions & Features */}
                 <motion.div
-                  key="tab-features"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.25 }}
                   className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
                 >
@@ -358,27 +330,32 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                       {selectedPlan.featuresTitle}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {selectedPlan.features.map((feat, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#F8FAFC] border border-gray-100 text-xs sm:text-sm text-gray-800 hover:border-[#0D2C54]/20 transition-all"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                          <span className="leading-snug">{feat}</span>
-                        </div>
-                      ))}
+                      {selectedPlan.features.map((feat, idx) => {
+                        const separatorIndex = feat.indexOf(':');
+                        const title = separatorIndex >= 0 ? feat.slice(0, separatorIndex) : undefined;
+                        const description = separatorIndex >= 0 ? feat.slice(separatorIndex + 1).trim() : feat;
+
+                        return (
+                          <div
+                            key={idx}
+                            className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#F8FAFC] border border-gray-100 text-xs sm:text-sm text-gray-800 hover:border-[#0D2C54]/20 transition-all"
+                          >
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                            <div className="leading-snug">
+                              {title && <p className="font-bold text-[#0D2C54]">{title}</p>}
+                              <p className={title ? 'mt-1 text-gray-600' : ''}>{description}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </motion.div>
-              )}
 
-              {/* TAB 2: Toppers Reviews */}
-              {activeTab === 'toppers' && (
+              {/* Toppers Reviews */}
                 <motion.div
-                  key="tab-toppers"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.25 }}
                   className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
                 >
@@ -433,15 +410,11 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                     ))}
                   </div>
                 </motion.div>
-              )}
 
-              {/* TAB 3: FAQs */}
-              {activeTab === 'faq' && (
+              {/* FAQs */}
                 <motion.div
-                  key="tab-faq"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.25 }}
                   className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-4"
                 >
@@ -449,28 +422,21 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                     Frequently Asked Questions
                   </h3>
                   <div className="space-y-3 text-xs sm:text-sm">
-                    <details className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100 cursor-pointer" open>
-                      <summary className="font-bold text-[#0D2C54]">Can I attend tests in offline classroom mode?</summary>
+                    <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100">
+                      <h4 className="font-bold text-[#0D2C54]">Can I attend tests in offline classroom mode?</h4>
                       <p className="mt-2 text-gray-600 leading-relaxed">
                         Yes! All tests are available in offline classroom simulation at our Anna Nagar center (Diamond Plaza, 2nd Ave) with real OMR sheets and invigilation, as well as online via our portal.
                       </p>
-                    </details>
-                    <details className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100 cursor-pointer">
-                      <summary className="font-bold text-[#0D2C54]">When do the Prelims Conquer 2027 classes start?</summary>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100">
+                      <h4 className="font-bold text-[#0D2C54]">When do the Prelims Conquer 2027 classes start?</h4>
                       <p className="mt-2 text-gray-600 leading-relaxed">
                         Classes officially commence on <strong>02 November 2026</strong>. Early bird orientation and preparation diagnostics are provided immediately upon enrollment.
                       </p>
-                    </details>
-                    <details className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100 cursor-pointer">
-                      <summary className="font-bold text-[#0D2C54]">How does the 1-on-1 mentorship work?</summary>
-                      <p className="mt-2 text-gray-600 leading-relaxed">
-                        Every student has regular 1-on-1 audit sessions with Sudhagaran Sir and academic counselors to review negative marks, weak themes, and fine-tune attempt strategy.
-                      </p>
-                    </details>
+                    </div>
                   </div>
                 </motion.div>
-              )}
-            </AnimatePresence>
+            </div>
 
           </div>
 
