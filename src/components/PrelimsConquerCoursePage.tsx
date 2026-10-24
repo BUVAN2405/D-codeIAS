@@ -5,6 +5,7 @@ import {
   Download,
   ArrowRight,
   Award,
+  MessageCircle,
   Phone,
   ChevronRight,
   X,
@@ -658,6 +659,17 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
 
         </div>
       </main>
+
+      <a
+        href="https://wa.me/919600060393?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Prelims%20Conquer%20course."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp at +91 96000 60393"
+        title="Chat on WhatsApp"
+        className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 hover:bg-[#1DA851] focus:outline-none focus:ring-4 focus:ring-emerald-300 sm:bottom-7 sm:right-7"
+      >
+        <MessageCircle className="h-5 w-5" />
+      </a>
 
       {/* Brochure Download Lead Modal (Page 4 requirement) */}
       <AnimatePresence>
