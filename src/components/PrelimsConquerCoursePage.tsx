@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   Download,
   ArrowRight,
+  Award,
   Phone,
   ChevronRight,
   X,
@@ -12,6 +13,15 @@ import {
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { submitInquiryApi } from '../services/api';
+import topperRajeshwari from '../assets/toppers/Rajeshwari Suve M.jpeg';
+import topperNeya from '../assets/toppers/Neya flower.jpeg';
+import topperArunPandian from '../assets/toppers/Arun Pandian.jpeg';
+import topperKirubakaran from '../assets/toppers/Kirubakaran.jpeg';
+import topperSubramania from '../assets/toppers/Subranabia Bharathi.jpeg';
+import topperNishanth from '../assets/toppers/Dr. NISHANTH T..jpeg';
+import topperSanjay from '../assets/toppers/Sanjay.jpeg';
+import topperPraveen from '../assets/toppers/PRAVEEN AROCKIARAJ.jpeg';
+import topperArunVadivarasan from '../assets/toppers/ARUN VADIVARASAN.jpeg';
 
 interface PrelimsConquerCoursePageProps {
   onBackToHome: () => void;
@@ -357,57 +367,117 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25 }}
-                  className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
+                  className="rounded-[2rem] border border-gray-200/70 bg-white p-4 shadow-sm sm:p-6 lg:p-8"
                 >
-                  <div>
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D31218]">
-                      <span>Proven Track Record</span>
+                  <div className="space-y-6">
+                    <div>
+                      <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#D31218]">
+                        Testimonials
+                      </span>
+                      <h3 className="mb-3 font-serif text-2xl font-bold tracking-tight text-[#0D2C54] sm:text-3xl">
+                        Testimonials of Toppers
+                      </h3>
+                      <p className="text-xs leading-relaxed text-gray-500 sm:text-sm">
+                        Under the mentorship of Sudhagaran Sir, who has aided them in their UPSC journey and Forest Services exams.
+                      </p>
+                      <div className="mt-5 flex items-center gap-2.5 text-[#D31218]">
+                        <Award className="h-5 w-5 animate-bounce" />
+                        <span className="text-xs font-bold uppercase tracking-wider">
+                          Guaranteed Results &amp; Dedication
+                        </span>
+                      </div>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0D2C54] mt-1">
-                      Excerpts from Toppers under Sudhagaran Sir
-                    </h3>
-                  </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                     {[
                       {
                         name: 'Rajeshwari Suve M',
-                        rank: 'AIR 2',
-                        quote: 'Under the guidance of Sudhagaran Sir, I navigated every stage of my UPSC journey, including Prelims, Mains, and the Interview.'
+                        rank: '2',
+                        exam: 'UPSC IAS',
+                        image: topperRajeshwari,
+                        imageClass: 'scale-[1.6] origin-[50%_18%] group-hover:scale-[1.7]'
                       },
                       {
-                        name: 'Mr. Gunasekaran N',
-                        rank: 'AIR 594',
-                        quote: 'Sudhagaran Sir identified the strengths and weaknesses of each and every student. His level of personal attention and support is reflected in the achievements of Tamil Nadu students in UPSC 2025.'
+                        name: 'Neya Flower S',
+                        rank: '515',
+                        exam: 'UPSC IAS',
+                        image: topperNeya,
+                        imageClass: 'object-top group-hover:scale-105'
                       },
                       {
-                        name: 'Mr. Aruljothi R',
-                        rank: 'AIR 723',
-                        quote: 'Sudhagaran Sir personally helped and guided me. Whenever I approached him for advice, he was very supportive.'
+                        name: 'Arun Pandian N',
+                        rank: '213',
+                        exam: 'UPSC IAS',
+                        image: topperArunPandian,
+                        imageClass: 'object-top group-hover:scale-105'
                       },
                       {
-                        name: 'Mr. Subramania Bharathi',
-                        rank: 'AIR 778',
-                        quote: 'Sudhagaran Sir helped me demystify the examination and instilled in me the confidence that with right direction, anyone can clear it.'
+                        name: 'Kirubakaran N',
+                        rank: '439',
+                        exam: 'UPSC IAS',
+                        image: topperKirubakaran,
+                        imageClass: 'object-top group-hover:scale-105'
                       },
                       {
-                        name: 'Nishant',
-                        rank: 'AIR 821',
-                        quote: "Sudhagaran Sir's brainstorming sessions helped me a lot. Throughout my UPSC journey, Sudhagaran Sir was a tremendous pillar of support for me."
+                        name: 'Subramania Bharathi',
+                        rank: '778',
+                        exam: 'UPSC IAS',
+                        image: topperSubramania,
+                        imageClass: 'object-top group-hover:scale-105'
+                      },
+                      {
+                        name: 'Nishanth T',
+                        rank: '821',
+                        exam: 'UPSC IAS',
+                        image: topperNishanth,
+                        imageClass: 'object-top group-hover:scale-105'
+                      },
+                      {
+                        name: 'Sanjay S',
+                        rank: '953',
+                        exam: 'UPSC IAS',
+                        image: topperSanjay,
+                        imageClass: 'object-top group-hover:scale-105'
+                      },
+                      {
+                        name: 'Praveen Arockiaraj J',
+                        rank: '102',
+                        exam: 'UPSC IFoS',
+                        image: topperPraveen,
+                        imageClass: 'object-top group-hover:scale-105'
+                      },
+                      {
+                        name: 'Arun Vadivarasan E',
+                        rank: '128',
+                        exam: 'UPSC IFoS',
+                        image: topperArunVadivarasan,
+                        imageClass: 'object-top group-hover:scale-105'
                       }
-                    ].map((top, i) => (
-                      <div key={i} className="p-4 rounded-2xl bg-[#F8FAFC] border border-gray-100 flex flex-col justify-between">
-                        <p className="text-xs text-gray-700 italic leading-relaxed">
-                          "{top.quote}"
-                        </p>
-                        <div className="mt-3 pt-2 border-t border-gray-200 flex items-center justify-between">
-                          <span className="font-bold text-xs text-[#0D2C54]">{top.name}</span>
-                          <span className="px-2 py-0.5 rounded-full bg-red-100 text-[#D31218] text-[10px] font-bold">
-                            {top.rank}
-                          </span>
+                    ].map((top) => (
+                      <div
+                        key={top.name}
+                        className="group flex cursor-pointer flex-col justify-between rounded-xl border border-gray-200/50 bg-slate-50/50 p-2 shadow-xs transition-all hover:border-[#D31218]/25 hover:bg-white"
+                      >
+                        <div>
+                          <div className="relative mb-2 aspect-[3/4] w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+                            <img
+                              src={top.image}
+                              alt={top.name}
+                              loading="lazy"
+                              className={`h-full w-full object-cover transition-transform duration-300 ${top.imageClass}`}
+                            />
+                            <span className="absolute left-1.5 top-1.5 rounded bg-white/95 px-1.5 py-0.5 font-space text-[8px] font-extrabold uppercase tracking-wider text-[#D31218] shadow-sm">
+                              {top.rank}
+                            </span>
+                          </div>
+                          <h4 className="line-clamp-2 font-serif text-xs font-bold text-[#0D2C54] transition-colors group-hover:text-[#D31218]">
+                            {top.name}
+                          </h4>
                         </div>
+                        <p className="mt-0.5 font-sans text-[9px] text-gray-400">{top.exam}</p>
                       </div>
                     ))}
+                    </div>
                   </div>
                 </motion.div>
 
