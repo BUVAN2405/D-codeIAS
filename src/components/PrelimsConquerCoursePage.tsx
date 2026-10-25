@@ -389,7 +389,7 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                    <div className="grid min-w-0 grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
                     {[
                       {
                         name: 'Rajeshwari Suve M',
@@ -457,9 +457,9 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                     ].map((top) => (
                       <div
                         key={top.name}
-                        className="group flex cursor-pointer flex-col justify-between rounded-xl border border-gray-200/50 bg-slate-50/50 p-2 shadow-xs transition-all hover:border-[#D31218]/25 hover:bg-white"
+                        className="group flex min-w-0 cursor-pointer flex-col rounded-xl border border-gray-200/50 bg-slate-50/50 p-2 shadow-xs transition-all hover:border-[#D31218]/25 hover:bg-white"
                       >
-                        <div>
+                        <div className="min-w-0">
                           <div className="relative mb-2 aspect-[3/4] w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
                             <img
                               src={top.image}
@@ -467,15 +467,15 @@ export default function PrelimsConquerCoursePage({ onBackToHome, onEnrollClick }
                               loading="lazy"
                               className={`h-full w-full object-cover transition-transform duration-300 ${top.imageClass}`}
                             />
-                            <span className="absolute left-1.5 top-1.5 rounded bg-white/95 px-1.5 py-0.5 font-space text-[8px] font-extrabold uppercase tracking-wider text-[#D31218] shadow-sm">
-                              {top.rank}
-                            </span>
                           </div>
-                          <h4 className="line-clamp-2 font-serif text-xs font-bold text-[#0D2C54] transition-colors group-hover:text-[#D31218]">
+                          <p className="mb-1 w-fit rounded-md bg-red-50 px-2 py-1 font-space text-[10px] font-extrabold uppercase tracking-wide text-[#D31218]">
+                            Rank {top.rank}
+                          </p>
+                          <h4 className="line-clamp-2 break-words font-serif text-xs font-bold text-[#0D2C54] transition-colors group-hover:text-[#D31218]">
                             {top.name}
                           </h4>
                         </div>
-                        <p className="mt-0.5 font-sans text-[9px] text-gray-400">{top.exam}</p>
+                        <p className="mt-1 font-sans text-[9px] text-gray-400">{top.exam}</p>
                       </div>
                     ))}
                     </div>

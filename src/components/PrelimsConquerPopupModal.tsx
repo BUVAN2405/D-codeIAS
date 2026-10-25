@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
+import popupImage from '../prelims-conquer-2027-popup-new.jpg';
 
 interface PrelimsConquerPopupModalProps {
   onNavigateToCourse: () => void;
@@ -113,7 +114,7 @@ export default function PrelimsConquerPopupModal({
               title="Click to view course details and schedule"
             >
               <img
-                src="/prelims-conquer-2027-popup.jpg"
+                src={popupImage}
                 alt="UPSC Prelims Conquer 2027 - Sudhagaran Sir"
                 className="w-full h-auto max-h-[82vh] object-contain rounded-2xl transition-transform duration-300 group-hover:scale-[1.015]"
               />
