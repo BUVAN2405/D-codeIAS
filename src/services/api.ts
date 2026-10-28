@@ -1,3 +1,7 @@
+
+import { ColorPalette, DEFAULT_PALETTE, isValidHex, setCachedPalette, getCachedPalette, applyPaletteToDom } from '../theme/palette';
+import { getPaletteFromFirestore, savePaletteToFirestore } from './firestoreService';
+
 // Frontend API service for D'code IAS Academy
 // Interfaces with Express API and directly with Firebase Firestore
 
@@ -368,3 +372,136 @@ export async function fetchAdminDashboardStatsApi(): Promise<{ stats: DashboardS
   }
 }
 
+
+
+// =========================================================================
+// COLOR PALETTE API CLIENT (Public Read, Admin Write & Reset)
+// =========================================================================
+
+export async function fetchPaletteApi(): Promise<ColorPalette> {
+  // 1. Try Express API
+  try {
+    const res = await fetch('/api/palette');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.success && data.palette) {
+        setCachedPalette(data.palette);
+        applyPaletteToDom(data.palette);
+        return data.palette;
+      }
+    }
+  } catch (err) {
+    // Backend offline, fallback to Firestore
+  }
+
+  // 2. Try Firestore fallback
+  try {
+    const firestorePalette = await getPaletteFromFirestore();
+    if (firestorePalette) {
+      const merged = { ...DEFAULT_PALETTE, ...firestorePalette };
+      setCachedPalette(merged);
+      applyPaletteToDom(merged);
+      return merged;
+    }
+  } catch (fsErr) {
+    // Fallback to cache
+  }
+
+  // 3. Fallback to localStorage cache
+  const cached = getCachedPalette();
+  applyPaletteToDom(cached);
+  return cached;
+}
+
+export async function savePaletteApi(
+  palette: ColorPalette
+): Promise<{ success: boolean; palette?: ColorPalette; error?: string }> {
+  // Validate on client before sending
+  for (const [key, value] of Object.entries(palette)) {
+    if (typeof value === 'string' && !isValidHex(value)) {
+      return {
+        success: false,
+        error: `Invalid hex color code for "${key}": "${value}". All colors must be valid CSS hex codes.`
+      };
+    }
+  }
+
+  let savedPalette: ColorPalette = palette;
+
+  // 1. Try Express API
+  try {
+    const headers = getAdminAuthHeaders();
+    const res = await fetch('/api/palette', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ palette })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.palette) {
+        savedPalette = data.palette;
+      }
+    } else {
+      const errData = await res.json().catch(() => ({}));
+      if (res.status === 401 || res.status === 403) {
+        return { success: false, error: errData.error || 'Unauthorized: Admin authentication token required.' };
+      }
+      if (errData.error) {
+        return { success: false, error: errData.error };
+      }
+    }
+  } catch (err) {
+    console.warn('[API] Express server offline during palette save. Saving directly to Firestore.', err);
+  }
+
+  // 2. Direct Firestore fallback
+  try {
+    await savePaletteToFirestore(palette);
+  } catch (fsErr) {
+    console.warn('[FIRESTORE] Could not write palette to Firestore directly', fsErr);
+  }
+
+  // Update client cache, DOM and broadcast event
+  setCachedPalette(savedPalette);
+  applyPaletteToDom(savedPalette);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('dcode_palette_updated', { detail: savedPalette }));
+  }
+
+  return { success: true, palette: savedPalette };
+}
+
+export async function resetPaletteApi(): Promise<{ success: boolean; palette?: ColorPalette; error?: string }> {
+  let defaultPal = DEFAULT_PALETTE;
+
+  try {
+    const headers = getAdminAuthHeaders();
+    const res = await fetch('/api/palette/reset', {
+      method: 'POST',
+      headers
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.palette) {
+        defaultPal = data.palette;
+      }
+    }
+  } catch (err) {
+    console.warn('[API] Express server offline during palette reset. Resetting Firestore.', err);
+  }
+
+  try {
+    await savePaletteToFirestore(DEFAULT_PALETTE);
+  } catch (fsErr) {
+    console.warn('[FIRESTORE] Error resetting palette in Firestore', fsErr);
+  }
+
+  setCachedPalette(defaultPal);
+  applyPaletteToDom(defaultPal);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('dcode_palette_updated', { detail: defaultPal }));
+  }
+
+  return { success: true, palette: defaultPal };
+}

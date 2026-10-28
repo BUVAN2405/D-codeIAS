@@ -12,7 +12,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0D2C54] text-gray-200 border-t border-[#D31218]/20 pt-16 pb-8 font-sans">
+    <footer className="bg-footer-bg text-footer-text border-t border-primary/20 pt-16 pb-8 font-sans">
       <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8">
 
         {/* Core Content Row */}
@@ -38,7 +38,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
 
             <div className="text-xs text-gray-400 mt-2 space-y-1">
               <p className="font-semibold text-white flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#D31218]" />
+                <MapPin className="w-3.5 h-3.5 text-primary" />
                 Anna Nagar Center:
               </p>
               <p>Block Z, 5th Ave, Z Block,</p>
@@ -57,32 +57,32 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
 
           {/* Quick Links Column */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="font-space text-[10px] font-bold uppercase text-[#D31218] tracking-widest">
+            <h4 className="font-space text-[10px] font-bold uppercase text-primary tracking-widest">
               Quick Links & Policies
             </h4>
             <ul className="space-y-2 text-xs font-semibold text-gray-300">
               <li>
-                <button onClick={() => onOpenPolicy?.('privacy')} className="hover:text-[#D31218] transition-colors text-left">
+                <button onClick={() => onOpenPolicy?.('privacy')} className="hover:text-primary transition-colors text-left">
                   Privacy Policy
                 </button>
               </li>
               <li>
-                <button onClick={() => onOpenPolicy?.('terms')} className="hover:text-[#D31218] transition-colors text-left">
+                <button onClick={() => onOpenPolicy?.('terms')} className="hover:text-primary transition-colors text-left">
                   Terms of Service
                 </button>
               </li>
               <li>
-                <button onClick={() => onOpenPolicy?.('refund')} className="hover:text-[#D31218] transition-colors text-left">
+                <button onClick={() => onOpenPolicy?.('refund')} className="hover:text-primary transition-colors text-left">
                   Refund Policy
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate?.('contact')} className="hover:text-[#D31218] transition-colors text-left">
+                <button onClick={() => onNavigate?.('contact')} className="hover:text-primary transition-colors text-left">
                   Contact Us
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate?.('courses')} className="hover:text-[#D31218] transition-colors text-left">
+                <button onClick={() => onNavigate?.('courses')} className="hover:text-primary transition-colors text-left">
                   Courses Offered
                 </button>
               </li>
@@ -92,7 +92,7 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
 
           {/* Connect Column (Circular Icons as in prompt) */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="font-space text-[10px] font-bold uppercase text-[#D31218] tracking-widest">
+            <h4 className="font-space text-[10px] font-bold uppercase text-primary tracking-widest">
               Connect
             </h4>
             <div className="flex gap-2.5">
@@ -140,11 +140,11 @@ export default function Footer({ onOpenPolicy, onNavigate, onAdminClick }: Foote
 
           <div className="flex items-center gap-6 italic">
             <span className="flex items-center gap-1.5 not-italic text-gray-300">
-              <Phone className="w-3 h-3 text-[#D31218]" />
+              <Phone className="w-3 h-3 text-primary" />
               +91 96000 60393 / 96000 60349
             </span>
             <span className="flex items-center gap-1.5 not-italic text-gray-300">
-              <Mail className="w-3 h-3 text-[#D31218]" />
+              <Mail className="w-3 h-3 text-primary" />
               info@decodeias.com
             </span>
           </div>

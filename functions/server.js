@@ -8,7 +8,10 @@ import {
   saveInquiryToDb,
   getAllInquiriesFromDb,
   updateInquiryStatusInDb,
-  deleteInquiryFromDb
+  deleteInquiryFromDb,
+  getPaletteFromDb,
+  savePaletteToDb,
+  resetPaletteInDb
 } from './server/db.js';
 import { sendInquiryNotification } from './server/mailer.js';
 
@@ -82,6 +85,12 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
+
+// Color validation helper for color palette API
+function isValidHexColor(hex) {
+  if (!hex || typeof hex !== 'string') return false;
+  return /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(hex.trim());
+}
 
 // Authentication Middleware to Protect Admin Endpoints
 const requireAdminAuth = (req, res, next) => {
@@ -473,6 +482,83 @@ app.delete('/api/inquiries/:id', requireAdminAuth, async (req, res) => {
 });
 
 // =========================================================================
+
+// =========================================================================
+// COLOR PALETTE API (PUBLIC READ, ADMIN WRITE & RESET)
+// =========================================================================
+
+// 1. GET /api/palette - Public read endpoint to retrieve active palette
+app.get('/api/palette', async (req, res) => {
+  try {
+    const palette = await getPaletteFromDb();
+    res.json({
+      success: true,
+      palette
+    });
+  } catch (err) {
+    console.error('Error fetching color palette:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load color palette from database.'
+    });
+  }
+});
+
+// 2. POST /api/palette - Admin-only endpoint to save/update palette with hex validation
+app.post('/api/palette', requireAdminAuth, async (req, res) => {
+  try {
+    const inputPalette = req.body.palette || req.body;
+
+    if (!inputPalette || typeof inputPalette !== 'object') {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid payload: Palette object is required.'
+      });
+    }
+
+    // Validate that every color provided has a valid hex code
+    for (const [key, value] of Object.entries(inputPalette)) {
+      if (typeof value === 'string' && !isValidHexColor(value)) {
+        return res.status(400).json({
+          success: false,
+          error: `Invalid hex color code for "${key}": "${value}". Hex colors must be valid CSS hex codes like #D31218 or #FFF.`
+        });
+      }
+    }
+
+    const saved = await savePaletteToDb(inputPalette);
+    res.json({
+      success: true,
+      message: 'Color palette successfully updated across the website.',
+      palette: saved
+    });
+  } catch (err) {
+    console.error('Error saving color palette:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to save color palette.'
+    });
+  }
+});
+
+// 3. POST /api/palette/reset - Admin-only endpoint to reset palette to defaults
+app.post('/api/palette/reset', requireAdminAuth, async (req, res) => {
+  try {
+    const defaultPalette = await resetPaletteInDb();
+    res.json({
+      success: true,
+      message: 'Color palette successfully reset to default system colors.',
+      palette: defaultPalette
+    });
+  } catch (err) {
+    console.error('Error resetting color palette:', err);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to reset color palette.'
+    });
+  }
+});
+
 // STATIC BUILD SERVING & SPA ROUTING
 // =========================================================================
 

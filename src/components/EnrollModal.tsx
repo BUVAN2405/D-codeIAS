@@ -117,12 +117,12 @@ export default function EnrollModal({
             className="relative w-full max-w-3xl bg-[#F8FAFC] text-gray-800 rounded-xl border border-gray-100 shadow-xl overflow-hidden z-10 my-auto max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-3rem)] md:max-h-none flex flex-col"
           >
             {/* Header indicator bar */}
-            <div className="h-1.5 bg-[#D31218] shrink-0" />
+            <div className="h-1.5 bg-primary shrink-0" />
 
             <button
               id="close-modal-btn"
               onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-1.5 py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-red-50 hover:bg-red-100 text-[#D31218] hover:text-[#A30D12] transition-colors border border-red-200/50 cursor-pointer z-20 font-space text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-xs"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 flex items-center gap-1.5 py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-red-50 hover:bg-red-100 text-primary hover:text-[#A30D12] transition-colors border border-red-200/50 cursor-pointer z-20 font-space text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-xs"
               aria-label="Close dialog"
             >
               <span>Exit</span>
@@ -143,13 +143,13 @@ export default function EnrollModal({
                   />
                   <Check className="w-8 h-8 sm:w-10 sm:h-10 stroke-[2.5]" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#0D2C54] mb-2 sm:mb-3">
+                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-secondary mb-2 sm:mb-3">
                   Seat Provisionally Reserved!
                 </h3>
                 <p className="max-w-md text-gray-600 font-sans mb-4 text-xs sm:text-sm px-2">
-                  Thank you, <strong className="text-[#D31218] font-semibold">{formData.name}</strong>. Your application has been saved to the database. A senior advisor will call you within <strong className="font-semibold text-[#0D2C54]">15 minutes</strong> for onboarding.
+                  Thank you, <strong className="text-primary font-semibold">{formData.name}</strong>. Your application has been saved to the database. A senior advisor will call you within <strong className="font-semibold text-secondary">15 minutes</strong> for onboarding.
                 </p>
-                <div className="border border-[#D31218]/10 bg-[#D31218]/5 py-2 px-4 rounded font-space text-[11px] sm:text-xs text-[#D31218] mb-2 font-bold">
+                <div className="border border-primary/10 bg-primary/5 py-2 px-4 rounded font-space text-[11px] sm:text-xs text-primary mb-2 font-bold">
                   Reference ID: DC-2026-{Math.floor(100000 + Math.random() * 900000)}
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-gray-400 uppercase font-space font-bold">
@@ -159,7 +159,7 @@ export default function EnrollModal({
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-12 overflow-y-auto md:overflow-visible flex-1">
                 {/* Left Side: Course Specific Details */}
-                <div className="md:col-span-5 bg-[#0D2C54] text-white p-5 sm:p-6 md:p-8 flex flex-col justify-between">
+                <div className="md:col-span-5 bg-secondary text-white p-5 sm:p-6 md:p-8 flex flex-col justify-between">
                   <div>
                     <span className="font-space text-[9px] sm:text-[10px] uppercase tracking-wider bg-white/10 text-white px-2 py-0.5 rounded font-bold">
                       D'code IAS Academy
@@ -171,7 +171,7 @@ export default function EnrollModal({
                           {selectedCourse.title}
                         </h3>
                         {selectedCourse.badge && (
-                          <p className="text-[#D31218] font-space text-[10px] sm:text-[11px] uppercase tracking-wide mb-2.5 font-extrabold">
+                          <p className="text-primary font-space text-[10px] sm:text-[11px] uppercase tracking-wide mb-2.5 font-extrabold">
                             {selectedCourse.badge}
                           </p>
                         )}
@@ -198,7 +198,7 @@ export default function EnrollModal({
                       </div>
                     ) : selectedBatch ? (
                       <div className="mt-4 sm:mt-6">
-                        <span className="font-space text-[9px] sm:text-xs bg-[#D31218] text-white px-2 py-0.5 rounded-full font-bold">
+                        <span className="font-space text-[9px] sm:text-xs bg-primary text-white px-2 py-0.5 rounded-full font-bold">
                           Selected Cycle
                         </span>
                         <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-bold mb-1.5 mt-2 text-white">
@@ -237,9 +237,9 @@ export default function EnrollModal({
                         <div className="space-y-3 pt-3 md:pt-4 border-t border-white/10 text-[11px] sm:text-xs">
                           <p className="font-space text-gray-400 uppercase tracking-widest font-bold text-[8px] sm:text-[9px]">D'CODE METRICS:</p>
                           <ul className="space-y-1.5 font-sans text-gray-300">
-                            <li className="flex items-start gap-1"><span className="text-[#D31218]">✓</span> Former Mission Director leadership</li>
-                            <li className="flex items-start gap-1"><span className="text-[#D31218]">✓</span> Personal Mentorship Tracking</li>
-                            <li className="flex items-start gap-1"><span className="text-[#D31218]">✓</span> High-Yield Syllabus Mapping</li>
+                            <li className="flex items-start gap-1"><span className="text-primary">✓</span> Former Mission Director leadership</li>
+                            <li className="flex items-start gap-1"><span className="text-primary">✓</span> Personal Mentorship Tracking</li>
+                            <li className="flex items-start gap-1"><span className="text-primary">✓</span> High-Yield Syllabus Mapping</li>
                           </ul>
                         </div>
                       </div>
@@ -254,7 +254,7 @@ export default function EnrollModal({
 
                 {/* Right Side: Interactive Admission Request Form */}
                 <div className="md:col-span-7 p-5 sm:p-6 md:p-8">
-                  <h4 className="font-serif text-lg sm:text-xl font-bold text-[#0D2C54] mb-1">
+                  <h4 className="font-serif text-lg sm:text-xl font-bold text-secondary mb-1">
                     Student Enquiry Form
                   </h4>
                   <p className="text-[11px] sm:text-xs text-gray-500 font-sans mb-4 sm:mb-6">
@@ -263,8 +263,8 @@ export default function EnrollModal({
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        NAME <span className="text-[#D31218]">*</span>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-secondary mb-1">
+                        NAME <span className="text-primary">*</span>
                       </label>
                       <input
                         type="text"
@@ -277,8 +277,8 @@ export default function EnrollModal({
                     </div>
 
                     <div>
-                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        MOBILE NUMBER <span className="text-[#D31218]">*</span>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-secondary mb-1">
+                        MOBILE NUMBER <span className="text-primary">*</span>
                       </label>
                       <div className="flex">
                         <span className="inline-flex items-center px-3 border border-r-0 border-gray-200 bg-gray-50 rounded-l-lg text-xs font-space text-gray-600 font-bold">
@@ -297,8 +297,8 @@ export default function EnrollModal({
                     </div>
 
                     <div>
-                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
-                        EMAIL ADDRESS <span className="text-[#D31218]">*</span>
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-secondary mb-1">
+                        EMAIL ADDRESS <span className="text-primary">*</span>
                       </label>
                       <input
                         type="email"
@@ -311,7 +311,7 @@ export default function EnrollModal({
                     </div>
 
                     <div>
-                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-[#0D2C54] mb-1">
+                      <label className="block text-[10px] sm:text-xs font-space font-semibold text-secondary mb-1">
                         IMMEDIATE QUERY / MESSAGE
                       </label>
                       <textarea
@@ -327,7 +327,7 @@ export default function EnrollModal({
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#D31218] text-white font-space text-xs sm:text-sm font-bold uppercase tracking-wider py-3 px-4 rounded-lg hover:bg-[#A30D12] transition-all active:scale-[0.99] cursor-pointer shadow-md shadow-red-600/20 border-none disabled:opacity-60"
+                        className="w-full bg-btn-primary-bg hover:bg-btn-primary-hover text-btn-primary-text font-space text-xs sm:text-sm font-bold uppercase tracking-wider py-3 px-4 rounded-lg transition-all active:scale-[0.99] cursor-pointer shadow-md shadow-red-600/20 border-none disabled:opacity-60"
                       >
                         {loading ? 'Submitting Application...' : 'Secure Provisionally Reserved Seat'}
                       </button>

@@ -3,6 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Immediate Color Palette Loader to prevent flash of default colors -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('dcode_theme_palette_v1');
+          if (stored) {
+            var palette = JSON.parse(stored);
+            function hexToChannels(hex) {
+              if (!hex || typeof hex !== 'string') return null;
+              var c = hex.trim().replace('#', '');
+              if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2];
+              if (c.length !== 6) return null;
+              var num = parseInt(c, 16);
+              if (isNaN(num)) return null;
+              return ((num >> 16) & 255) + ' ' + ((num >> 8) & 255) + ' ' + (num & 255);
+            }
+            var root = document.documentElement;
+            var map = {
+              primary: '--primary',
+              secondary: '--secondary',
+              tertiary: '--tertiary',
+              background: '--background',
+              surface: '--surface',
+              border: '--border',
+              textHeading: '--text-heading',
+              textBody: '--text-body',
+              textMuted: '--text-muted',
+              textLink: '--text-link',
+              btnPrimaryBg: '--btn-primary-bg',
+              btnPrimaryText: '--btn-primary-text',
+              btnPrimaryHover: '--btn-primary-hover',
+              btnSecondaryBg: '--btn-secondary-bg',
+              btnSecondaryText: '--btn-secondary-text',
+              btnSecondaryHover: '--btn-secondary-hover',
+              btnSpecialBg: '--btn-special-bg',
+              btnSpecialText: '--btn-special-text',
+              btnSpecialHover: '--btn-special-hover',
+              navbarBg: '--navbar-bg',
+              navbarText: '--navbar-text',
+              footerBg: '--footer-bg',
+              footerText: '--footer-text',
+              success: '--success',
+              warning: '--warning',
+              danger: '--danger'
+            };
+            for (var key in map) {
+              if (palette[key]) {
+                var rgb = hexToChannels(palette[key]);
+                if (rgb) root.style.setProperty(map[key], rgb);
+              }
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
     
     <!-- Favicon using academy logo -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />

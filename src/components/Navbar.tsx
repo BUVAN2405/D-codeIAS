@@ -175,9 +175,7 @@ export default function Navbar({
 
         {/* Main Navbar */}
         <div className={`transition-all duration-300 ${
-          isScrolled
-            ? 'bg-[#0D2C54]/95 text-white shadow-lg py-2.5 backdrop-blur-md border-b border-[#D31218]/20'
-            : 'bg-[#0D2C54] text-white py-3 md:py-4 border-b border-white/5'
+          isScrolled ? 'bg-navbar-bg/95 text-navbar-text shadow-lg py-2.5 backdrop-blur-md border-b border-primary/20' : 'bg-navbar-bg text-navbar-text py-3 md:py-4 border-b border-white/5'
         }`}>
           <div className="max-w-(--size-container-max) mx-auto px-4 md:px-8 flex items-center justify-between">
             {/* Logo Brand Title */}
@@ -230,7 +228,7 @@ export default function Navbar({
                     {isActive && (
                       <motion.div
                         layoutId="activeIndicator"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D31218]"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -255,7 +253,7 @@ export default function Navbar({
 
               <button
                 onClick={onEnrollClick}
-                className="hidden lg:inline-flex bg-[#D31218] hover:bg-[#A30D12] text-white font-space text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded transition-all active:scale-95 shadow-md shadow-black/10 duration-200 cursor-pointer border-none"
+                className="hidden lg:inline-flex bg-btn-primary-bg hover:bg-btn-primary-hover text-btn-primary-text font-space text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded transition-all active:scale-95 shadow-md shadow-black/10 duration-200 cursor-pointer border-none"
               >
                 Inquire Now
               </button>

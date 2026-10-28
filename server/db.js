@@ -8,6 +8,8 @@ import {
   addDoc,
   getDocs,
   doc,
+  getDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
   query,
@@ -23,6 +25,7 @@ const __dirname = path.dirname(__filename);
 
 const DATA_DIR = process.env.FIREBASE_CONFIG ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'inquiries.json');
+const PALETTE_FILE = path.join(DATA_DIR, 'palette.json');
 
 // Ensure data directory exists
 try {
@@ -395,4 +398,95 @@ function localDelete(id) {
     return true;
   }
   return false;
+}
+
+
+// =========================================================================
+// COLOR PALETTE SYSTEM SERVICE
+// =========================================================================
+
+export const SERVER_DEFAULT_PALETTE = {
+  primary: '#D31218',
+  secondary: '#0D2C54',
+  tertiary: '#F59E0B',
+  background: '#F8FAFC',
+  surface: '#FFFFFF',
+  border: '#E2E8F0',
+  textHeading: '#0D2C54',
+  textBody: '#334155',
+  textMuted: '#64748B',
+  textLink: '#D31218',
+  btnPrimaryBg: '#D31218',
+  btnPrimaryText: '#FFFFFF',
+  btnPrimaryHover: '#B91C1C',
+  btnSecondaryBg: '#0D2C54',
+  btnSecondaryText: '#FFFFFF',
+  btnSecondaryHover: '#1E3A8A',
+  btnSpecialBg: '#F59E0B',
+  btnSpecialText: '#FFFFFF',
+  btnSpecialHover: '#D97706',
+  navbarBg: '#0D2C54',
+  navbarText: '#FFFFFF',
+  footerBg: '#081B34',
+  footerText: '#E2E8F0',
+  success: '#10B981',
+  warning: '#F59E0B',
+  danger: '#EF4444'
+};
+
+export async function getPaletteFromDb() {
+  if (firestore) {
+    try {
+      const docRef = doc(firestore, 'settings', 'palette');
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data && data.palette) {
+          return { ...SERVER_DEFAULT_PALETTE, ...data.palette };
+        }
+      }
+    } catch (err) {
+      console.warn('[FIRESTORE] Error reading palette:', err.message);
+    }
+  }
+
+  try {
+    if (fs.existsSync(PALETTE_FILE)) {
+      const raw = fs.readFileSync(PALETTE_FILE, 'utf8');
+      const parsed = JSON.parse(raw);
+      return { ...SERVER_DEFAULT_PALETTE, ...parsed };
+    }
+  } catch (err) {
+    console.warn('[DATABASE] Error reading local palette file:', err.message);
+  }
+
+  return SERVER_DEFAULT_PALETTE;
+}
+
+export async function savePaletteToDb(palette) {
+  const merged = { ...SERVER_DEFAULT_PALETTE, ...palette };
+
+  if (firestore) {
+    try {
+      const docRef = doc(firestore, 'settings', 'palette');
+      await setDoc(docRef, {
+        palette: merged,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+    } catch (err) {
+      console.error('[FIRESTORE] Error saving palette:', err.message);
+    }
+  }
+
+  try {
+    fs.writeFileSync(PALETTE_FILE, JSON.stringify(merged, null, 2), 'utf8');
+  } catch (err) {
+    console.warn('[DATABASE] Error saving local palette file:', err.message);
+  }
+
+  return merged;
+}
+
+export async function resetPaletteInDb() {
+  return savePaletteToDb(SERVER_DEFAULT_PALETTE);
 }

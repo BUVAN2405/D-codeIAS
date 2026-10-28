@@ -22,6 +22,7 @@ import LegalPolicyModal, { PolicyType } from './components/LegalPolicyModal';
 import PrelimsOrientationPage from './components/PrelimsOrientationPage';
 import PrelimsConquerCoursePage from './components/PrelimsConquerCoursePage';
 import PcmBatch2028CoursePage from './components/PcmBatch2028CoursePage';
+import { useThemePalette } from './theme/useThemePalette';
 import PrelimsConquerPopupModal from './components/PrelimsConquerPopupModal';
 import { isOrientationExpired } from './utils/orientationConfig';
 import { ORIENTATION_HASHTAGS } from './components/PrelimsOrientationPopup';
@@ -48,6 +49,7 @@ import { Course, BatchSchedule } from './types';
 import { CheckCircle, Info, Landmark } from 'lucide-react';
 
 export default function App() {
+  useThemePalette();
   const [activeSection, setActiveSection] = useState('home');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);

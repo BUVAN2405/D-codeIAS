@@ -2,6 +2,7 @@ import {
   collection,
   addDoc,
   getDoc,
+  setDoc,
   getDocs,
   doc,
   updateDoc,
@@ -291,5 +292,40 @@ export async function deleteQueryReport(id: string): Promise<void> {
       `Failed to delete query report with ID '${id}'.`,
       err
     );
+  }
+}
+
+
+/**
+ * 7. Fetch theme palette from Firestore settings/palette document.
+ */
+export async function getPaletteFromFirestore(): Promise<any | null> {
+  try {
+    const docRef = doc(db, 'settings', 'palette');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return data?.palette || null;
+    }
+  } catch (err) {
+    console.warn('[FIRESTORE] Could not read settings/palette doc:', err);
+  }
+  return null;
+}
+
+/**
+ * 8. Save theme palette to Firestore settings/palette document.
+ */
+export async function savePaletteToFirestore(palette: any): Promise<boolean> {
+  try {
+    const docRef = doc(db, 'settings', 'palette');
+    await setDoc(docRef, {
+      palette,
+      updatedAt: new Date().toISOString()
+    }, { merge: true });
+    return true;
+  } catch (err) {
+    console.warn('[FIRESTORE] Could not write settings/palette doc:', err);
+    return false;
   }
 }

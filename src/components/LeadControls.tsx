@@ -47,13 +47,13 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
               <motion.div
                 whileHover={{ x: -12 }}
                 onClick={onOrientationClick}
-                className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-[#D31218]/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-primary/20 hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#D31218] to-red-600 text-white flex items-center justify-center hover:from-red-600 hover:to-[#0D2C54] transition-colors shrink-0 shadow-md">
                   <span className="text-[11px] font-black tracking-tight font-space text-white">2027</span>
                 </div>
                 <div className="text-[10px] max-w-0 opacity-0 overflow-hidden group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-3 group-hover:mr-2 transition-all duration-300 ease-in-out whitespace-nowrap flex flex-col justify-center">
-                  <p className="font-space font-bold uppercase tracking-wider text-[#D31218] leading-tight">Prelims 2027</p>
+                  <p className="font-space font-bold uppercase tracking-wider text-primary leading-tight">Prelims 2027</p>
                   <p className="font-sans font-semibold text-gray-500 mt-0.5 leading-none">Oct 15 Orientation</p>
                 </div>
               </motion.div>
@@ -62,17 +62,17 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
             {/* Sticky Call Card */}
             <motion.div
               whileHover={{ x: -12 }}
-              className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-[#0D2C54]/10 hover:shadow-lg transition-all duration-300"
+              className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-secondary/10 hover:shadow-lg transition-all duration-300"
             >
               <a
                 href={`tel:${contact1}`}
-                className="w-10 h-10 rounded-lg bg-[#0D2C54] text-white flex items-center justify-center hover:bg-[#D31218] transition-colors shrink-0 shadow-md"
+                className="w-10 h-10 rounded-lg bg-secondary text-white flex items-center justify-center hover:bg-primary transition-colors shrink-0 shadow-md"
                 title="Call D'code IAS"
               >
                 <Phone className="w-4 h-4" />
               </a>
               <div className="text-[10px] max-w-0 opacity-0 overflow-hidden group-hover:max-w-[140px] group-hover:opacity-100 group-hover:ml-3 group-hover:mr-2 transition-all duration-300 ease-in-out whitespace-nowrap flex flex-col justify-center">
-                <p className="font-space font-bold uppercase tracking-wider text-[#0D2C54] leading-tight">Call Academy</p>
+                <p className="font-space font-bold uppercase tracking-wider text-secondary leading-tight">Call Academy</p>
                 <p className="font-sans font-semibold text-gray-500 mt-0.5 leading-none">{contact1}</p>
               </div>
             </motion.div>
@@ -81,13 +81,13 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
             <motion.div
               whileHover={{ x: -12 }}
               onClick={onInquiryClick}
-              className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-[#0D2C54]/10 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="bg-transparent border border-transparent border-r-0 rounded-l-xl p-1.5 flex items-center group hover:bg-white hover:border-secondary/10 hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#D31218] text-white flex items-center justify-center hover:bg-[#A30D12] transition-colors shrink-0 shadow-md">
+              <div className="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-btn-primary-hover transition-colors shrink-0 shadow-md">
                 <FileText className="w-4 h-4" />
               </div>
               <div className="text-[10px] max-w-0 opacity-0 overflow-hidden group-hover:max-w-[140px] group-hover:opacity-100 group-hover:ml-3 group-hover:mr-2 transition-all duration-300 ease-in-out whitespace-nowrap flex flex-col justify-center">
-                <p className="font-space font-bold uppercase tracking-wider text-[#D31218] leading-tight">Inquire Now</p>
+                <p className="font-space font-bold uppercase tracking-wider text-primary leading-tight">Inquire Now</p>
                 <p className="font-sans font-semibold text-gray-500 mt-0.5 leading-none">Instant Callback</p>
               </div>
             </motion.div>
@@ -131,7 +131,7 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
               <button
                 type="button"
                 onClick={onOrientationClick}
-                className="px-2.5 py-1.5 rounded-full bg-[#D31218] text-white font-space text-[9px] font-extrabold uppercase tracking-tight shrink-0 shadow-sm active:scale-95 transition-transform flex items-center gap-1"
+                className="px-2.5 py-1.5 rounded-full bg-primary text-white font-space text-[9px] font-extrabold uppercase tracking-tight shrink-0 shadow-sm active:scale-95 transition-transform flex items-center gap-1"
                 title="Prelims 2027 Orientation (Oct 15)"
               >
                 <span>Oct 15</span>
@@ -141,7 +141,7 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
             {/* Call Academy Option */}
             <a
               href={`tel:${contact1}`}
-              className="w-8 h-8 rounded-full bg-[#0D2C54] hover:bg-[#112F5A] text-white flex items-center justify-center shrink-0 shadow-sm active:scale-95 transition-transform"
+              className="w-8 h-8 rounded-full bg-secondary hover:bg-btn-secondary-hover text-white flex items-center justify-center shrink-0 shadow-sm active:scale-95 transition-transform"
               title="Call Center"
             >
               <Phone className="w-3 h-3" />
@@ -150,7 +150,7 @@ export default function LeadControls({ onInquiryClick, onOrientationClick }: Lea
             {/* Quick Inquiry Option */}
             <button
               onClick={onInquiryClick}
-              className="flex-1 inline-flex items-center justify-center bg-[#D31218] hover:bg-[#A30D12] text-white py-1.5 px-3 rounded-full font-space text-[10px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
+              className="flex-1 inline-flex items-center justify-center bg-primary hover:bg-btn-primary-hover text-white py-1.5 px-3 rounded-full font-space text-[10px] font-extrabold uppercase tracking-wider shadow-sm active:scale-95 transition-transform"
             >
               <span>Inquire Now</span>
             </button>

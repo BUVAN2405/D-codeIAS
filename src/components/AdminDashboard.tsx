@@ -1,6 +1,7 @@
+import AdminColorPalette from './AdminColorPalette';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
+import { Palette, 
   ArrowLeft,
   Shield,
   LayoutDashboard,
@@ -35,7 +36,7 @@ import {
   Database,
   Eye,
   Send
-} from 'lucide-react';
+ } from 'lucide-react';
 import {
   fetchAdminDashboardStatsApi,
   updateInquiryStatusApi,
@@ -61,7 +62,7 @@ interface AdminDashboardProps {
   onLogout?: () => void;
 }
 
-type TabType = 'overview' | 'leads' | 'batches' | 'system';
+type TabType = 'overview' | 'leads' | 'batches' | 'palette' | 'system';
 
 export function normalizeCourseName(rawCourse?: string): string {
   if (!rawCourse) return 'General Guidance';
@@ -587,7 +588,49 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
           <span>Batches ({batches.length})</span>
         </button>
 
+        
         <button
+          onClick={() => handleSelectTab('palette')}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+            activeTab === 'palette'
+              ? 'bg-[#0D2C54] text-white shadow-xs'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          <Palette className="w-3.5 h-3.5 text-amber-400" />
+          <span>Color Palette</span>
+        </button>
+
+                    <button
+                      onClick={() => handleSelectTab('palette')}
+                      className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                        activeTab === 'palette'
+                          ? 'bg-[#0D2C54] text-white shadow-sm'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Palette className="w-4 h-4 text-amber-400" />
+                        <span>Color Palette</span>
+                      </div>
+                      <span className="text-xs font-mono opacity-80">04</span>
+                    </button>
+
+                <button
+                  onClick={() => handleSelectTab('palette')}
+                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                    activeTab === 'palette'
+                      ? 'bg-[#0D2C54] text-white shadow-sm'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Palette className="w-4 h-4 text-amber-400" />
+                    <span>Color Palette</span>
+                  </div>
+                  <span className="text-xs font-mono opacity-80">04</span>
+                </button>
+<button
           onClick={() => handleSelectTab('system')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
             activeTab === 'system'
@@ -1668,7 +1711,14 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
               {/* ======================================================== */}
               {/* TAB 4: SYSTEM & LOGS                                     */}
               {/* ======================================================== */}
-              {activeTab === 'system' && (
+                            {/* ======================================================== */}
+              {/* TAB: COLOR PALETTE CUSTOMIZER                           */}
+              {/* ======================================================== */}
+              {activeTab === 'palette' && (
+                <AdminColorPalette />
+              )}
+
+{activeTab === 'system' && (
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#0D2C54]">
