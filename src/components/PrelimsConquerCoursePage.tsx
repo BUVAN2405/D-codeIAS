@@ -108,7 +108,7 @@ const COURSE_PLANS: Record<PlanType, CoursePlan> = {
     description: 'Dedicated high-impact CSAT track for non-math backgrounds and students wanting guaranteed qualifying score (66.67+) with zero fear.',
     featuresTitle: 'CSAT Key Features',
     features: [
-      'Comprehensive CSAT Course: Master Quantitative Aptitude, Logical Reasoning, Data Interpretation, Data Sufficiency, and Reading Comprehension.',
+      'Comprehensive=o CSAT Course: Master Quantitative Aptitude, Logical Reasoning, Data Interpretation, Data Sufficiency, and Reading Comprehension.',
       'Topic by Topic Concept Building & Practice: Build strong fundamentals through systematic concept learning, guided practice, and right approach.',
       'Complete PYQ Solving in Class: Gain exam insights by solving Previous Year Questions (PYQs) in class and mastering shortcuts.',
       '5,000+ MCQs Covered: Strengthen your preparation with an extensive question bank designed to improve accuracy, speed, and confidence.',

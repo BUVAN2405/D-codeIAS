@@ -20,18 +20,21 @@ export const COURSES: Course[] = [
   },
   {
     id: 'pcm_comprehensive',
-    title: 'PCM Comprehensive',
-    badge: 'Prelims Cum Mains',
-    tagline: 'Complete Foundation Course for Beginners covering both UPSC Prelims and Mains.',
-    description: 'Covers syllabus foundations systematically, combining consistent topic examinations, doubt clearing discussions, and pricing formats built for accessibility.',
+    title: 'PCM UPSC Batch 2028',
+    badge: '1.5-Year Full Foundation',
+    tagline: 'Comprehensive 1.5-Year Prelims-Cum-Mains Foundation Course targeting UPSC CSE 2028.',
+    description: 'Structured 8-step roadmap: Prelims Foundation classes (till June 2027), Weekly Assessments, Mains Mentoring & Optional Mentoring (June 2027 - Nov 2027), Prelims Test Series (Nov 2027 - May 2028), Prelims & Mains readiness, and Interview guidance to LBSNAA.',
     iconName: 'BookOpen',
-    duration: 'Full Duration',
+    duration: '1.5 Years (Till 2028)',
     syllabusOverview: [
-      'Comprehensive Syllabus Foundation Coverage',
-      'Daily Tests & Regular Discussions',
-      'Affordable Fee Structure with Quality Assurance',
-      'Mentorship Support & Concept Clarity Classes',
-      'Integrated CSAT and Essay Prep Modules'
+      '1) Prelims foundation classes (till June 2027)',
+      '2) Weekly assessments & granular performance analytics',
+      '3) Mains mentoring (June 2027 - Nov 2027) & optional mentoring',
+      '4) Prelims test series PTS (Nov 2027 - May 2028)',
+      '5) UPSC CSE prelims ready with CSAT mastery',
+      '6) UPSC CSE mains ready with 3-hr simulations',
+      '7) Interview guidance program & DAF scrutiny',
+      '8) Your way to LBSNAA with Sudhagaran Sir'
     ]
   },
   {
@@ -201,7 +204,7 @@ export const BATCH_SCHEDULES: BatchSchedule[] = [
   },
   {
     id: 'batch_pcm_comprehensive',
-    name: 'PCM Comprehensive',
+    name: 'PCM UPSC Batch 2028',
     startDate: '01st Nov, 2026',
     mode: 'Offline + Online',
     availability: 'Coming Soon'

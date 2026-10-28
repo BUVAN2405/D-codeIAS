@@ -10,7 +10,7 @@ export const INITIAL_BATCHES: BatchSchedule[] = [
   },
   {
     id: 'batch_pcm_comprehensive',
-    name: 'PCM Comprehensive',
+    name: 'PCM UPSC Batch 2028',
     startDate: '01st Nov, 2026',
     mode: 'Offline + Online',
     availability: 'Coming Soon'

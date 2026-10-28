@@ -21,6 +21,7 @@ import NetworkStatusOverlay from './components/NetworkStatusOverlay';
 import LegalPolicyModal, { PolicyType } from './components/LegalPolicyModal';
 import PrelimsOrientationPage from './components/PrelimsOrientationPage';
 import PrelimsConquerCoursePage from './components/PrelimsConquerCoursePage';
+import PcmBatch2028CoursePage from './components/PcmBatch2028CoursePage';
 import PrelimsConquerPopupModal from './components/PrelimsConquerPopupModal';
 import { isOrientationExpired } from './utils/orientationConfig';
 import { ORIENTATION_HASHTAGS } from './components/PrelimsOrientationPopup';
@@ -64,9 +65,10 @@ export default function App() {
   const [adminSessionKey, setAdminSessionKey] = useState(0);
   const [isOrientationPage, setIsOrientationPage] = useState(false);
   const [isPrelimsConquerPage, setIsPrelimsConquerPage] = useState(false);
+  const [isPcmCoursePage, setIsPcmCoursePage] = useState(false);
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
 
-  // Detect URL routes (including dedicated /prelims-orientation-2027 page, /prelims-conquer-2027 page, 404, maintenance, 500, etc.)
+  // Detect URL routes (including dedicated /prelims-orientation-2027 page, /prelims-conquer-2027 page, /pcm-batch-2028, 404, etc.)
   useEffect(() => {
     const checkRoute = () => {
       const path = window.location.pathname.toLowerCase();
@@ -77,6 +79,29 @@ export default function App() {
       if (mode === 'maintenance' || mode === '503') setIsMaintenanceMode(true);
       if (mode === '500' || mode === 'servererror') setIs500ServerError(true);
       if (mode === '401' || mode === '403' || mode === 'accessdenied') setIs401AccessDenied(true);
+
+      // Check for dedicated PCM UPSC Batch 2028 Course Page routes
+      if (
+        path === '/pcm-batch-2028' ||
+        path === '/pcm-2028' ||
+        path === '/pcm' ||
+        path.startsWith('/pcm-batch-2028') ||
+        path.startsWith('/pcm-2028') ||
+        hash === '#pcm-batch-2028' ||
+        hash === '#pcm-2028' ||
+        searchParams.get('course') === 'pcm-2028' ||
+        searchParams.get('course') === 'pcm-batch-2028' ||
+        searchParams.get('page') === 'pcm-2028' ||
+        searchParams.get('page') === 'pcm'
+      ) {
+        setIsPcmCoursePage(true);
+        setIsPrelimsConquerPage(false);
+        setIsOrientationPage(false);
+        setIsAdminPage(false);
+        setIs404(false);
+        return;
+      }
+      setIsPcmCoursePage(false);
 
       // Check for dedicated Prelims Conquer 2027 Course Page routes
       if (
@@ -90,6 +115,7 @@ export default function App() {
       ) {
         setIsPrelimsConquerPage(true);
         setIsOrientationPage(false);
+        setIsAdminPage(false);
         setIs404(false);
         return;
       }
@@ -109,6 +135,7 @@ export default function App() {
           return;
         }
         setIsOrientationPage(true);
+        setIsAdminPage(false);
         setIs404(false);
         return;
       }
@@ -145,12 +172,30 @@ export default function App() {
   const handleOpenPrelimsConquerPage = () => {
     window.history.pushState({}, '', '/prelims-conquer-2027');
     setIsPrelimsConquerPage(true);
+    setIsPcmCoursePage(false);
+    setIsAdminPage(false);
+    setIsOrientationPage(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleGoHomeFromPrelimsConquer = () => {
     window.history.pushState({}, '', '/');
     setIsPrelimsConquerPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenPcmCoursePage = () => {
+    window.history.pushState({}, '', '/pcm-batch-2028');
+    setIsPcmCoursePage(true);
+    setIsPrelimsConquerPage(false);
+    setIsAdminPage(false);
+    setIsOrientationPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoHomeFromPcmCourse = () => {
+    window.history.pushState({}, '', '/');
+    setIsPcmCoursePage(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -211,6 +256,10 @@ export default function App() {
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'enquiry-27') {
       handleOpenPrelimsConquerPage();
+      return;
+    }
+    if (sectionId === 'pcm-2028') {
+      handleOpenPcmCoursePage();
       return;
     }
     // If 'results' is selected, scroll specifically, if 'blog' scroll to courses range
@@ -322,6 +371,36 @@ export default function App() {
             setIs404(false);
             setTimeout(() => scrollToSection(sec), 150);
           }}
+        />
+      </ErrorBoundary>
+    );
+  }
+
+  if (isPcmCoursePage) {
+    return (
+      <ErrorBoundary>
+        <Helmet>
+          <title>UPSC PCM Batch 2028 | 1.5 Years Prelims-Cum-Mains Full Foundation | D'code IAS Academy</title>
+          <meta
+            name="description"
+            content="Enroll in UPSC PCM Batch 2028 by D'code IAS Academy with Sudhagaran Sir. Comprehensive 1.5-year Prelims-cum-Mains foundation course targeting UPSC CSE 2028. Daily 3-hour classes, 8-step roadmap, weekly assessments, Mains & optional mentoring, and Prelims test series."
+          />
+        </Helmet>
+        <NetworkStatusOverlay />
+        <PcmBatch2028CoursePage
+          onBackToHome={handleGoHomeFromPcmCourse}
+          onEnrollClick={(_packageName) => {
+            triggerModalGeneric();
+          }}
+          onNavigateToPrelimsConquer={handleOpenPrelimsConquerPage}
+        />
+        {/* Master Registration Reservation Modal Overlay */}
+        <EnrollModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedCourse={selectedCourse}
+          selectedBatch={selectedBatch}
+          coursesList={COURSES}
         />
       </ErrorBoundary>
     );
@@ -499,6 +578,7 @@ export default function App() {
           onAdminClick={handleOpenAdminPortal}
           onOrientationClick={handleOpenOrientationPage}
           onPrelimsConquerClick={handleOpenPrelimsConquerPage}
+          onPcmClick={handleOpenPcmCoursePage}
           onMenuToggle={setIsNavMenuOpen}
         />
 
@@ -521,7 +601,13 @@ export default function App() {
           >
             <Programs
               courses={COURSES}
-              onCourseSelect={triggerModalForCourse}
+              onCourseSelect={(course) => {
+                if (course.id === 'pcm_comprehensive') {
+                  handleOpenPcmCoursePage();
+                } else {
+                  triggerModalForCourse(course);
+                }
+              }}
             />
           </motion.div>
 
@@ -617,9 +703,10 @@ export default function App() {
           />
         )}
 
-        {/* Flagship Entry Advertisement Popup for Prelims Conquer 2027 */}
+        {/* Flagship Entry Advertisement Popup for Prelims Conquer 2027 & PCM Batch 2028 */}
         <PrelimsConquerPopupModal
           onNavigateToCourse={handleOpenPrelimsConquerPage}
+          onNavigateToPcmCourse={handleOpenPcmCoursePage}
         />
 
         {/* Master Registration Reservation Modal Overlay */}
