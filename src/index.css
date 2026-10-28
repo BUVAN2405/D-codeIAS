@@ -298,7 +298,7 @@ html, body {
 
 /* 60% Dominant: Backgrounds & Fills (#F8FAFC) */
 .bg-surface-cream,
-.bg-[#ece7e5],
+[class*="bg-[#ece7e5]"],
 .bg-surface-cream\/40,
 .bg-surface-cream\/50,
 .bg-gray-50,

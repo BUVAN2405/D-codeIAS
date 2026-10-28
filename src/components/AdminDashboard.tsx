@@ -79,12 +79,25 @@ export function normalizeCourseName(rawCourse?: string): string {
 }
 
 export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, onLogout }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [activeTab, setActiveTab] = useState<TabType>(() => {
+    if (typeof window !== 'undefined') {
+      const paramTab = new URLSearchParams(window.location.search).get('tab');
+      if (paramTab === 'palette' || paramTab === 'leads' || paramTab === 'batches' || paramTab === 'system') {
+        return paramTab as TabType;
+      }
+    }
+    return 'overview';
+  });
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const handleSelectTab = (tab: TabType) => {
     setActiveTab(tab);
     setIsMobileSidebarOpen(false);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tab);
+      window.history.replaceState(null, '', url.toString());
+    }
   };
 
   // Leads & Stats State
@@ -532,6 +545,19 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
           </button>
 
           <button
+            onClick={() => handleSelectTab('palette')}
+            className={`flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-lg text-xs font-space font-bold uppercase tracking-wider transition-all cursor-pointer border ${
+              activeTab === 'palette'
+                ? 'bg-amber-400 text-black border-amber-300 shadow-xs'
+                : 'bg-white/10 hover:bg-white/20 text-white border-white/10'
+            }`}
+            title="Customize Website Color Theme"
+          >
+            <Palette className="w-3.5 h-3.5 text-amber-300" />
+            <span className="hidden sm:inline">Color Theme</span>
+          </button>
+
+          <button
             onClick={handleLogout}
             className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-lg bg-[#D31218] hover:bg-[#A30D12] text-white text-xs font-space font-bold uppercase tracking-wider transition-all cursor-pointer border-none shadow-sm"
             title="Sign out of admin session"
@@ -588,7 +614,6 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
           <span>Batches ({batches.length})</span>
         </button>
 
-        
         <button
           onClick={() => handleSelectTab('palette')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
@@ -598,39 +623,10 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
           }`}
         >
           <Palette className="w-3.5 h-3.5 text-amber-400" />
-          <span>Color Palette</span>
+          <span>Color Theme</span>
         </button>
 
-                    <button
-                      onClick={() => handleSelectTab('palette')}
-                      className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                        activeTab === 'palette'
-                          ? 'bg-[#0D2C54] text-white shadow-sm'
-                          : 'text-gray-700 hover:bg-gray-100'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Palette className="w-4 h-4 text-amber-400" />
-                        <span>Color Palette</span>
-                      </div>
-                      <span className="text-xs font-mono opacity-80">04</span>
-                    </button>
-
-                <button
-                  onClick={() => handleSelectTab('palette')}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                    activeTab === 'palette'
-                      ? 'bg-[#0D2C54] text-white shadow-sm'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Palette className="w-4 h-4 text-amber-400" />
-                    <span>Color Palette</span>
-                  </div>
-                  <span className="text-xs font-mono opacity-80">04</span>
-                </button>
-<button
+        <button
           onClick={() => handleSelectTab('system')}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
             activeTab === 'system'
@@ -738,6 +734,23 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                       </span>
                     </button>
 
+                    
+                    <button
+                      onClick={() => handleSelectTab('palette')}
+                      className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                        activeTab === 'palette'
+                          ? 'bg-[#0D2C54] text-white shadow-sm'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Palette className="w-4 h-4 text-amber-400" />
+                        <span>Color Theme Customizer</span>
+                      </div>
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-mono">
+                        NEW
+                      </span>
+                    </button>
                     <button
                       onClick={() => handleSelectTab('system')}
                       className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
@@ -856,6 +869,23 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                   </span>
                 </button>
 
+                
+                <button
+                  onClick={() => handleSelectTab('palette')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    activeTab === 'palette'
+                      ? 'bg-[#0D2C54] text-white shadow-sm'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-[#0D2C54]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Palette className="w-4 h-4 text-amber-400" />
+                    <span>Color Theme Customizer</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-400 text-black font-space uppercase">
+                    NEW
+                  </span>
+                </button>
                 <button
                   onClick={() => handleSelectTab('system')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -868,7 +898,7 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                     <Settings className="w-4 h-4 text-purple-400" />
                     <span>System & Logs</span>
                   </div>
-                  <span className="text-[10px] font-mono opacity-80">04</span>
+                  <span className="text-[10px] font-mono opacity-80">05</span>
                 </button>
               </nav>
             </div>
@@ -938,6 +968,13 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                       >
                         <Calendar className="w-4 h-4" />
                         <span>Edit Batches</span>
+                      </button>
+                      <button
+                        onClick={() => handleSelectTab('palette')}
+                        className="flex-1 sm:flex-initial justify-center px-4 py-2 sm:py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black text-xs font-bold font-space uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Palette className="w-4 h-4 text-black" />
+                        <span>Customize Color Theme</span>
                       </button>
                     </div>
                   </div>

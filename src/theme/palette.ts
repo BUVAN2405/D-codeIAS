@@ -246,3 +246,4 @@ export function setCachedPalette(palette: ColorPalette): void {
     console.warn('[THEME] Could not write palette to localStorage', err);
   }
 }
+

@@ -69,3 +69,4 @@ export function useThemePalette() {
 
   return { palette, setPalette };
 }
+
