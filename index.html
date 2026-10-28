@@ -50,9 +50,19 @@
               danger: '--danger'
             };
             for (var key in map) {
-              if (palette[key]) {
-                var rgb = hexToChannels(palette[key]);
-                if (rgb) root.style.setProperty(map[key], rgb);
+              var hexVal = palette[key];
+              if (hexVal && typeof hexVal === 'string') {
+                var cleanHex = hexVal.trim();
+                var varName = map[key];
+                var cleanKey = varName.replace(/^--/, '');
+                root.style.setProperty(varName, cleanHex);
+                root.style.setProperty('--color-' + cleanKey, cleanHex);
+                root.style.setProperty('--color-' + key, cleanHex);
+                var rgb = hexToChannels(cleanHex);
+                if (rgb) {
+                  root.style.setProperty(varName + '-rgb', rgb);
+                  root.style.setProperty('--' + key + '-rgb', rgb);
+                }
               }
             }
           }

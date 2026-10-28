@@ -207,6 +207,7 @@ export function hexToRgbChannels(hex: string): string {
 
 /**
  * Applies a palette object directly to document.documentElement CSS variables.
+ * Sets direct HEX colors, Tailwind semantic color variables, and RGB channel representations.
  */
 export function applyPaletteToDom(palette: Partial<ColorPalette>): void {
   if (typeof document === 'undefined') return;
@@ -215,7 +216,18 @@ export function applyPaletteToDom(palette: Partial<ColorPalette>): void {
   for (const [key, varName] of Object.entries(PALETTE_VAR_MAP)) {
     const hexVal = palette[key as keyof ColorPalette];
     if (hexVal && isValidHex(hexVal)) {
-      root.style.setProperty(varName, hexToRgbChannels(hexVal));
+      const normalized = normalizeHex(hexVal);
+      const rgbChannels = hexToRgbChannels(hexVal);
+      const cleanKey = varName.replace(/^--/, '');
+
+      // 1. Direct color value (e.g. #D31218) for var(--primary) and var(--color-primary)
+      root.style.setProperty(varName, normalized);
+      root.style.setProperty(`--color-${cleanKey}`, normalized);
+      root.style.setProperty(`--color-${key}`, normalized);
+
+      // 2. Space-delimited RGB channel format (e.g. "211 18 24")
+      root.style.setProperty(`${varName}-rgb`, rgbChannels);
+      root.style.setProperty(`--${key}-rgb`, rgbChannels);
     }
   }
 }
