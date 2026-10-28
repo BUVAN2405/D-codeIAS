@@ -35,7 +35,8 @@ import { Palette,
   AlertCircle,
   Database,
   Eye,
-  Send
+  Send,
+  Share2
  } from 'lucide-react';
 import {
   fetchAdminDashboardStatsApi,
@@ -239,8 +240,8 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
     }
   };
 
-  // Export Leads to CSV with Mobile File Sharing, Blob downloading, and Instant In-App Preview
-  const handleExportCSV = async () => {
+  // Export Leads to CSV: Direct file download across all desktop & mobile browsers (Edge, Chrome, Safari, Firefox, Opera)
+  const handleExportCSV = () => {
     if (filteredInquiries.length === 0) {
       alert('No leads to export under current filters.');
       return;
@@ -248,11 +249,76 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
 
     const csvContent = generateCsvContent();
     const filename = `dcode_ias_leads_${new Date().toISOString().slice(0, 10)}.csv`;
-    // Add UTF-8 BOM so Excel and mobile spreadsheet viewers display all characters accurately
+    // Add UTF-8 BOM so Excel, Google Sheets, and LibreOffice correctly parse Indian names & special characters
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
 
-    // 1. Mobile Web Share API support (iOS Safari & Android Chrome)
-    // Pops up native mobile sheet: Save to Files / Open in Excel or Sheets / Send to WhatsApp
+    // 1. Legacy Microsoft Edge / Internet Explorer msSaveOrOpenBlob compatibility
+    if (typeof window !== 'undefined' && (window.navigator as any)?.msSaveOrOpenBlob) {
+      try {
+        (window.navigator as any).msSaveOrOpenBlob(blob, filename);
+        setDownloadSuccessToast(`Downloaded "${filename}" directly to your device.`);
+        return;
+      } catch (msErr) {
+        console.warn('[CSV MS SAVE BLOB ERROR]', msErr);
+      }
+    }
+
+    // 2. Direct Blob ObjectURL download (Guarantees file download to Downloads folder in Edge, Chrome, Safari, Firefox)
+    try {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      link.download = filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      
+      setTimeout(() => {
+        try {
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        } catch {
+          // ignore cleanup errors
+        }
+      }, 1500);
+
+      setDownloadSuccessToast(`Downloaded "${filename}" directly to your device.`);
+    } catch (dlErr) {
+      console.error('[CSV DOWNLOAD ERROR]', dlErr);
+      // Fallback: data URI click
+      try {
+        const encodedUri = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csvContent);
+        const link = document.createElement('a');
+        link.href = encodedUri;
+        link.setAttribute('download', filename);
+        link.download = filename;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+          try {
+            document.body.removeChild(link);
+          } catch {}
+        }, 500);
+        setDownloadSuccessToast(`Downloaded "${filename}".`);
+      } catch (fbErr) {
+        setIsCsvPreviewOpen(true);
+      }
+    }
+  };
+
+  // Optional mobile / device Share action when admin explicitly wants to share via WhatsApp, AirDrop, or Mail
+  const handleShareCSV = async () => {
+    if (filteredInquiries.length === 0) {
+      alert('No leads to share under current filters.');
+      return;
+    }
+
+    const csvContent = generateCsvContent();
+    const filename = `dcode_ias_leads_${new Date().toISOString().slice(0, 10)}.csv`;
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+
     if (typeof navigator !== 'undefined' && (navigator as any).canShare) {
       try {
         const file = new File([blob], filename, { type: 'text/csv' });
@@ -262,36 +328,16 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
             title: filename,
             text: `D'code IAS Academy - ${filteredInquiries.length} Student Leads Export`
           });
-          setDownloadSuccessToast('CSV shared / saved successfully! Tap Preview CSV to view the spreadsheet on screen.');
+          setDownloadSuccessToast('CSV shared successfully!');
           return;
         }
       } catch (shareErr: any) {
-        if (shareErr.name === 'AbortError') return; // User simply closed the share sheet
-        console.warn('[CSV SHARE] Falling back to blob download', shareErr);
+        if (shareErr.name === 'AbortError') return;
       }
     }
 
-    // 2. Direct Blob ObjectURL download (Desktop + Android Chrome / Mobile fallback)
-    try {
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', filename);
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      
-      setTimeout(() => {
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      }, 2000);
-
-      setDownloadSuccessToast(`Downloaded "${filename}". Tap Preview CSV to view on this device.`);
-    } catch (dlErr) {
-      console.error('[CSV DOWNLOAD ERROR]', dlErr);
-      // Auto open preview modal so user can view and copy
-      setIsCsvPreviewOpen(true);
-    }
+    // If Web Share API is unavailable or rejected, fall back to direct download
+    handleExportCSV();
   };
 
   // Batch actions
@@ -1107,21 +1153,32 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                     <div className="flex items-center gap-2 w-full sm:w-auto">
                       <button
                         onClick={() => setIsCsvPreviewOpen(true)}
-                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 text-xs font-bold uppercase font-space tracking-wider transition-colors shadow-2xs cursor-pointer"
+                        className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 text-xs font-bold uppercase font-space tracking-wider transition-colors shadow-2xs cursor-pointer"
                         title="View spreadsheet table preview on screen"
                       >
                         <FileText className="w-4 h-4 text-blue-600" />
-                        <span>Preview CSV</span>
+                        <span className="hidden xs:inline">Preview</span>
                       </button>
 
                       <button
                         onClick={handleExportCSV}
                         className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#0D2C54] hover:bg-[#D31218] text-white text-xs font-bold uppercase font-space tracking-wider transition-colors shadow-xs cursor-pointer"
-                        title="Download or share CSV directly to your device"
+                        title="Directly download CSV file to your Downloads folder"
                       >
                         <Download className="w-4 h-4" />
-                        <span>Export CSV</span>
+                        <span>Download CSV</span>
                       </button>
+
+                      {typeof navigator !== 'undefined' && typeof (navigator as any).share === 'function' && (
+                        <button
+                          onClick={handleShareCSV}
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold uppercase font-space tracking-wider transition-colors cursor-pointer"
+                          title="Share CSV via WhatsApp, Email, or AirDrop"
+                        >
+                          <Share2 className="w-4 h-4 text-gray-600" />
+                          <span className="hidden sm:inline">Share</span>
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -1865,9 +1922,10 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                   <button
                     onClick={handleExportCSV}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0D2C54] hover:bg-[#D31218] text-white text-xs font-bold font-space uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
+                    title="Directly download CSV file to Downloads folder"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>Download File</span>
+                    <span>Download CSV</span>
                   </button>
 
                   <button

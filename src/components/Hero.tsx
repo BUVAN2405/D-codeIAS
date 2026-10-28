@@ -73,11 +73,24 @@ export default function Hero({ onExploreClick, onBrochureClick }: HeroProps) {
         <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
       </button>
 
-      {/* Slide Index Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 select-none">
-        <span className="font-mono text-xs text-white/90 font-bold tracking-wider">
-          {currentBgIndex + 1} / {BACKGROUND_IMAGES.length}
-        </span>
+      {/* Slide Navigation Dots Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 sm:gap-2 bg-black/45 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 shadow-lg select-none">
+        {BACKGROUND_IMAGES.map((_, index) => {
+          const isActive = currentBgIndex === index;
+          return (
+            <button
+              key={index}
+              onClick={() => setCurrentBgIndex(index)}
+              className={`transition-all duration-300 rounded-full cursor-pointer border-none outline-none ${
+                isActive
+                  ? 'w-5 sm:w-6 h-2 bg-[#D31218] shadow-xs'
+                  : 'w-2 h-2 bg-white/50 hover:bg-white/90 hover:scale-125'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+              title={`Slide ${index + 1}`}
+            />
+          );
+        })}
       </div>
 
       {/* Accessible SEO Heading */}
