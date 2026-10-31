@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   CheckCircle2,
-  Download,
   ArrowRight,
   Award,
   Phone,
   ChevronRight,
   X,
-  FileDown,
   Calendar,
   Clock,
   BookOpen,
@@ -24,7 +22,6 @@ import {
 } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { submitInquiryApi } from '../services/api';
 import topperRajeshwari from '../assets/toppers/Rajeshwari Suve M.jpeg';
 import topperNeya from '../assets/toppers/Neya flower.jpeg';
 import topperArunPandian from '../assets/toppers/Arun Pandian.jpeg';
@@ -46,70 +43,15 @@ export default function PcmBatch2028CoursePage({
   onEnrollClick,
   onNavigateToPrelimsConquer
 }: PcmBatch2028CoursePageProps) {
-  const [activeTab, setActiveTab] = useState<'roadmap' | 'highlights' | 'csat' | 'why2028' | 'toppers' | 'faq'>('roadmap');
-  const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
-  const [brochureLead, setBrochureLead] = useState({ name: '', phone: '' });
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [isInfographicModalOpen, setIsInfographicModalOpen] = useState(false);
 
   const courseTitle = 'PCM UPSC Batch 2028 (Prelims-cum-Mains Full Foundation)';
-  const brochureUrl = '/D_code_IAS_PCM_UPSC_Batch_2028_Brochure.pdf';
 
   const handleEnrollAction = () => {
     if (onEnrollClick) {
       onEnrollClick(courseTitle);
     } else {
       window.location.href = `/#enroll?course=${encodeURIComponent(courseTitle)}`;
-    }
-  };
-
-  const triggerDirectDownload = (url: string, filename: string) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleBrochureClick = () => {
-    setDownloadSuccess(false);
-    setIsBrochureModalOpen(true);
-  };
-
-  const handleBrochureSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!brochureLead.name.trim() || !brochureLead.phone.trim()) {
-      alert('Please provide your Name and 10-digit Mobile Number.');
-      return;
-    }
-
-    setIsDownloading(true);
-    try {
-      await submitInquiryApi({
-        fullName: brochureLead.name.trim(),
-        phone: brochureLead.phone.trim(),
-        course: courseTitle,
-        formType: 'inquiry',
-        message: 'Brochure & Syllabus Request for PCM UPSC Batch 2028'
-      });
-
-      const filename = 'D_code_IAS_PCM_UPSC_Batch_2028_Brochure.pdf';
-      triggerDirectDownload(brochureUrl, filename);
-
-      setDownloadSuccess(true);
-      setTimeout(() => {
-        setIsBrochureModalOpen(false);
-        setIsDownloading(false);
-        setBrochureLead({ name: '', phone: '' });
-      }, 1800);
-    } catch (err) {
-      console.error(err);
-      triggerDirectDownload(brochureUrl, 'D_code_IAS_PCM_UPSC_Batch_2028_Brochure.pdf');
-      setIsBrochureModalOpen(false);
-      setIsDownloading(false);
     }
   };
 
@@ -287,14 +229,14 @@ export default function PcmBatch2028CoursePage({
         </div>
 
         {/* Main Container */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-8 lg:py-10">
+          <div className="w-full">
             
             {/* ======================================================== */}
             {/* LEFT COLUMN: Main Course Details (8 Cols)                */}
             {/* ======================================================== */}
-            <div className="lg:col-span-8 space-y-6">
-
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              <div className="lg:col-span-8">
               {/* Course Header Banner Card */}
               <div className="bg-gradient-to-br from-[#0D2C54] via-[#123668] to-[#081B34] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-white/10 relative overflow-hidden">
                 {/* Decorative Background Lighting */}
@@ -331,26 +273,16 @@ export default function PcmBatch2028CoursePage({
                   </p>
 
                   {/* Quick Highlight Pillars */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
-                    <div className="bg-black/25 backdrop-blur-sm p-3 rounded-xl border border-white/10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <div className="min-h-24 bg-black/25 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-white/10 flex flex-col justify-center">
                       <p className="text-amber-300 text-[10px] uppercase font-bold tracking-wider">Daily Classes</p>
-                      <p className="text-white font-bold text-sm mt-0.5 font-space">3 Hours / Day</p>
-                      <p className="text-gray-300 text-[10px]">Quality over quantity</p>
+                      <p className="text-white font-bold text-sm mt-1 font-space">3 Hours / Day</p>
+                      <p className="text-gray-300 text-[10px] mt-0.5">Quality over quantity</p>
                     </div>
-                    <div className="bg-black/25 backdrop-blur-sm p-3 rounded-xl border border-white/10">
+                    <div className="min-h-24 bg-black/25 backdrop-blur-sm p-4 sm:p-5 rounded-xl border border-white/10 flex flex-col justify-center">
                       <p className="text-amber-300 text-[10px] uppercase font-bold tracking-wider">Course Duration</p>
-                      <p className="text-white font-bold text-sm mt-0.5 font-space">1.5 Years</p>
-                      <p className="text-gray-300 text-[10px]">Full syllabus &amp; mocks</p>
-                    </div>
-                    <div className="bg-black/25 backdrop-blur-sm p-3 rounded-xl border border-white/10">
-                      <p className="text-amber-300 text-[10px] uppercase font-bold tracking-wider">Coverage</p>
-                      <p className="text-white font-bold text-sm mt-0.5 font-space">GS + CSAT</p>
-                      <p className="text-gray-300 text-[10px]">Prelims, Mains, Interview</p>
-                    </div>
-                    <div className="bg-black/25 backdrop-blur-sm p-3 rounded-xl border border-white/10">
-                      <p className="text-amber-300 text-[10px] uppercase font-bold tracking-wider">Mentorship</p>
-                      <p className="text-white font-bold text-sm mt-0.5 font-space">1-on-1 Direct</p>
-                      <p className="text-gray-300 text-[10px]">Personal guidance</p>
+                      <p className="text-white font-bold text-sm mt-1 font-space">1.5 Years</p>
+                      <p className="text-gray-300 text-[10px] mt-0.5">Full syllabus &amp; mocks</p>
                     </div>
                   </div>
 
@@ -378,42 +310,37 @@ export default function PcmBatch2028CoursePage({
 
                 </div>
               </div>
-
-              {/* Sub-Tabs Navigation */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-1.5 flex items-center gap-1 overflow-x-auto scrollbar-none sticky top-28 sm:top-32 z-20">
-                {[
-                  { id: 'roadmap', label: '8-Step Roadmap (2028)', icon: Compass },
-                  { id: 'highlights', label: 'Program Highlights', icon: Award },
-                  { id: 'csat', label: 'CSAT Classes', icon: BookOpen },
-                  { id: 'why2028', label: 'Why Target 2028?', icon: Target },
-                  { id: 'toppers', label: 'Toppers Testimonials', icon: Users },
-                  { id: 'faq', label: 'FAQs', icon: HelpCircle }
-                ].map(tab => {
-                  const Icon = tab.icon;
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
-                        isActive
-                          ? 'bg-[#0D2C54] text-white shadow-sm'
-                          : 'text-gray-600 hover:text-[#0D2C54] hover:bg-gray-100'
-                      }`}
-                    >
-                      <Icon className={`w-4 h-4 ${isActive ? 'text-amber-300' : 'text-gray-400'}`} />
-                      <span>{tab.label}</span>
-                    </button>
-                  );
-                })}
               </div>
 
-              {/* DYNAMIC TAB CONTENT */}
-              <AnimatePresence mode="wait">
+              <aside className="lg:col-span-4 lg:sticky lg:top-28">
+                <div className="rounded-3xl border border-gray-200 bg-white p-5 sm:p-6 shadow-xl">
+                  <div className="rounded-2xl bg-[#0D2C54] px-5 py-4 text-white">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300">Admissions Open</span>
+                    <h2 className="mt-1 font-serif text-xl font-bold">PCM Full Foundation</h2>
+                    <p className="mt-1 text-xs text-blue-100">Batch 2028 • Prelims + Mains + Interview</p>
+                  </div>
+                  <div className="mt-5 space-y-3 text-sm text-gray-700">
+                    {['1.5 Years Full Foundation', 'Daily 3 Hours Classroom Sessions', 'GS, CSAT & Mains Coverage', 'Integrated Test Series', 'Direct 1-on-1 Mentorship'].map((item) => (
+                      <div key={item} className="flex items-start gap-2.5"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" /><span>{item}</span></div>
+                    ))}
+                  </div>
+                  <button onClick={handleEnrollAction} className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#D31218] px-4 py-3.5 text-sm font-black uppercase tracking-wider text-white shadow-lg shadow-red-600/25 hover:bg-[#A30D12]">
+                    Enroll Now / Book Seat <ArrowRight className="h-4 w-4" />
+                  </button>
+                  <div className="mt-5 border-t border-gray-100 pt-4">
+                    <p className="flex items-center gap-2 text-xs font-bold text-[#0D2C54]"><Phone className="h-4 w-4 text-[#D31218]" /> Direct Admission Desk</p>
+                    <div className="mt-2 flex justify-between font-mono text-xs font-bold text-[#0D2C54]"><a href="tel:9600060349" className="hover:text-[#D31218]">96000 60349</a><span>•</span><a href="tel:9600060393" className="hover:text-[#D31218]">96000 60393</a></div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            {/* Program sections are presented as a continuous vertical page. */}
+              <div className="space-y-6">
+
 
                 {/* TAB 1: 8-Step Preparation Roadmap (User Specific Request) */}
-                {activeTab === 'roadmap' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-roadmap"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -446,12 +373,11 @@ export default function PcmBatch2028CoursePage({
                     </div>
 
                     {/* Step-by-Step 8 Sequential Cards */}
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       {ROADMAP_STEPS.map((step, idx) => (
-                        <div
-                          key={step.step}
-                          className="p-5 rounded-2xl bg-[#F8FAFC] border border-gray-200 hover:border-[#0D2C54]/30 hover:shadow-md transition-all relative overflow-hidden"
-                        >
+                        <div key={step.step} className={`flex ${idx % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                          <div className={`w-full lg:w-[72%] p-5 sm:p-6 rounded-2xl bg-[#F8FAFC] border border-gray-200 hover:border-[#0D2C54]/30 hover:shadow-md transition-all relative overflow-hidden`}>
+
                           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
                             <div className="flex items-center gap-3">
                               <span className="w-10 h-10 rounded-xl bg-[#0D2C54] text-amber-300 font-space font-black text-sm flex items-center justify-center shrink-0 shadow-sm">
@@ -484,6 +410,7 @@ export default function PcmBatch2028CoursePage({
                               </div>
                             ))}
                           </div>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -513,11 +440,9 @@ export default function PcmBatch2028CoursePage({
                     </div>
 
                   </motion.div>
-                )}
 
                 {/* TAB 2: Program Highlights (From PDF Page 2) */}
-                {activeTab === 'highlights' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-highlights"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -671,11 +596,9 @@ export default function PcmBatch2028CoursePage({
                     </div>
 
                   </motion.div>
-                )}
 
                 {/* TAB 3: CSAT Classes (From PDF Page 3) */}
-                {activeTab === 'csat' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-csat"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -733,11 +656,9 @@ export default function PcmBatch2028CoursePage({
                       </button>
                     </div>
                   </motion.div>
-                )}
 
                 {/* TAB 4: Why We Target UPSC CSE 2028 (From PDF Page 1) */}
-                {activeTab === 'why2028' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-why2028"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -777,11 +698,9 @@ export default function PcmBatch2028CoursePage({
                       </p>
                     </div>
                   </motion.div>
-                )}
 
                 {/* TAB 5: Toppers Testimonials (From PDF Page 5) */}
-                {activeTab === 'toppers' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-toppers"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -789,7 +708,7 @@ export default function PcmBatch2028CoursePage({
                     transition={{ duration: 0.25 }}
                     className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
                   >
-                    <div>
+                    <div className="mx-auto max-w-3xl text-center">
                       <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-[#D31218]">
                         Testimonials
                       </span>
@@ -799,7 +718,7 @@ export default function PcmBatch2028CoursePage({
                       <p className="text-xs leading-relaxed text-gray-500 sm:text-sm">
                         Under the mentorship of Sudhagaran Sir, who has aided them in their UPSC journey and Forest Services exams.
                       </p>
-                      <div className="mt-3 flex items-center gap-2 text-[#D31218]">
+                      <div className="mt-3 flex items-center justify-center gap-2 text-[#D31218]">
                         <Award className="h-4 w-4" />
                         <span className="text-xs font-bold uppercase tracking-wider">
                           Guaranteed Results &amp; Dedication
@@ -807,7 +726,7 @@ export default function PcmBatch2028CoursePage({
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3">
+                    <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                       {[
                         {
                           name: 'Rajeshwari Suve M',
@@ -898,11 +817,29 @@ export default function PcmBatch2028CoursePage({
                       ))}
                     </div>
                   </motion.div>
-                )}
+
+                {/* Visual roadmap above FAQs */}
+                <section className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+                  <div className="border-b border-gray-100 px-6 py-5 text-center sm:px-8">
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D31218]">
+                      UPSC CSE 2028
+                    </span>
+                    <h3 className="mt-2 font-serif text-xl font-bold text-[#0D2C54] sm:text-2xl">
+                      Visual Roadmap Chart
+                    </h3>
+                  </div>
+                  <div className="bg-slate-50 p-3 sm:p-5">
+                    <img
+                      src="/pcm-assets/pcm-roadmap-infographic.jpg"
+                      alt="Visual roadmap chart for UPSC CSE 2028"
+                      loading="lazy"
+                      className="mx-auto h-auto w-full max-w-6xl rounded-2xl border border-gray-200 bg-white shadow-md"
+                    />
+                  </div>
+                </section>
 
                 {/* TAB 6: FAQs */}
-                {activeTab === 'faq' && (
-                  <motion.div
+                                  <motion.div
                     key="tab-faq"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -940,135 +877,8 @@ export default function PcmBatch2028CoursePage({
                       </details>
                     </div>
                   </motion.div>
-                )}
-
-              </AnimatePresence>
-
-            </div>
-
-            {/* ======================================================== */}
-            {/* RIGHT COLUMN: Sticky Package Card & Fee (4 Cols)         */}
-            {/* ======================================================== */}
-            <div className="lg:col-span-4 sticky top-28 sm:top-32 space-y-5">
-              
-              <div className="bg-white rounded-3xl p-6 shadow-xl border-2 border-[#0D2C54]/10 relative overflow-hidden">
-                {/* Early bird discount badge */}
-                <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-space">
-                      Early Bird 20% OFF
-                    </span>
-                    <h3 className="text-base font-bold font-serif text-[#0D2C54] mt-1.5">
-                      PCM Full Foundation
-                    </h3>
-                  </div>
-                  <span className="text-xs font-bold text-gray-500 font-space">
-                    Batch 2028
-                  </span>
-                </div>
-
-                {/* Pricing Box (From PDF Page 1) */}
-                <div className="py-4 border-b border-gray-100 space-y-2">
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>Total Standard Fee:</span>
-                    <span className="line-through font-mono text-gray-400">₹1,45,000</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-emerald-600 font-bold">
-                    <span>Early Bird Discount (20%):</span>
-                    <span>- ₹29,000</span>
-                  </div>
-                  <div className="flex items-baseline justify-between pt-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#0D2C54]">
-                      Payable Fee:
-                    </span>
-                    <div className="text-right">
-                      <span className="text-3xl font-black text-[#D31218] font-space">
-                        ₹1,16,000
-                      </span>
-                      <p className="text-[10px] text-gray-400">All Taxes &amp; GST Included</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Inclusions Bullet Points */}
-                <div className="py-3.5 space-y-2 text-xs text-gray-700">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>1.5 Years Full Foundation (Prelims + Mains)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Daily 3 Hours Classroom Sessions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Comprehensive CSAT Course Included</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Integrated Prelims &amp; Mains Test Series</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>1-on-1 Mentorship under Sudhagaran Sir</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Free Interview Guidance Program (DAF + Mocks)</span>
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="pt-2 space-y-2.5">
-                  <button
-                    onClick={handleEnrollAction}
-                    className="w-full py-3.5 px-4 rounded-2xl bg-[#D31218] hover:bg-[#A30D12] text-white font-black text-sm uppercase tracking-wider shadow-lg shadow-red-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
-                  >
-                    <span>Enroll Now / Book Seat</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={handleBrochureClick}
-                    className="w-full py-2.5 px-4 rounded-2xl bg-white hover:bg-gray-50 border-2 border-[#0D2C54] text-[#0D2C54] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <Download className="w-3.5 h-3.5 text-[#D31218]" />
-                    <span>Download PCM Brochure (PDF)</span>
-                  </button>
-                </div>
-
-                {/* Direct Admission Helpline */}
-                <div className="mt-4 pt-3.5 border-t border-gray-100 flex flex-col gap-1 text-xs text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-[#D31218]" />
-                    <span className="font-bold text-[#0D2C54]">Direct Admission Desk:</span>
-                  </div>
-                  <div className="flex items-center justify-between font-mono font-bold text-xs text-[#0D2C54] pt-1">
-                    <a href="tel:9600060349" className="hover:text-[#D31218]">+91 96000 60349</a>
-                    <span>•</span>
-                    <a href="tel:9600060393" className="hover:text-[#D31218]">+91 96000 60393</a>
-                  </div>
-                </div>
 
               </div>
-
-              {/* Telegram Community Quick Card */}
-              <div className="bg-gradient-to-r from-sky-50 to-blue-50 rounded-2xl p-4 border border-sky-200 flex items-center justify-between text-xs shadow-xs">
-                <div>
-                  <p className="font-bold text-[#0D2C54]">Join Telegram Study Group</p>
-                  <p className="text-[10px] text-gray-600">Daily micro notes &amp; PYQ insights</p>
-                </div>
-                <a
-                  href="https://t.me/dcodesudhagaran"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-[10px] uppercase tracking-wider transition-all shadow-xs"
-                >
-                  Join Free
-                </a>
-              </div>
-
-            </div>
 
           </div>
         </main>
@@ -1084,98 +894,6 @@ export default function PcmBatch2028CoursePage({
         >
           <MessageCircle className="h-5 w-5" />
         </a>
-
-        {/* Brochure Download Lead Modal */}
-        <AnimatePresence>
-          {isBrochureModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
-              <div className="absolute inset-0" onClick={() => setIsBrochureModalOpen(false)} />
-              
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 15 }}
-                className="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-7 shadow-2xl z-10 border border-gray-100"
-              >
-                <button
-                  onClick={() => setIsBrochureModalOpen(false)}
-                  className="absolute top-4 right-4 p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 cursor-pointer transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-
-                <div className="text-center mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-red-50 text-[#D31218] flex items-center justify-center mx-auto mb-3">
-                    <FileDown className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-serif font-bold text-[#0D2C54]">
-                    Download Official PCM 2028 Brochure
-                  </h3>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Enter your details to instantly receive the complete 1.5 Years syllabus, fee breakdown, and preparation roadmap PDF.
-                  </p>
-                </div>
-
-                {downloadSuccess ? (
-                  <div className="text-center py-6">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2">
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <p className="font-bold text-sm text-[#0D2C54]">Brochure Downloading...</p>
-                    <p className="text-xs text-gray-500 mt-1">Thank you! Your download will begin in a moment.</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleBrochureSubmit} className="space-y-3.5">
-                    <div>
-                      <label className="block text-xs font-semibold text-[#0D2C54] mb-1">
-                        Aspirant Name <span className="text-[#D31218]">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={brochureLead.name}
-                        onChange={(e) => setBrochureLead({ ...brochureLead, name: e.target.value })}
-                        placeholder="e.g. Ananya Sharma"
-                        className="w-full text-xs py-2.5 px-3 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-[#0D2C54] mb-1">
-                        Mobile Number <span className="text-[#D31218]">*</span>
-                      </label>
-                      <div className="flex">
-                        <span className="inline-flex items-center px-3 border border-r-0 border-gray-200 bg-gray-50 rounded-l-xl text-xs font-space text-gray-600 font-bold">
-                          +91
-                        </span>
-                        <input
-                          type="tel"
-                          required
-                          pattern="[0-9]{10}"
-                          value={brochureLead.phone}
-                          onChange={(e) => setBrochureLead({ ...brochureLead, phone: e.target.value })}
-                          placeholder="9876543210"
-                          className="w-full text-xs py-2.5 px-3 border border-gray-200 rounded-r-xl focus:outline-none focus:border-[#0D2C54] bg-white text-gray-800 font-mono"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        disabled={isDownloading}
-                        className="w-full py-3 px-4 rounded-xl bg-[#D31218] hover:bg-[#A30D12] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
-                      >
-                        <Download className="w-4 h-4" />
-                        <span>{isDownloading ? 'Preparing Brochure...' : 'Download Brochure Now'}</span>
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
 
         {/* High-Resolution Infographic Lightbox Modal */}
         <AnimatePresence>
@@ -1213,13 +931,6 @@ export default function PcmBatch2028CoursePage({
                   <p className="text-xs text-gray-500">
                     D'code IAS Academy • 1.5 Years Full Foundation
                   </p>
-                  <button
-                    onClick={handleBrochureClick}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D31218] hover:bg-[#A30D12] text-white text-xs font-bold uppercase tracking-wider"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Download Full PDF Brochure</span>
-                  </button>
                 </div>
               </motion.div>
             </div>
