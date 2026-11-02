@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ArrowRight } from 'lucide-react';
-import prelimsConquerPopupImg from '../prelims-conquer-2027-popup-new.jpg';
+import prelimsConquerPopupImg from '../prelims-conquer-2027-popup-new-new.jpg';
 
 interface PrelimsConquerPopupModalProps {
   onNavigateToCourse: () => void;
