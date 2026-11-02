@@ -56,7 +56,14 @@ export default function PcmBatch2028CoursePage({
   };
 
   useEffect(() => {
-    const timer = window.setTimeout(handleEnrollAction, 30_000);
+    const popupKey = 'dcode_pcm_2028_auto_enroll_shown';
+    if (sessionStorage.getItem(popupKey) === 'true') return;
+
+    const timer = window.setTimeout(() => {
+      sessionStorage.setItem(popupKey, 'true');
+      handleEnrollAction();
+    }, 30_000);
+
     return () => window.clearTimeout(timer);
   }, [courseTitle, onEnrollClick]);
 
