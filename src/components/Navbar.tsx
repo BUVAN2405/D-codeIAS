@@ -54,9 +54,15 @@ export default function Navbar({
     { label: 'Faculty', id: 'faculty' },
     { label: 'Blog', id: 'blog' },
     { label: 'Contact', id: 'contact' },
+    { label: 'Login', id: 'login' },
   ];
 
   const handleItemClick = (id: string) => {
+    if (id === 'login') {
+      window.location.href = '/login';
+      setIsMobileMenuOpen(false);
+      return;
+    }
     if (id === 'enquiry-27') {
       if (onPrelimsConquerClick) {
         onPrelimsConquerClick();

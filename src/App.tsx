@@ -24,6 +24,7 @@ import PrelimsConquerCoursePage from './components/PrelimsConquerCoursePage';
 import PcmBatch2028CoursePage from './components/PcmBatch2028CoursePage';
 import { useThemePalette } from './theme/useThemePalette';
 import PrelimsConquerPopupModal from './components/PrelimsConquerPopupModal';
+import LoginPage from './components/LoginPage';
 import { isOrientationExpired } from './utils/orientationConfig';
 import { ORIENTATION_HASHTAGS } from './components/PrelimsOrientationPopup';
 
@@ -69,6 +70,7 @@ export default function App() {
   const [isPrelimsConquerPage, setIsPrelimsConquerPage] = useState(false);
   const [isPcmCoursePage, setIsPcmCoursePage] = useState(false);
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
+  const [isLoginPage, setIsLoginPage] = useState(false);
 
   // Detect URL routes (including dedicated /prelims-orientation-2027 page, /prelims-conquer-2027 page, /pcm-batch-2028, 404, etc.)
   useEffect(() => {
@@ -77,6 +79,17 @@ export default function App() {
       const hash = window.location.hash.toLowerCase();
       const searchParams = new URLSearchParams(window.location.search);
       const mode = searchParams.get('mode');
+
+      if (path === '/login' || hash === '#login' || searchParams.get('page') === 'login') {
+        setIsLoginPage(true);
+        setIsAdminPage(false);
+        setIsPrelimsConquerPage(false);
+        setIsOrientationPage(false);
+        setIsPcmCoursePage(false);
+        setIs404(false);
+        return;
+      }
+      setIsLoginPage(false);
 
       if (mode === 'maintenance' || mode === '503') setIsMaintenanceMode(true);
       if (mode === '500' || mode === 'servererror') setIs500ServerError(true);
@@ -374,6 +387,18 @@ export default function App() {
             setTimeout(() => scrollToSection(sec), 150);
           }}
         />
+      </ErrorBoundary>
+    );
+  }
+
+  if (isLoginPage) {
+    return (
+      <ErrorBoundary>
+        <Helmet>
+          <title>Student Login | D'code IAS Academy</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <LoginPage />
       </ErrorBoundary>
     );
   }

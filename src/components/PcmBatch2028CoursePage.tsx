@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   CheckCircle2,
@@ -54,6 +54,11 @@ export default function PcmBatch2028CoursePage({
       window.location.href = `/#enroll?course=${encodeURIComponent(courseTitle)}`;
     }
   };
+
+  useEffect(() => {
+    const timer = window.setTimeout(handleEnrollAction, 30_000);
+    return () => window.clearTimeout(timer);
+  }, [courseTitle, onEnrollClick]);
 
   // The 8 Sequential Pillars requested explicitly by the user
   const ROADMAP_STEPS = [
