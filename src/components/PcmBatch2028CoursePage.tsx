@@ -339,6 +339,49 @@ export default function PcmBatch2028CoursePage({
               <div className="space-y-6">
 
 
+                {/* TAB 4: Why We Target UPSC CSE 2028 (From PDF Page 1) */}
+                                  <motion.div
+                    key="tab-why2028"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25 }}
+                    className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
+                  >
+                    <div className="border-b border-gray-100 pb-4">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D31218]">
+                        <span>Philosophy &amp; Strategy</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0D2C54] mt-1">
+                        Why We Target UPSC CSE 2028
+                      </h2>
+                    </div>
+
+                    <div className="prose prose-sm max-w-none text-gray-700 space-y-4 text-xs sm:text-sm leading-relaxed">
+                      <p>
+                        We believe that effective UPSC preparation is <strong>not about rushing through the syllabus</strong> or overwhelming students with 6–8 hours of exhausting daily classes. It is about building a strong conceptual foundation, ensuring meaningful classroom learning, and providing aspirants with sufficient time to revise, practice answer writing, take tests, and develop analytical skills.
+                      </p>
+
+                      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
+                        <p className="font-serif font-bold text-[#0D2C54] text-sm">
+                          Our Motto: “We Simplify IAS”
+                        </p>
+                        <p className="text-xs text-gray-700 mt-1">
+                          Reflects our commitment to making the UPSC journey more organized, manageable, and effective. Through a well-planned curriculum, a balanced class schedule, integrated preparation for Prelims and Mains, and dedicated time for self-study and revision, we aim to ensure that students can absorb what they learn in class and apply it confidently in the examination.
+                        </p>
+                      </div>
+
+                      <p>
+                        Our objective is not merely to complete the syllabus, but to ensure that every student gets the time, guidance, and preparation structure needed to master it.
+                      </p>
+
+                      <p className="font-semibold text-[#0D2C54]">
+                        At D’CODE IAS ACADEMY, we believe that quality learning matters more than the quantity of classes. Our approach is centered on preparing aspirants for UPSC CSE 2028 with a structured, sustainable, and student-centric learning strategy.
+                      </p>
+                    </div>
+                  </motion.div>
+
+
                 {/* TAB 1: 8-Step Preparation Roadmap (User Specific Request) */}
                                   <motion.div
                     key="tab-roadmap"
@@ -413,30 +456,6 @@ export default function PcmBatch2028CoursePage({
                           </div>
                         </div>
                       ))}
-                    </div>
-
-                    {/* Infographic Preview Card Banner */}
-                    <div
-                      onClick={() => setIsInfographicModalOpen(true)}
-                      className="cursor-pointer group relative overflow-hidden rounded-2xl border-2 border-dashed border-amber-400 bg-amber-50/50 p-4 sm:p-5 flex items-center justify-between gap-4 transition-all hover:bg-amber-100/60"
-                    >
-                      <div className="flex items-center gap-3.5">
-                        <div className="w-12 h-12 rounded-xl bg-[#0D2C54] text-white flex items-center justify-center shrink-0 shadow-sm">
-                          <Compass className="w-6 h-6 text-amber-300 group-hover:rotate-45 transition-transform duration-300" />
-                        </div>
-                        <div>
-                          <p className="font-serif font-bold text-sm sm:text-base text-[#0D2C54]">
-                            View Complete Graphical Roadmap Infographic
-                          </p>
-                          <p className="text-xs text-gray-600">
-                            Click to expand the full official visual roadmap chart for UPSC CSE 2028.
-                          </p>
-                        </div>
-                      </div>
-                      <span className="px-3 py-1.5 rounded-xl bg-[#0D2C54] text-white text-xs font-bold uppercase tracking-wider shrink-0 hidden sm:inline-flex items-center gap-1 group-hover:bg-[#D31218] transition-colors">
-                        <span>Expand</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
                     </div>
 
                   </motion.div>
@@ -654,48 +673,6 @@ export default function PcmBatch2028CoursePage({
                       >
                         Enroll in Foundation
                       </button>
-                    </div>
-                  </motion.div>
-
-                {/* TAB 4: Why We Target UPSC CSE 2028 (From PDF Page 1) */}
-                                  <motion.div
-                    key="tab-why2028"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25 }}
-                    className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-6"
-                  >
-                    <div className="border-b border-gray-100 pb-4">
-                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D31218]">
-                        <span>Philosophy &amp; Strategy</span>
-                      </div>
-                      <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0D2C54] mt-1">
-                        Why We Target UPSC CSE 2028
-                      </h2>
-                    </div>
-
-                    <div className="prose prose-sm max-w-none text-gray-700 space-y-4 text-xs sm:text-sm leading-relaxed">
-                      <p>
-                        We believe that effective UPSC preparation is <strong>not about rushing through the syllabus</strong> or overwhelming students with 6–8 hours of exhausting daily classes. It is about building a strong conceptual foundation, ensuring meaningful classroom learning, and providing aspirants with sufficient time to revise, practice answer writing, take tests, and develop analytical skills.
-                      </p>
-
-                      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200">
-                        <p className="font-serif font-bold text-[#0D2C54] text-sm">
-                          Our Motto: “We Simplify IAS”
-                        </p>
-                        <p className="text-xs text-gray-700 mt-1">
-                          Reflects our commitment to making the UPSC journey more organized, manageable, and effective. Through a well-planned curriculum, a balanced class schedule, integrated preparation for Prelims and Mains, and dedicated time for self-study and revision, we aim to ensure that students can absorb what they learn in class and apply it confidently in the examination.
-                        </p>
-                      </div>
-
-                      <p>
-                        Our objective is not merely to complete the syllabus, but to ensure that every student gets the time, guidance, and preparation structure needed to master it.
-                      </p>
-
-                      <p className="font-semibold text-[#0D2C54]">
-                        At D’CODE IAS ACADEMY, we believe that quality learning matters more than the quantity of classes. Our approach is centered on preparing aspirants for UPSC CSE 2028 with a structured, sustainable, and student-centric learning strategy.
-                      </p>
                     </div>
                   </motion.div>
 
