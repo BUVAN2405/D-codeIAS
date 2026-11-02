@@ -5,7 +5,8 @@ import { ALL_RETRIEVED_LEADS } from '../data/storedLeads';
 export interface SavedInquiry extends InquiryFormInput {
   id: string;
   createdAt: string;
-  status: 'New' | 'Contacted' | 'Enrolled';
+  status: 'New' | 'Contacted' | 'Enrolled' | 'Not Enrolled';
+  followedBy?: 'Sarath Kumar' | 'Isai Mozhi' | '';
   formType?: 'enrollment' | 'contact' | 'registration' | 'inquiry';
 }
 
@@ -354,14 +355,16 @@ export function deleteEnquiry(id: string): void {
   window.dispatchEvent(new Event('dcode_leads_updated'));
 }
 
-export function updateEnquiryStatus(id: string, status: 'New' | 'Contacted' | 'Enrolled'): void {
+export function updateEnquiryStatus(id: string, status: 'New' | 'Contacted' | 'Enrolled' | 'Not Enrolled'): void {
   const current = getAllEnquiries();
-  const updated = current.map(item => {
-    if (item.id === id) {
-      return { ...item, status };
-    }
-    return item;
-  });
+  const updated = current.map(item => item.id === id ? { ...item, status } : item);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new Event('dcode_leads_updated'));
+}
+
+export function updateEnquiryFollowedBy(id: string, followedBy: 'Sarath Kumar' | 'Isai Mozhi' | ''): void {
+  const current = getAllEnquiries();
+  const updated = current.map(item => item.id === id ? { ...item, followedBy } : item);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   window.dispatchEvent(new Event('dcode_leads_updated'));
 }

@@ -6,11 +6,12 @@ import { getPaletteFromFirestore, savePaletteToFirestore } from './firestoreServ
 // Interfaces with Express API and directly with Firebase Firestore
 
 import { InquiryFormInput } from '../types';
-import { saveEnquiryToDb, getAllEnquiries, deleteEnquiry, updateEnquiryStatus, SavedInquiry } from './db';
+import { saveEnquiryToDb, getAllEnquiries, deleteEnquiry, updateEnquiryStatus, updateEnquiryFollowedBy, SavedInquiry } from './db';
 import {
   addQueryReport,
   getAllQueryReports,
   updateQueryReportStatus as updateFirestoreStatus,
+  updateQueryReportField as updateFirestoreField,
   deleteQueryReport as deleteFirestoreDoc
 } from './firestoreService';
 
@@ -132,7 +133,8 @@ export async function fetchInquiriesApi(): Promise<ApiInquiry[]> {
         email: r.email || '',
         course: r.course || 'general_inquiry',
         message: r.message || '',
-        status: (r.status.charAt(0).toUpperCase() + r.status.slice(1)) as any,
+        status: (r.status.toLowerCase() === 'not enrolled' ? 'Not Enrolled' : r.status.charAt(0).toUpperCase() + r.status.slice(1)) as any,
+        followedBy: r.followedBy as any,
         createdAt: r.createdAt ? r.createdAt.toISOString() : new Date().toISOString(),
         formType: (r as any).formType || (r.status === 'enrolled' ? 'enrollment' : 'contact')
       }));
@@ -172,7 +174,7 @@ export async function fetchInquiriesApi(): Promise<ApiInquiry[]> {
 // 3. Update Inquiry Status via API with Firestore fallback
 export async function updateInquiryStatusApi(
   id: string,
-  status: 'New' | 'Contacted' | 'Enrolled'
+  status: 'New' | 'Contacted' | 'Enrolled' | 'Not Enrolled'
 ): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE}/${id}/status`, {
@@ -195,6 +197,33 @@ export async function updateInquiryStatusApi(
     updateEnquiryStatus(id, status);
   }
 
+  window.dispatchEvent(new Event('dcode_leads_updated'));
+  return true;
+}
+
+export async function updateInquiryFollowedByApi(
+  id: string,
+  followedBy: 'Sarath Kumar' | 'Isai Mozhi' | ''
+): Promise<boolean> {
+  try {
+    const response = await fetch(`${API_BASE}/${id}/status`, {
+      method: 'PATCH',
+      headers: getAdminAuthHeaders(),
+      body: JSON.stringify({ followedBy })
+    });
+    if (response.ok) {
+      window.dispatchEvent(new Event('dcode_leads_updated'));
+      return true;
+    }
+  } catch (err) {
+    console.warn('[API] Updating followed-by field directly in Firebase Firestore.', err);
+  }
+
+  try {
+    await updateFirestoreField(id, 'followedBy', followedBy);
+  } catch (fsErr) {
+    updateEnquiryFollowedBy(id, followedBy);
+  }
   window.dispatchEvent(new Event('dcode_leads_updated'));
   return true;
 }

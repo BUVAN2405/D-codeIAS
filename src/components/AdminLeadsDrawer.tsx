@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Database, Mail, Phone, Trash2, X, CheckSquare, MessageSquare, ExternalLink, Calendar, RefreshCcw, Filter } from 'lucide-react';
-import { fetchInquiriesApi, updateInquiryStatusApi, deleteInquiryApi, ApiInquiry } from '../services/api';
+import { fetchInquiriesApi, updateInquiryStatusApi, updateInquiryFollowedByApi, deleteInquiryApi, ApiInquiry } from '../services/api';
 
 interface AdminLeadsDrawerProps {
   onOpenAdmin?: () => void;
@@ -54,8 +54,13 @@ export default function AdminLeadsDrawer({ onOpenAdmin }: AdminLeadsDrawerProps)
     loadLeads();
   };
 
-  const handleStatusChange = async (id: string, status: 'New' | 'Contacted' | 'Enrolled') => {
+  const handleStatusChange = async (id: string, status: 'New' | 'Contacted' | 'Enrolled' | 'Not Enrolled') => {
     await updateInquiryStatusApi(id, status);
+    loadLeads();
+  };
+
+  const handleFollowedByChange = async (id: string, followedBy: 'Sarath Kumar' | 'Isai Mozhi' | '') => {
+    await updateInquiryFollowedByApi(id, followedBy);
     loadLeads();
   };
 
@@ -216,7 +221,7 @@ export default function AdminLeadsDrawer({ onOpenAdmin }: AdminLeadsDrawerProps)
                             
                             {/* Status Badges Selector */}
                             <div className="flex items-center gap-1">
-                              {(['New', 'Contacted', 'Enrolled'] as const).map((st) => (
+                              {(['New', 'Contacted', 'Enrolled', 'Not Enrolled'] as const).map((st) => (
                                 <button
                                   key={st}
                                   onClick={() => handleStatusChange(lead.id, st)}
@@ -230,6 +235,20 @@ export default function AdminLeadsDrawer({ onOpenAdmin }: AdminLeadsDrawerProps)
                                 </button>
                               ))}
                             </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-[10px] font-space uppercase font-bold text-gray-500">
+                            <label htmlFor={`followed-${lead.id}`}>Followed By:</label>
+                            <select
+                              id={`followed-${lead.id}`}
+                              value={lead.followedBy || ''}
+                              onChange={(e) => handleFollowedByChange(lead.id, e.target.value as '' | 'Sarath Kumar' | 'Isai Mozhi')}
+                              className="text-xs normal-case border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700"
+                            >
+                              <option value="">Select staff</option>
+                              <option value="Sarath Kumar">Sarath Kumar</option>
+                              <option value="Isai Mozhi">Isai Mozhi</option>
+                            </select>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">

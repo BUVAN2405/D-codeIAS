@@ -8,6 +8,7 @@ import {
   saveInquiryToDb,
   getAllInquiriesFromDb,
   updateInquiryStatusInDb,
+  updateInquiryFollowedByInDb,
   deleteInquiryFromDb,
   getPaletteFromDb,
   savePaletteToDb,
@@ -425,12 +426,21 @@ app.get('/api/inquiries', requireAdminAuth, async (req, res) => {
 app.patch('/api/inquiries/:id/status', requireAdminAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, followedBy } = req.body;
 
-    if (!['New', 'Contacted', 'Enrolled'].includes(status)) {
+    if (followedBy !== undefined) {
+      if (!['', 'Sarath Kumar', 'Isai Mozhi'].includes(followedBy)) {
+        return res.status(400).json({ success: false, error: 'Invalid followed-by value.' });
+      }
+      const updated = await updateInquiryFollowedByInDb(id, followedBy);
+      if (!updated) return res.status(404).json({ success: false, error: `Inquiry with ID ${id} not found.` });
+      return res.json({ success: true, inquiry: updated });
+    }
+
+    if (!['New', 'Contacted', 'Enrolled', 'Not Enrolled'].includes(status)) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid status. Must be New, Contacted, or Enrolled.'
+        error: 'Invalid status. Must be New, Contacted, Enrolled, or Not Enrolled.'
       });
     }
 

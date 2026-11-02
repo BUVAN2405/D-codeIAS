@@ -29,6 +29,7 @@ export interface QueryReport {
   message: string;
   phone: string;
   status: string;
+  followedBy?: string;
 }
 
 /**
@@ -73,6 +74,7 @@ function mapDocToQueryReport(docSnap: DocumentSnapshot<DocumentData>): QueryRepo
     message: String(data.message ?? ''),
     phone: String(data.phone ?? ''),
     status: String(data.status ?? 'new'),
+    followedBy: String(data.followedBy ?? ''),
   };
 }
 
@@ -272,6 +274,15 @@ export async function updateQueryReportStatus(id: string, status: string): Promi
       `Failed to update status for query report '${id}'.`,
       err
     );
+  }
+}
+
+export async function updateQueryReportField(id: string, field: string, value: string): Promise<void> {
+  if (!id || !id.trim()) throw new FirestoreServiceError('Document ID must be a non-empty string.');
+  try {
+    await updateDoc(doc(db, COLLECTION_NAME, id.trim()), { [field]: value });
+  } catch (err) {
+    throw new FirestoreServiceError(`Failed to update ${field} for query report '${id}'.`, err);
   }
 }
 

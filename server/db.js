@@ -355,6 +355,23 @@ export async function updateInquiryStatusInDb(id, status) {
   }
 }
 
+export async function updateInquiryFollowedByInDb(id, followedBy) {
+  if (firestore) {
+    try {
+      const docRef = doc(firestore, 'query', id);
+      await updateDoc(docRef, { followedBy });
+      return { id, followedBy };
+    } catch (err) {
+      console.error('[FIREBASE ERROR] Failed to update followed by in Firestore:', err.message);
+    }
+  }
+  const current = readDb();
+  const updated = current.map(item => item.id === id ? { ...item, followedBy } : item);
+  const changed = updated.some(item => item.id === id);
+  if (changed) writeDb(updated);
+  return changed ? updated.find(item => item.id === id) : null;
+}
+
 function localUpdateStatus(id, status) {
   const current = readDb();
   let updatedRecord = null;

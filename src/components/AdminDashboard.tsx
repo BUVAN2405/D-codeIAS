@@ -41,6 +41,7 @@ import { Palette,
 import {
   fetchAdminDashboardStatsApi,
   updateInquiryStatusApi,
+  updateInquiryFollowedByApi,
   deleteInquiryApi,
   adminLogoutApi,
   getAdminSession,
@@ -190,8 +191,13 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
   if (!isOpen) return null;
 
   // Lead actions
-  const handleStatusChange = async (id: string, status: 'New' | 'Contacted' | 'Enrolled') => {
+  const handleStatusChange = async (id: string, status: 'New' | 'Contacted' | 'Enrolled' | 'Not Enrolled') => {
     await updateInquiryStatusApi(id, status);
+    loadDashboardData();
+  };
+
+  const handleFollowedByChange = async (id: string, followedBy: 'Sarath Kumar' | 'Isai Mozhi' | '') => {
+    await updateInquiryFollowedByApi(id, followedBy);
     loadDashboardData();
   };
 
@@ -1375,6 +1381,7 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                               <option value="New">New</option>
                               <option value="Contacted">Contacted</option>
                               <option value="Enrolled">Enrolled</option>
+                              <option value="Not Enrolled">Not Enrolled</option>
                             </select>
                           </div>
 
@@ -1395,6 +1402,20 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                                 {item.createdAt && ` • ${new Date(item.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })}`}
                               </span>
                             </div>
+                          </div>
+
+                          {/* Followed By */}
+                          <div className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1.5">
+                            <span className="text-[10px] font-bold uppercase text-gray-500">Followed By</span>
+                            <select
+                              value={item.followedBy || ''}
+                              onChange={(e) => handleFollowedByChange(item.id, e.target.value as '' | 'Sarath Kumar' | 'Isai Mozhi')}
+                              className="text-xs font-semibold border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none"
+                            >
+                              <option value="">Select staff</option>
+                              <option value="Sarath Kumar">Sarath Kumar</option>
+                              <option value="Isai Mozhi">Isai Mozhi</option>
+                            </select>
                           </div>
 
                           {/* Contact Info */}
@@ -1466,6 +1487,7 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                             <th className="py-3 px-4">Course / Program</th>
                             <th className="py-3 px-4">Submission Date</th>
                             <th className="py-3 px-4">Status</th>
+                            <th className="py-3 px-4">Followed By</th>
                             <th className="py-3 px-4 text-right">Actions</th>
                           </tr>
                         </thead>
@@ -1537,6 +1559,20 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                                   <option value="New">New</option>
                                   <option value="Contacted">Contacted</option>
                                   <option value="Enrolled">Enrolled</option>
+                              <option value="Not Enrolled">Not Enrolled</option>
+                                            </select>
+                              </td>
+
+                              {/* Followed By Select */}
+                              <td className="py-3.5 px-4">
+                                <select
+                                  value={item.followedBy || ''}
+                                  onChange={(e) => handleFollowedByChange(item.id, e.target.value as '' | 'Sarath Kumar' | 'Isai Mozhi')}
+                                  className="text-[11px] font-semibold px-2 py-1 rounded-lg border border-gray-300 bg-white focus:outline-none cursor-pointer"
+                                >
+                                  <option value="">Select staff</option>
+                                  <option value="Sarath Kumar">Sarath Kumar</option>
+                                  <option value="Isai Mozhi">Isai Mozhi</option>
                                 </select>
                               </td>
 
@@ -2091,6 +2127,23 @@ export default function AdminDashboard({ isOpen, onClose, isPage, onBackToHome, 
                     <option value="New">New</option>
                     <option value="Contacted">Contacted</option>
                     <option value="Enrolled">Enrolled</option>
+                              <option value="Not Enrolled">Not Enrolled</option>
+                  </select>
+                </div>
+                <div className="flex items-center justify-between pt-2">
+                  <span className="text-gray-500 font-bold uppercase text-[10px]">Followed By:</span>
+                  <select
+                    value={selectedLead.followedBy || ''}
+                    onChange={(e) => {
+                      const followedBy = e.target.value as '' | 'Sarath Kumar' | 'Isai Mozhi';
+                      handleFollowedByChange(selectedLead.id, followedBy);
+                      setSelectedLead({ ...selectedLead, followedBy });
+                    }}
+                    className="text-xs font-bold font-space px-3 py-1.5 rounded-xl border border-gray-300 bg-white"
+                  >
+                    <option value="">Select staff</option>
+                    <option value="Sarath Kumar">Sarath Kumar</option>
+                    <option value="Isai Mozhi">Isai Mozhi</option>
                   </select>
                 </div>
               </div>
